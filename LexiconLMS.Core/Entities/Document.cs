@@ -10,16 +10,16 @@ namespace LexiconLMS.Core.Entities
 
         public string SearchableString => $"{Name} {Description} {UploadTime:yyyy-MM-dd}";
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public User User { get; set; } = default!;
 
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
         public Course Course { get; set; } = default!;
 
-        public int ModuleId { get; set; }
+        public int? ModuleId { get; set; }
         public Module Module { get; set; } = default!;
 
-        public int ActivityId { get; set; }
+        public int? ActivityId { get; set; }
         public Activity Activity { get; set; } = default!;
     }
 }
