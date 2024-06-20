@@ -4,6 +4,8 @@ using LexiconLMS.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+// Sample Comment
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
