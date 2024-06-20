@@ -22,13 +22,4 @@
 		<ProjectReference Include="..\LexiconLMS.Persistence\LexiconLMS.Persistence.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Reference Include="LexiconLMS.Core">
-			<HintPath>..\LexiconLMS.Core\bin\Debug\net8.0\LexiconLMS.Core.dll</HintPath>
-		</Reference>
-		<Reference Include="LexiconLMS.Persistence">
-			<HintPath>..\LexiconLMS.Persistence\bin\Debug\net8.0\LexiconLMS.Persistence.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-
 </Project>
