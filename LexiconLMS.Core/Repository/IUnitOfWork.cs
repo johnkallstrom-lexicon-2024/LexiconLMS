@@ -2,7 +2,7 @@
 
 namespace LexiconLMS.Core.Repository
 {
-    public interface IUnitOfWork<TContext> where TContext : DbContext
+    public interface IUnitOfWork
     {
         IRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
         Task<int> SaveChangesAsync();

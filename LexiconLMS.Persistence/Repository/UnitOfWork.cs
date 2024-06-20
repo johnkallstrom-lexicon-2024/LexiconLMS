@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LexiconLMS.Persistence.Repository
 {
-    public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbContext
+    public class UnitOfWork : IUnitOfWork
     {
-        private readonly TContext _context;
+        private readonly DbContext _context;
         private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
 
-        public UnitOfWork(TContext context)
+        public UnitOfWork(DbContext context)
         {
             _context = context;
         }
