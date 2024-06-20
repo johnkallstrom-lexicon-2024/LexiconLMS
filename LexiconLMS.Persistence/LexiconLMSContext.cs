@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace LexiconLMS.Data
+namespace LexiconLMS.Persistence
 {
     public class LexiconLMSContext : IdentityDbContext<User, Role, int>
     {

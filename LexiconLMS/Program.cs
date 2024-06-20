@@ -1,6 +1,6 @@
 using LexiconLMS.Components;
 using LexiconLMS.Core.Identity;
-using LexiconLMS.Data;
+using LexiconLMS.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
