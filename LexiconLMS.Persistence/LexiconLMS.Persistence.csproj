@@ -19,8 +19,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="LMS.Core">
-			<HintPath>..\..\..\ZentientFramework\Source\Zentient\LMS\LMS.Persistence\bin\Debug\net8.0\LMS.Core.dll</HintPath>
+		<Reference Include="LexiconLMS.Core">
+			<HintPath>..\LexiconLMS.Core\bin\Debug\net8.0\LexiconLMS.Core.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 

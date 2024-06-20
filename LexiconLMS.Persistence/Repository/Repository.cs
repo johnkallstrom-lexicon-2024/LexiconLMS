@@ -1,6 +1,7 @@
-﻿using System.Linq.Expressions;
+﻿using LexiconLMS.Core.Repository;
+using System.Linq.Expressions;
 
-namespace LMS.Persistence.Repository
+namespace LexiconLMS.Persistence.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

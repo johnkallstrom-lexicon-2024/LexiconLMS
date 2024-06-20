@@ -1,9 +1,9 @@
-﻿using LMS.Core.Repository;
+﻿using LexiconLMS.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace LMS.Persistence.Repository
+namespace LexiconLMS.Persistence.Repository
 {
-    public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
+    public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbContext
     {
         private readonly TContext _context;
         private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
