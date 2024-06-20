@@ -1,9 +1,8 @@
-﻿@page "/courses/create"
-@inject IUnitOfWork<LexiconDbContext> unitOfWork
+﻿@page "/course/create"
+@inject ICourseService CourseService
 @inject NavigationManager NavigationManager
 @using LexiconLMS.Core.Entities
-@using LexiconLMS.Core.Repository
-@using LexiconLMS.Persistence
+@using LexiconLMS.Core.Services
 
 <PageTitle>Create</PageTitle>
 
@@ -12,6 +11,7 @@
 <h4>Course</h4>
 <hr />
 <EditForm Model="@course" OnValidSubmit="@CreateCourse" FormName="CreateCourse">
+    <DataAnnotationsValidator />
     <div class="form-group">
         <label for="Title">Title</label>
         <InputText id="Title" class="form-control" @bind-Value="course.Name" />
@@ -36,17 +36,23 @@
 </EditForm>
 
 @code {
-    private Course course = new Course {
-            Name = "Course Name",
-            Description = "Course Description",
-            StartDate = DateTime.Now,
-            EndDate = DateTime.Now.AddDays(30)
-        };
+    private Course course = new Course
+    {
+        Name = "Course Name",
+        Description = "Course Description",
+        StartDate = DateTime.UtcNow,
+        EndDate = DateTime.UtcNow.AddDays(7),
+        Created = DateTime.UtcNow,
+        LastModified = DateTime.UtcNow,
+         
+
+    };
 
     private async Task CreateCourse()
     {
-        await unitOfWork.GetRepository<Course>().AddAsync(course);
-        await unitOfWork.SaveChangesAsync();
-        NavigationManager.NavigateTo("/courses");
+        course.Created = DateTime.UtcNow;
+        course.LastModified = DateTime.UtcNow;
+        await CourseService.AddCourseAsync(course);
+        NavigationManager.NavigateTo("/course");
     }
 }

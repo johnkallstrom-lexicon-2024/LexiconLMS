@@ -1,0 +1,45 @@
+﻿@page "/courses"
+@using LexiconLMS.Components.Shared
+@using LexiconLMS.Core.Repository
+@using LexiconLMS.Core.Entities
+@inject IUnitOfWork UnitOfWork
+
+
+<div class="container">
+    @* <WelcomeBanner UserName="@UserName" /> *@
+
+    <h2 class="mt-4">Your Courses</h2>
+
+    <!-- Student Courses -->
+    <div>
+        <h3>Current Courses</h3>
+        @foreach (var course in StudentCourses)
+        {
+            <CourseCard CourseName="@course.Name" Description="@course.Description" StartDate="@course.StartDate" Modules="@course.Modules.ToList()" />
+        }
+    </div>
+
+    <!-- Teacher Courses -->
+@*     <div>
+        <h3>Courses You Manage</h3>
+        @foreach (var course in TeacherCourses)
+        {
+            <CourseCard CourseName="@course.Name" Description="@course.Description" StartDate="@course.StartDate" Modules="@course.Modules.ToList()" Activities="@course.Activities" />
+        }
+    </div>
+ *@</div>
+
+@code {
+    private List<Course> courses = new List<Course>();
+    private List<Course> StudentCourses = new List<Course>();
+    private List<Course> TeacherCourses = new List<Course>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch courses for the user
+        courses = (await UnitOfWork.GetRepository<Course>().GetAllAsync()).ToList();
+        StudentCourses = courses;
+        TeacherCourses = courses;
+        // TeacherCourses = (await UnitOfWork.GetRepository<Course>().FindAsync(c => c.Teacher.UserName == UserName)).ToList();
+    }
+}

@@ -1,0 +1,73 @@
+﻿@page "/course-overview"
+@using LexiconLMS.Core.Entities
+@inject HttpClient Http
+@* 
+<div class="container">
+    <WelcomeBanner UserName="@UserName" />
+
+    <h2 class="mt-4">Courses</h2>
+
+    <!-- Student Courses -->
+    <div>
+        <h3>Current Courses</h3>
+        @foreach (var course in StudentCourses)
+        {
+            <CourseCard CourseName="@course.Name" Description="@course.Description" StartDate="@course.StartDate" Modules="@course.Modules.ToList()" />
+        }
+    </div>
+
+    <!-- Teacher Courses -->
+@*     <div>
+        <h3>Courses You Manage</h3>
+        @foreach (var course in TeacherCourses)
+        {
+            <CourseCard CourseName="@course.Name" Description="@course.Description" StartDate="@course.StartDate" Modules="@course.Modules" Activities="@course.Activities" />
+        }
+    </div>
+ *@ @* </div>
+
+@code {
+    private string UserName = "John Doe"; // Replace with actual user data
+    private List<Course> StudentCourses = new List<Course>();
+    private List<Course> TeacherCourses = new List<Course>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch courses for the user (dummy data for now)
+        StudentCourses = await FetchStudentCoursesAsync();
+        TeacherCourses = await FetchTeacherCoursesAsync();
+    }
+
+    private async Task<List<Course>> FetchStudentCoursesAsync()
+    {
+        // Fetch student courses from API
+        return new List<Course>
+        {
+            new Course
+            {
+                Name = ".NET 2024",
+                Description = "Advanced .NET Programming",
+                StartDate = new DateTime(2024, 1, 1),
+                Modules = new List<Module> { "Database Design", "Javascript" },
+                Activities = new List<Activity> { "Lecture - Database Basics (2024-01-05)", "Assignment - Javascript Project (2024-01-10)" }
+            }
+        };
+    }
+
+    private async Task<List<Course>> FetchTeacherCoursesAsync()
+    {
+        // Fetch teacher courses from API
+        return new List<Course>
+        {
+            new Course
+            {
+                Name = ".NET 2024",
+                Description = "Advanced .NET Programming",
+                StartDate = new DateTime(2024, 1, 1),
+                Modules = new List<string> { "Database Design", "Javascript" },
+                Activities = new List<string> { "Lecture - Database Basics (2024-01-05)", "Assignment - Javascript Project (2024-01-10)" }
+            }
+        };
+    }
+}
+ *@

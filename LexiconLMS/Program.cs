@@ -7,12 +7,13 @@ using LexiconLMS.Persistence.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using LexiconLMS.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<LexiconDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LexiconLMSContext") ?? throw new InvalidOperationException("Connection string 'LexiconLMSContext' not found.")));
 
-builder.Services.AddQuickGridEntityFrameworkAdapter(); ;
+builder.Services.AddQuickGridEntityFrameworkAdapter();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -29,7 +30,12 @@ builder.Services.AddDbContext<LexiconDbContext>(options => options.UseSqlServer(
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(provider.GetRequiredService<DbContext>()));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(provider.GetRequiredService<LexiconDbContext>()));
+builder.Services.AddScoped<IActivityService, ActivityService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IDocumentService, DocumentService>();
+builder.Services.AddScoped<IModuleService, ModuleService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<LexiconDbContext>()
