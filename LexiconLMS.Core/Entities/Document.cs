@@ -4,8 +4,8 @@ namespace LexiconLMS.Core.Entities
 {
     public class Document : BaseEntity
     {
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
+        public required string Name { get; set; }
+        public required string Description { get; set; }
         public DateTime UploadTime { get; set; }
 
         public string SearchableString => $"{Name} {Description} {UploadTime:yyyy-MM-dd}";
