@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 // Sample Comment
+// Another Sample Comment
 
 var builder = WebApplication.CreateBuilder(args);
 
