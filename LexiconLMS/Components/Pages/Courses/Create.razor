@@ -11,7 +11,7 @@
 
 <h4>Course</h4>
 <hr />
-<EditForm Model="@course" OnValidSubmit="@CreateCourse">
+<EditForm Model="@course" OnValidSubmit="@CreateCourse" FormName="CreateCourse">
     <div class="form-group">
         <label for="Title">Title</label>
         <InputText id="Title" class="form-control" @bind-Value="course.Name" />

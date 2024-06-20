@@ -1,0 +1,44 @@
+﻿@page "/courses"
+@using LexiconLMS.Core.Entities
+@using LexiconLMS.Core.Repository
+@inject IUnitOfWork<LexiconLMS.Data.LexiconLMSContext> unitOfWork
+@using Microsoft.AspNetCore.Components.QuickGrid
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="courses/create">Create New</a>
+</p>
+
+@if (courses != null)
+{
+    <QuickGrid Class="table" Items="@courses.AsQueryable()">
+        <PropertyColumn Property="course => course.Name" />
+        <PropertyColumn Property="course => course.Description" />
+        <PropertyColumn Property="course => course.StartDate" />
+        <PropertyColumn Property="course => course.EndDate" />
+        <PropertyColumn Property="course => course.Created" />
+        <PropertyColumn Property="course => course.LastModified" />
+
+        <TemplateColumn Context="course">
+            <a href="@($"courses/edit?id={course.Id}")">Edit</a> |
+            <a href="@($"courses/details?id={course.Id}")">Details</a> |
+            <a href="@($"courses/delete?id={course.Id}")">Delete</a>
+        </TemplateColumn>
+    </QuickGrid>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+@code {
+    private IEnumerable<Course>? courses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        courses = await unitOfWork.GetRepository<Course>().GetAllAsync();
+    }
+}
