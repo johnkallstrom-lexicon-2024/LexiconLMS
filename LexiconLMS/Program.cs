@@ -6,7 +6,6 @@ using LexiconLMS.Persistence;
 using LexiconLMS.Persistence.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using LexiconLMS.Core.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
