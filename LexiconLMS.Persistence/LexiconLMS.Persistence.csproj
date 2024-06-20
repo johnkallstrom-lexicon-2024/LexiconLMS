@@ -15,13 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\LexiconLMS.Core\LexiconLMS.Core.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Reference Include="LexiconLMS.Core">
-			<HintPath>..\LexiconLMS.Core\bin\Debug\net8.0\LexiconLMS.Core.dll</HintPath>
-		</Reference>
+	  <ProjectReference Include="..\LexiconLMS.Core\LexiconLMS.Core.csproj" />
 	</ItemGroup>
 
 </Project>
