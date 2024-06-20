@@ -15,6 +15,7 @@ namespace LexiconLMS.Persistence
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+
         }
     }
 }
