@@ -1,6 +1,5 @@
 using LexiconLMS.Components;
 using LexiconLMS.Core.Identity;
-using LexiconLMS.Core.Entities;
 using LexiconLMS.Core.Repository;
 using LexiconLMS.Persistence;
 using LexiconLMS.Persistence.Repository;
@@ -12,8 +11,6 @@ using LexiconLMS.Core.Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<LexiconDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LexiconLMSContext") ?? throw new InvalidOperationException("Connection string 'LexiconLMSContext' not found.")));
-
-builder.Services.AddQuickGridEntityFrameworkAdapter();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
