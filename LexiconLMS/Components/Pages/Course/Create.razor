@@ -1,8 +1,8 @@
 ﻿@page "/course/create"
-@inject IUnitOfWork unitOfWork
+@inject ICourseService CourseService
 @inject NavigationManager NavigationManager
 @using LexiconLMS.Core.Entities
-@using LexiconLMS.Core.Repository
+@using LexiconLMS.Core.Services
 
 <PageTitle>Create</PageTitle>
 
@@ -50,9 +50,9 @@
 
     private async Task CreateCourse()
     {
-        course.Created = DateTime.UtcNow; // Ensure this property exists and is settable
-        await unitOfWork.GetRepository<Course>().AddAsync(course);
-        await unitOfWork.SaveChangesAsync();
-        NavigationManager.NavigateTo("/courses");
+        course.Created = DateTime.UtcNow;
+        course.LastModified = DateTime.UtcNow;
+        await CourseService.AddCourseAsync(course);
+        NavigationManager.NavigateTo("/course");
     }
 }

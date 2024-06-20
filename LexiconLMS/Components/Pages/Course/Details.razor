@@ -1,6 +1,7 @@
-﻿@page "/courses/details"
-@inject LexiconLMS.Data.LexiconLMSContext DB
+﻿@page "/course/details"
 @using LexiconLMS.Core.Entities
+@using LexiconLMS.Core.Repository
+@inject IUnitOfWork UnitOfWork
 @inject NavigationManager NavigationManager
 @using Microsoft.EntityFrameworkCore
 
@@ -38,14 +39,15 @@
 </div>
 
 @code {
-    Course? course;
 
     [SupplyParameterFromQuery]
     public int Id { get; set; }
 
+    private Course? course;
+
     protected override async Task OnInitializedAsync()
     {
-        course = await DB.Course.FirstOrDefaultAsync(m => m.Id == Id);
+        course = await UnitOfWork.GetRepository<Course>().GetAsync(Id);
 
         if (course is null)
         {

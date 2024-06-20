@@ -1,7 +1,7 @@
 ﻿@page "/course-overview"
 @using LexiconLMS.Core.Entities
 @inject HttpClient Http
-
+@* 
 <div class="container">
     <WelcomeBanner UserName="@UserName" />
 
@@ -24,7 +24,7 @@
             <CourseCard CourseName="@course.Name" Description="@course.Description" StartDate="@course.StartDate" Modules="@course.Modules" Activities="@course.Activities" />
         }
     </div>
- *@ </div>
+ *@ @* </div>
 
 @code {
     private string UserName = "John Doe"; // Replace with actual user data
@@ -70,3 +70,4 @@
         };
     }
 }
+ *@

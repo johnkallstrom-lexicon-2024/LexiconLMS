@@ -1,8 +1,8 @@
-﻿@page "/courses/delete"
-@inject LexiconLMS.Data.LexiconLMSContext DB
+﻿@page "/course/delete"
 @using LexiconLMS.Core.Entities
-@inject IUnitOfWork UnitOfWork
+@inject ICourseService CourseService
 @inject NavigationManager NavigationManager
+@using LexiconLMS.Core.Services
 @using Microsoft.EntityFrameworkCore
 
 <PageTitle>Delete</PageTitle>
@@ -51,16 +51,14 @@
 
 @code {
 
-    [Parameter]
-    public int Id { get; set; }
-    Course? course = null;
-
     [SupplyParameterFromQuery]
     public int Id { get; set; }
 
+    private Course? course = null;
+
     protected override async Task OnInitializedAsync()
     {
-        course = await DB.Course.FirstOrDefaultAsync(m => m.Id == Id);
+        course = await CourseService.GetCourseAsync(Id);
 
         if (course is null)
         {
@@ -70,8 +68,7 @@
 
     public async Task DeleteCourse()
     {
-        DB.Course.Remove(course!);
-        await DB.SaveChangesAsync();
+        await CourseService.DeleteCourseAsync(course!);
         NavigationManager.NavigateTo("/courses");
     }
 }

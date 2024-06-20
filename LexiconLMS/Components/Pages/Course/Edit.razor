@@ -1,7 +1,11 @@
-﻿@page "/Courses/edit"
-@inject LexiconLMS.Data.LexiconLMSContext DB
-@using LexiconLMS.Core.Entities
+﻿@page "/course/edit"
+@inject ICourseService CourseService
 @inject NavigationManager NavigationManager
+@using LexiconLMS.Core.Entities
+@using LexiconLMS.Core.Services
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
 @using Microsoft.EntityFrameworkCore
 
 <PageTitle>Edit</PageTitle>
@@ -71,7 +75,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Course ??= await DB.Course.FirstOrDefaultAsync(m => m.Id == Id);
+        Course ??= await CourseService.GetCourseAsync(Id);
 
         if (Course is null)
         {
@@ -79,19 +83,16 @@ else
         }
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see https://aka.ms/RazorPagesCRUD.
     public async Task UpdateCourse()
     {
-        DB.Attach(Course!).State = EntityState.Modified;
-
         try
         {
-            await DB.SaveChangesAsync();
+            await CourseService.UpdateCourseAsync(Course!);
+
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!CourseExists(Course!.Id))
+            if (!await CourseExists(Course!.Id))
             {
                 NavigationManager.NavigateTo("notfound");
             }
@@ -104,8 +105,8 @@ else
         NavigationManager.NavigateTo("/courses");
     }
 
-    bool CourseExists(int id)
+    async Task<bool> CourseExists(int id)
     {
-        return DB.Course.Any(e => e.Id == id);
+        return await CourseService.GetCourseAsync(id) is not null;
     }
 }

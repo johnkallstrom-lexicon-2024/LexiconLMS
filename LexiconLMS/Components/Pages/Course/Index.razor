@@ -1,7 +1,8 @@
-﻿@page "/courses"
+﻿@page "/course"
 @using LexiconLMS.Core.Entities
-@using LexiconLMS.Core.Repository
-@inject IUnitOfWork unitOfWork
+@using LexiconLMS.Core.Services
+@inject ICourseService CourseService
+@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.QuickGrid
 
 <PageTitle>Index</PageTitle>
@@ -23,6 +24,7 @@
         <PropertyColumn Property="course => course.LastModified" />
 
         <TemplateColumn Context="course">
+            <a href="d:\lexicon-2024.net\lms\lexiconlms\components\pages\error.razor">d:\lexicon-2024.net\lms\lexiconlms\components\pages\error.razor</a>
             <a href="@($"courses/edit?id={course.Id}")">Edit</a> |
             <a href="@($"courses/details?id={course.Id}")">Details</a> |
             <a href="@($"courses/delete?id={course.Id}")">Delete</a>
@@ -39,6 +41,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        courses = await unitOfWork.GetRepository<Course>().GetAllAsync();
+        courses = await CourseService.GetAllCoursesAsync();
     }
 }
