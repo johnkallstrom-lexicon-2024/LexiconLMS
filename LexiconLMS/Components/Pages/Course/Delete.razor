@@ -1,0 +1,73 @@
+﻿@page "/courses/delete"
+@inject LexiconLMS.Data.LexiconLMSContext DB
+@using LexiconLMS.Core.Entities
+@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Course</h4>
+    <hr />
+    @if (course is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@course.Name</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Description</dt>
+            <dd class="col-sm-10">@course.Description</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">StartDate</dt>
+            <dd class="col-sm-10">@course.StartDate</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">EndDate</dt>
+            <dd class="col-sm-10">@course.EndDate</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Created</dt>
+            <dd class="col-sm-10">@course.Created</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">LastModified</dt>
+            <dd class="col-sm-10">@course.LastModified</dd>
+        </dl>
+        <EditForm method="post" Model="course" OnValidSubmit="DeleteCourse" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(course is null)">Delete</button> |
+            <a href="/courses">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    Course? course;
+
+    [SupplyParameterFromQuery]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = await DB.Course.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (course is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    public async Task DeleteCourse()
+    {
+        DB.Course.Remove(course!);
+        await DB.SaveChangesAsync();
+        NavigationManager.NavigateTo("/courses");
+    }
+}

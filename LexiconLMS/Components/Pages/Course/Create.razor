@@ -1,0 +1,59 @@
+﻿@page "/courses/create"
+@inject LexiconLMS.Data.LexiconLMSContext DB
+@using LexiconLMS.Core.Entities
+@using LexiconLMS.Core.Repositories
+@using LexiconLMS.Persistence.Repositories
+@inject IUnitOfWork UnitOfWork
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h4>Course</h4>
+<hr />
+@* Generate code to create a new course with EditForm *@
+<EditForm Model="@course" OnValidSubmit="@CreateCourse" FormName="CreateCourse">
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <InputText id="Title" class="form-control" @bind-Value="course.Name" />
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <InputText id="Description" class="form-control" @bind-Value="course.Description" />
+    </div>
+
+    <div class="form-group">
+        <label for="StartDate">Start Date</label>
+        <InputDate id="StartDate" class="form-control" @bind-Value="course.StartDate" />
+    </div>
+
+    <div class="form-group">
+        <label for="EndDate">End Date</label>
+        <InputDate id="EndDate" class="form-control" @bind-Value="course.EndDate" />
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</EditForm>
+
+
+
+@code {
+
+    Course course = new Course
+    {
+        Name = "New Course",
+        Description = "New Course Description",
+        StartDate = DateTime.Now,
+        EndDate = DateTime.Now.AddDays(30)
+    };
+
+    private void CreateCourse()
+    {
+        DB.Courses.Add(course);
+        DB.SaveChanges();
+        NavigationManager.NavigateTo("/courses");
+    }
+}

@@ -1,0 +1,55 @@
+﻿@page "/courses/details"
+@inject LexiconLMS.Data.LexiconLMSContext DB
+@using LexiconLMS.Core.Entities
+@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h4>Course</h4>
+    <hr />
+    @if (course is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@course.Name</dd>
+            <dt class="col-sm-2">Description</dt>
+            <dd class="col-sm-10">@course.Description</dd>
+            <dt class="col-sm-2">StartDate</dt>
+            <dd class="col-sm-10">@course.StartDate</dd>
+            <dt class="col-sm-2">EndDate</dt>
+            <dd class="col-sm-10">@course.EndDate</dd>
+            <dt class="col-sm-2">Created</dt>
+            <dd class="col-sm-10">@course.Created</dd>
+            <dt class="col-sm-2">LastModified</dt>
+            <dd class="col-sm-10">@course.LastModified</dd>
+        </dl>
+        <div>
+            <a href="@($"/courses/edit?id={course.Id}")">Edit</a> |
+            <a href="@($"/courses")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    Course? course;
+
+    [SupplyParameterFromQuery]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = await DB.Course.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (course is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

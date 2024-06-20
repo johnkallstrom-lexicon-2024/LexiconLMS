@@ -1,0 +1,27 @@
+﻿@page "/courses"
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject LexiconLMS.Data.LexiconLMSContext DB
+@using LexiconLMS.Core.Entities
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="courses/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="DB.Course">
+    <PropertyColumn Property="course => course.Name" />
+    <PropertyColumn Property="course => course.Description" />
+    <PropertyColumn Property="course => course.StartDate" />
+    <PropertyColumn Property="course => course.EndDate" />
+    <PropertyColumn Property="course => course.Created" />
+    <PropertyColumn Property="course => course.LastModified" />
+
+    <TemplateColumn Context="course">
+        <a href="@($"courses/edit?id={course.Id}")">Edit</a> |
+        <a href="@($"courses/details?id={course.Id}")">Details</a> |
+        <a href="@($"courses/delete?id={course.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>

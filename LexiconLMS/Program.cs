@@ -3,8 +3,14 @@ using LexiconLMS.Core.Identity;
 using LexiconLMS.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using LexiconLMS.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<LexiconLMSContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LexiconLMSContext") ?? throw new InvalidOperationException("Connection string 'LexiconLMSContext' not found.")));
+
+builder.Services.AddQuickGridEntityFrameworkAdapter(); ;
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
