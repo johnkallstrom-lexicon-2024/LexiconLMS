@@ -1,13 +1,15 @@
 using LexiconLMS.Components;
 using LexiconLMS.Core.Identity;
+using LexiconLMS.Core.Entities;
+using LexiconLMS.Core.Repository;
 using LexiconLMS.Persistence;
+using LexiconLMS.Persistence.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using LexiconLMS.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<LexiconLMSContext>(options =>
+builder.Services.AddDbContext<LexiconDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LexiconLMSContext") ?? throw new InvalidOperationException("Connection string 'LexiconLMSContext' not found.")));
 
 builder.Services.AddQuickGridEntityFrameworkAdapter(); ;
@@ -25,6 +27,9 @@ builder.Services.AddAuthentication(options =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<LexiconDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
 builder.Services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<LexiconDbContext>()
