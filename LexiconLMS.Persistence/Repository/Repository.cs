@@ -7,7 +7,6 @@ namespace LexiconLMS.Persistence.Repository
     {
         protected readonly DbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
-        private bool _disposed;
 
         public Repository(DbContext context)
         {

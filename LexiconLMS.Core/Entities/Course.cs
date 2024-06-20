@@ -4,10 +4,17 @@ namespace LexiconLMS.Core.Entities
 {
     public class Course : BaseEntity
     {
-        public required string Name { get; set; }
-        public required string Description { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        [Required]
+        [MinLength(3)]
+        [StringLength(100)]
+        public required string Name { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(2000)]
+        public required string Description { get; set; } = string.Empty;
+
+        public DateTime StartDate { get; set; } = DateTime.UtcNow;
+        public DateTime EndDate { get; set; } = DateTime.UtcNow.AddMonths(3);
 
         public string SearchableString => $"{Name} {Description} {StartDate:yyyy-MM-dd}";
 

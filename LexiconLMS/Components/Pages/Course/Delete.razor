@@ -1,6 +1,7 @@
 ﻿@page "/courses/delete"
 @inject LexiconLMS.Data.LexiconLMSContext DB
 @using LexiconLMS.Core.Entities
+@inject IUnitOfWork UnitOfWork
 @inject NavigationManager NavigationManager
 @using Microsoft.EntityFrameworkCore
 
@@ -49,7 +50,10 @@
 </div>
 
 @code {
-    Course? course;
+
+    [Parameter]
+    public int Id { get; set; }
+    Course? course = null;
 
     [SupplyParameterFromQuery]
     public int Id { get; set; }

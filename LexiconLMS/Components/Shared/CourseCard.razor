@@ -1,0 +1,36 @@
+﻿@using LexiconLMS.Core.Entities
+@code {
+    [Parameter]
+    public string CourseName { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
+
+    [Parameter]
+    public DateTime StartDate { get; set; }
+
+    [Parameter]
+    public List<Module> Modules { get; set; }
+}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h4 class="card-title">@CourseName</h4>
+        <p class="card-text">@Description</p>
+        <p class="card-text"><strong>Start Date:</strong> @StartDate.ToShortDateString()</p>
+        <h5>Modules:</h5>
+        <ul>
+            @foreach (var module in Modules)
+            {
+                <li>@module</li>
+            }
+        </ul>
+@*         <h5>Upcoming Activities:</h5>
+        <ul>
+            @foreach (var activity in Activities)
+            {
+                <li>@activity</li>
+            }
+        </ul>
+ *@    </div>
+</div>
