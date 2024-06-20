@@ -4,14 +4,8 @@ namespace LexiconLMS.Core.Entities
 {
     public class Module : BaseEntity
     {
-        [Required]
-        [MinLength(length: 3)]
-        public string Name { get; set; } = string.Empty;
-
-        [Required]
-        [MinLength(length: 3)]
-        public string Description { get; set; } = string.Empty;
-
+        public required string Name { get; set; }
+        public required string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
@@ -20,7 +14,7 @@ namespace LexiconLMS.Core.Entities
 
         // Navigation properties
         public int CourseId { get; set; }
-        public Course Course { get; set; } = new Course();
+        public Course Course { get; set; } = default!;
         public ICollection<Document> Documents { get; set; } = new List<Document>();
         public ICollection<Activity> Activities { get; set; } = new List<Activity>();
     }
