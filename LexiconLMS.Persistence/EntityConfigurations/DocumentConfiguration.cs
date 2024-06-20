@@ -12,7 +12,10 @@ namespace LexiconLMS.Persistence.EntityConfigurations
             builder.HasKey(d => d.Id);
 
             // Document Many-to-One relationship with User
-            builder.HasOne(d => d.User).WithMany(u => u.Documents).HasForeignKey(d => d.UserId);
+            builder
+                .HasOne(d => d.User)
+                .WithMany(u => u.Documents)
+                .HasForeignKey(d => d.UserId);
 
             // Document Many-to-One relationship with Course
 
