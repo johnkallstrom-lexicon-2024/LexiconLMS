@@ -1,12 +1,10 @@
 using LexiconLMS.Components;
 using LexiconLMS.Core.Identity;
-using LexiconLMS.Core.Entities;
 using LexiconLMS.Core.Repository;
 using LexiconLMS.Persistence;
 using LexiconLMS.Persistence.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using LexiconLMS.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
