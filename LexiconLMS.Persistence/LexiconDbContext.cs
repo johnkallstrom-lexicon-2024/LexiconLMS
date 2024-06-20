@@ -1,14 +1,13 @@
 using LexiconLMS.Core.Entities;
 using LexiconLMS.Core.Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LexiconLMS.Persistence
 {
-    public class LexiconLMSContext : IdentityDbContext<User, Role, int>
+    public class LexiconDbContext : IdentityDbContext<User, Role, int>
     {
-        public LexiconLMSContext(DbContextOptions<LexiconLMSContext> options) : base(options)
+        public LexiconDbContext(DbContextOptions<LexiconDbContext> options) : base(options)
         {
         }
 
