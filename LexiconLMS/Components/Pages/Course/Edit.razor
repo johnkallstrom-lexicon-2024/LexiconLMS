@@ -1,4 +1,4 @@
-﻿@page "/course/edit"
+﻿@page "/course/edit/{Id}"
 @inject ICourseService CourseService
 @inject NavigationManager NavigationManager
 @using LexiconLMS.Core.Entities
@@ -7,7 +7,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.EntityFrameworkCore
-rendermode InteractiveServer 
+@rendermode InteractiveServer
 
 <PageTitle>Edit</PageTitle>
 
@@ -52,11 +52,6 @@ else
                     <InputDate id="created" @bind-Value="Course.Created" class="form-control" />
                     <ValidationMessage For="() => Course.Created" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                    <label for="lastmodified" class="form-label">LastModified:</label>
-                    <InputDate id="lastmodified" @bind-Value="Course.LastModified" class="form-control" />
-                    <ValidationMessage For="() => Course.LastModified" class="text-danger" />
-                </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>
         </div>
@@ -64,19 +59,24 @@ else
 }
 
 <div>
-    <a href="/courses">Back to List</a>
+    <a href="/course">Back to List</a>
 </div>
 
 @code {
-    [SupplyParameterFromQuery]
-    public int Id { get; set; }
+    [Parameter]
+    public string? Id { get; set; }
 
     [SupplyParameterFromForm]
     public Course? Course { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Course ??= await CourseService.GetCourseAsync(Id);
+        if (!int.TryParse(Id, out int courseId))
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+
+        Course ??= await CourseService.GetCourseAsync(courseId);
 
         if (Course is null)
         {
@@ -88,6 +88,7 @@ else
     {
         try
         {
+            Course!.LastModified = DateTime.UtcNow;
             await CourseService.UpdateCourseAsync(Course!);
 
         }

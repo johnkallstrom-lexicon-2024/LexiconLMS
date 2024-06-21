@@ -1,59 +1,107 @@
 ﻿@page "/course/create"
 @inject ICourseService CourseService
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 @using LexiconLMS.Core.Entities
 @using LexiconLMS.Core.Services
-rendermode InteractiveServer 
-
-<PageTitle>Create</PageTitle>
+@rendermode InteractiveServer
+<PageTitle>Course Create</PageTitle>
 
 <h1>Create</h1>
 
 <h4>Course</h4>
 <hr />
-<EditForm Model="@course" OnValidSubmit="@CreateCourse" FormName="CreateCourse">
-    <DataAnnotationsValidator />
-    <div class="form-group">
-        <label for="Title">Title</label>
-        <InputText id="Title" class="form-control" @bind-Value="course.Name" />
-    </div>
+<div class="row">
+    <EditForm Model="@Course" FormName="CreateCourse" OnValidSubmit="@CreateCourse" Context="editContext">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="Title" class="col-sm-2">Title</label>
+            <InputText id="Title" class="form-control col-sm-10" @bind-Value="Course.Name" />
+            <ValidationMessage For="() => Course.Name" class="text-danger" />
+        </div>
 
-    <div class="form-group">
-        <label for="Description">Description</label>
-        <InputText id="Description" class="form-control" @bind-Value="course.Description" />
-    </div>
+        <div class="form-group">
+            <label for="Description" class="col-sm-2">Description</label>
+            <InputText id="Description" class="form-control col-sm-10" @bind-Value="Course.Description" />
+            <ValidationMessage For="() => Course.Description" class="text-danger" />
+        </div>
 
-    <div class="form-group">
-        <label for="StartDate">Start Date</label>
-        <InputDate id="StartDate" class="form-control" @bind-Value="course.StartDate" />
-    </div>
+        <div class="form-group">
+            <label for="StartDate" class="col-sm-2">Start Date</label>
+            <InputDate id="StartDate" class="form-control col-sm-10" @bind-Value="Course.StartDate" />
+            <ValidationMessage For="() => Course.StartDate" class="text-danger" />
+        </div>
 
-    <div class="form-group">
-        <label for="EndDate">End Date</label>
-        <InputDate id="EndDate" class="form-control" @bind-Value="course.EndDate" />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Create</button>
-</EditForm>
+        <div class="form-group">
+            <label for="EndDate" class="col-sm-2">End Date</label>
+            <InputDate id="EndDate" class="form-control col-sm-10" @bind-Value="Course.EndDate" />
+            <ValidationMessage For="() => Course.EndDate" class="text-danger" />
+        </div>
+        <button type="submit" class="btn btn-primary" disable="@IsFormInvalid">Create</button>
+    </EditForm>
+</div>
 
 @code {
-    private Course course = new Course
-    {
-        Name = "Course Name",
-        Description = "Course Description",
-        StartDate = DateTime.UtcNow,
-        EndDate = DateTime.UtcNow.AddDays(7),
-        Created = DateTime.UtcNow,
-        LastModified = DateTime.UtcNow,
-         
+    private Course Course = new Course
+        {
+            Name = string.Empty,
+            Description = string.Empty
+        };
+    private EditContext? editContext;
 
-    };
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        editContext = new EditContext(Course);
+        editContext.OnValidationRequested += ValidateDates;
+    }
+
+    private bool IsFormInvalid => editContext is null || editContext.GetValidationMessages().Any();
+
+    private void ValidateDates(object? sender, ValidationRequestedEventArgs e)
+    {
+        var messages = new ValidationMessageStore(editContext);
+
+        if (Course.StartDate < DateTime.Today)
+        {
+            messages.Add(() => Course.StartDate, "Start date cannot be in the past.");
+        }
+
+        if (Course.EndDate < Course.StartDate)
+        {
+            messages.Add(() => Course.EndDate, "End date cannot be before the start date.");
+        }
+
+        editContext.NotifyValidationStateChanged();
+    }
 
     private async Task CreateCourse()
     {
-        course.Created = DateTime.UtcNow;
-        course.LastModified = DateTime.UtcNow;
-        await CourseService.AddCourseAsync(course);
-        NavigationManager.NavigateTo("/course");
+        if (editContext is null || editContext.GetValidationMessages().Any())
+        {
+            return;
+        }
+
+        try
+        {
+            Course.Created = DateTime.UtcNow;
+            Course.LastModified = DateTime.UtcNow;
+            await CourseService.AddCourseAsync(Course);
+            NavigationManager.NavigateTo("/course");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            // Consider showing an error message to the user.
+        }
+    }
+
+    public void Dispose()
+    {
+        if (editContext != null)
+        {
+            editContext.OnValidationRequested -= ValidateDates;
+        }
     }
 }

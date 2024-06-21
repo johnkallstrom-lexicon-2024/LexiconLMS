@@ -1,10 +1,10 @@
-﻿@page "/course/details"
+﻿@page "/course/details/{Id}"
 @using LexiconLMS.Core.Entities
-@using LexiconLMS.Core.Repository
-@inject IUnitOfWork UnitOfWork
+@using LexiconLMS.Core.Services
+@inject ICourseService CourseService
 @inject NavigationManager NavigationManager
 @using Microsoft.EntityFrameworkCore
-rendermode InteractiveServer 
+@rendermode InteractiveServer
 
 <PageTitle>Details</PageTitle>
 
@@ -13,44 +13,49 @@ rendermode InteractiveServer
 <div>
     <h4>Course</h4>
     <hr />
-    @if (course is null)
+    @if (Course is null)
     {
         <p><em>Loading...</em></p>
     }
     else {
         <dl class="row">
             <dt class="col-sm-2">Name</dt>
-            <dd class="col-sm-10">@course.Name</dd>
+            <dd class="col-sm-10">@Course.Name</dd>
             <dt class="col-sm-2">Description</dt>
-            <dd class="col-sm-10">@course.Description</dd>
+            <dd class="col-sm-10">@Course.Description</dd>
             <dt class="col-sm-2">StartDate</dt>
-            <dd class="col-sm-10">@course.StartDate</dd>
+            <dd class="col-sm-10">@Course.StartDate</dd>
             <dt class="col-sm-2">EndDate</dt>
-            <dd class="col-sm-10">@course.EndDate</dd>
+            <dd class="col-sm-10">@Course.EndDate</dd>
             <dt class="col-sm-2">Created</dt>
-            <dd class="col-sm-10">@course.Created</dd>
+            <dd class="col-sm-10">@Course.Created</dd>
             <dt class="col-sm-2">LastModified</dt>
-            <dd class="col-sm-10">@course.LastModified</dd>
+            <dd class="col-sm-10">@Course.LastModified</dd>
         </dl>
         <div>
-            <a href="@($"/courses/edit?id={course.Id}")">Edit</a> |
-            <a href="@($"/courses")">Back to List</a>
+            <a href="@($"/Course/edit?id={Course.Id}")">Edit</a> |
+            <a href="@($"/Course")">Back to List</a>
         </div>
     }
 </div>
 
 @code {
 
-    [SupplyParameterFromQuery]
-    public int Id { get; set; }
+    [Parameter]
+    public string? Id { get; set; }
 
-    private Course? course;
+    private Course? Course;
 
     protected override async Task OnInitializedAsync()
     {
-        course = await UnitOfWork.GetRepository<Course>().GetAsync(Id);
+        if (!int.TryParse(Id, out int CourseId))
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
 
-        if (course is null)
+        Course ??= await CourseService.GetCourseAsync(CourseId);
+
+        if (Course is null)
         {
             NavigationManager.NavigateTo("notfound");
         }

@@ -1,10 +1,12 @@
 ﻿@page "/course"
+@inject ICourseService CourseService
+@rendermode InteractiveServer
+@using LexiconLMS.Components.Shared
 @using LexiconLMS.Core.Entities
 @using LexiconLMS.Core.Services
 @inject ICourseService CourseService
 @using Microsoft.AspNetCore.Components
-@using Microsoft.AspNetCore.Components.QuickGrid
-rendermode InteractiveServer 
+@using Microsoft.AspNetCore.Components.Web
 
 <PageTitle>Index</PageTitle>
 
@@ -14,23 +16,37 @@ rendermode InteractiveServer
     <a href="courses/create">Create New</a>
 </p>
 
-@if (courses != null)
+@if (courses != null && courses.Any())
 {
-    <QuickGrid Class="table" Items="@courses.AsQueryable()">
-        <PropertyColumn Property="course => course.Name" />
-        <PropertyColumn Property="course => course.Description" />
-        <PropertyColumn Property="course => course.StartDate" />
-        <PropertyColumn Property="course => course.EndDate" />
-        <PropertyColumn Property="course => course.Created" />
-        <PropertyColumn Property="course => course.LastModified" />
-
-        <TemplateColumn Context="course">
-            <a href="d:\lexicon-2024.net\lms\lexiconlms\components\pages\error.razor">d:\lexicon-2024.net\lms\lexiconlms\components\pages\error.razor</a>
-            <a href="@($"courses/edit?id={course.Id}")">Edit</a> |
-            <a href="@($"courses/details?id={course.Id}")">Details</a> |
-            <a href="@($"courses/delete?id={course.Id}")">Delete</a>
-        </TemplateColumn>
-    </QuickGrid>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>Created</th>
+                <th>Last Modified</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in courses)
+            {
+                <tr>
+                    <td>@course.Name</td>
+                    <td>@course.Description</td>
+                    <td>@course.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@course.Created.ToString("yyyy-MM-dd")</td>
+                    <td>@course.LastModified?.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a href="@($"course/edit/{course.Id}")">Edit</a> |
+                        <a href="@($"course/details/{course.Id}")">Details</a> |
+                        <a href="@($"course/delete/{course.Id}")">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {
