@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LexiconLMS.Core.Repository
+namespace LexiconLMS.Core.Exceptions
 {
     [Serializable]
     internal class RepositoryNotFoundException : Exception
