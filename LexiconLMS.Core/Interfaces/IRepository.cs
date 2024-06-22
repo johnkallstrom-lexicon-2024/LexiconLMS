@@ -4,6 +4,8 @@ namespace LexiconLMS.Core.Repository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
+        Microsoft.EntityFrameworkCore.DbSet<TEntity> Entities { get; }
+
         Task AddAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
