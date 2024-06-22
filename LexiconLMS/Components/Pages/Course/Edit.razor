@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.EntityFrameworkCore
+@using System.ComponentModel.DataAnnotations
 @rendermode InteractiveServer
 
 <PageTitle>Edit</PageTitle>
@@ -84,13 +85,24 @@ else
         }
     }
 
+    @inject IJSRuntime JSRuntime
+
+    // Existing code...
+
     public async Task UpdateCourse()
     {
+        var validationResult = await CourseService.ValidateCourseAsync(Course!);
+        if (validationResult != ValidationResult.Success)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", validationResult.ErrorMessage);
+            return;
+        }
+
         try
         {
             Course!.LastModified = DateTime.UtcNow;
             await CourseService.UpdateCourseAsync(Course!);
-
+            NavigationManager.NavigateTo("/courses");
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -103,8 +115,6 @@ else
                 throw;
             }
         }
-
-        NavigationManager.NavigateTo("/courses");
     }
 
     async Task<bool> CourseExists(int id)

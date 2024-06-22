@@ -102,5 +102,24 @@ namespace LexiconLMS.Core.Services
             await _courseRepository.DeleteAsync(course);
             await _courseRepository.SaveChangesAsync();
         }
+
+        public async Task<ValidationResult> ValidateCourseAsync(Course course)
+        {
+            if (course.EndDate < course.StartDate)
+            {
+                return new ValidationResult("End date must be after start date", new[] { nameof(course.StartDate), nameof(course.EndDate) });
+            }
+
+            var overlappingCourses = await _courseRepository.FindAsync(c =>
+                           (course.StartDate >= c.StartDate && course.StartDate <= c.EndDate) ||
+                           (course.EndDate >= c.StartDate && course.EndDate <= c.EndDate));
+
+            if (overlappingCourses.Any())
+            {
+                return new ValidationResult("Course overlaps with existing course", new[] { nameof(course.StartDate), nameof(course.EndDate) });
+            }
+
+            return ValidationResult.Success!;
+        }
     }
 }

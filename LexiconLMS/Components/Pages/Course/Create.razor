@@ -4,6 +4,7 @@
 @inject IJSRuntime JSRuntime
 @using LexiconLMS.Core.Entities
 @using LexiconLMS.Core.Services
+@using System.ComponentModel.DataAnnotations
 @rendermode InteractiveServer
 <PageTitle>Course Create</PageTitle>
 
@@ -12,7 +13,7 @@
 <h4>Course</h4>
 <hr />
 <div class="row">
-    <EditForm Model="@Course" FormName="CreateCourse" OnValidSubmit="@CreateCourse" Context="editContext">
+    <EditForm Model="@Course" OnValidSubmit="@CreateCourse" Context="editContext">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="form-group">
@@ -38,70 +39,43 @@
             <InputDate id="EndDate" class="form-control col-sm-10" @bind-Value="Course.EndDate" />
             <ValidationMessage For="() => Course.EndDate" class="text-danger" />
         </div>
-        <button type="submit" class="btn btn-primary" disable="@IsFormInvalid">Create</button>
+        <button type="submit" class="btn btn-primary">Create</button>
     </EditForm>
 </div>
 
 @code {
-    private Course Course = new Course
+    private Course Course = new()
         {
             Name = string.Empty,
-            Description = string.Empty
+            Description = string.Empty,
+            StartDate = DateTime.Today,
+            EndDate = DateTime.Today.AddDays(1) // Default end date to tomorrow
         };
-    private EditContext? editContext;
+    private EditContext editContext = null!;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         editContext = new EditContext(Course);
-        editContext.OnValidationRequested += ValidateDates;
-    }
-
-    private bool IsFormInvalid => editContext is null || editContext.GetValidationMessages().Any();
-
-    private void ValidateDates(object? sender, ValidationRequestedEventArgs e)
-    {
-        var messages = new ValidationMessageStore(editContext);
-
-        if (Course.StartDate < DateTime.Today)
-        {
-            messages.Add(() => Course.StartDate, "Start date cannot be in the past.");
-        }
-
-        if (Course.EndDate < Course.StartDate)
-        {
-            messages.Add(() => Course.EndDate, "End date cannot be before the start date.");
-        }
-
-        editContext.NotifyValidationStateChanged();
     }
 
     private async Task CreateCourse()
     {
-        if (editContext is null || editContext.GetValidationMessages().Any())
+        var validationResult = await CourseService.ValidateCourseAsync(Course);
+        if (validationResult != ValidationResult.Success)
         {
+            await JSRuntime.InvokeVoidAsync("alert", validationResult.ErrorMessage);
             return;
         }
 
         try
         {
-            Course.Created = DateTime.UtcNow;
-            Course.LastModified = DateTime.UtcNow;
             await CourseService.AddCourseAsync(Course);
             NavigationManager.NavigateTo("/course");
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
-            // Consider showing an error message to the user.
-        }
-    }
-
-    public void Dispose()
-    {
-        if (editContext != null)
-        {
-            editContext.OnValidationRequested -= ValidateDates;
+            await JSRuntime.InvokeVoidAsync("alert", $"Error creating course: {e.Message}");
         }
     }
 }
