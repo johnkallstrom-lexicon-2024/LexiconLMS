@@ -1,4 +1,5 @@
-﻿using LexiconLMS.Core.Repository;
+﻿using LexiconLMS.Core.Exceptions;
+using LexiconLMS.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace LexiconLMS.Persistence.Repository
@@ -13,14 +14,27 @@ namespace LexiconLMS.Persistence.Repository
             _context = context;
         }
 
-        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
+        public IRepository<TEntity>? GetRepository<TEntity>() where TEntity : class
         {
             if (_repositories.ContainsKey(typeof(TEntity)))
             {
                 return (IRepository<TEntity>)_repositories[typeof(TEntity)];
             }
 
-            var repository = new Repository<TEntity>(_context);
+            IRepository<TEntity>? repository = null;
+            try
+            {
+                repository = new Repository<TEntity>(_context);
+            }
+            catch (RepositoryNotFoundException)
+            {
+                return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
             _repositories.Add(typeof(TEntity), repository);
             return repository;
         }
