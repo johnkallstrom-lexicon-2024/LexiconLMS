@@ -3,7 +3,7 @@
 namespace LexiconLMS.Core.Exceptions
 {
     [Serializable]
-    internal class RepositoryNotFoundException : Exception
+    public class RepositoryNotFoundException : Exception
     {
         public RepositoryNotFoundException()
         {
