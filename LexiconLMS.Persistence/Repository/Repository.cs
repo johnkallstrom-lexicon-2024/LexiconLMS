@@ -1,4 +1,5 @@
-﻿using LexiconLMS.Core.Repository;
+﻿using LexiconLMS.Core.Exceptions;
+using LexiconLMS.Core.Repository;
 using System.Linq.Expressions;
 
 namespace LexiconLMS.Persistence.Repository
@@ -12,8 +13,10 @@ namespace LexiconLMS.Persistence.Repository
         public Repository(DbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _dbSet = _context.Set<TEntity>() ?? throw new InvalidOperationException("Could not set DbSet<T> in Repository<T>.");
+            _dbSet = _context.Set<TEntity>() ?? throw new RepositoryNotFoundException($"There is no Repository<{typeof(TEntity).Name}> in the context.");
         }
+
+        public DbSet<TEntity> Entities => _dbSet;
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
