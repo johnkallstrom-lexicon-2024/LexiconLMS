@@ -7,8 +7,4 @@
     <UserSecretsId>aspnet-LexiconLMS-eeb80e33-2c64-4f71-8f80-d6e057ad76e0</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\LexiconLMS.Persistence\LexiconLMS.Persistence.csproj" />
-  </ItemGroup>
-
 </Project>
