@@ -33,6 +33,8 @@ namespace LexiconLMS.Persistence
 
         public static async Task CreateUser(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
+            var roles = roleManager.Rol
+
             var users = _userFaker.Generate(100);
             if (users != null && users.Count() > 0)
             {
