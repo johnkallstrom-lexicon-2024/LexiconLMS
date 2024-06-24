@@ -8,7 +8,6 @@ namespace LexiconLMS.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.ToTable("Roles");
         }
     }
 }
