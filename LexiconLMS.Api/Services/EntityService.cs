@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LexiconLMS.Core.Services
+namespace LexiconLMS.Api.Services
 {
     public class EntityService<TEntity> : EntityService<TEntity, int> where TEntity : class, IEntity, IEquatable<TEntity>, new()
     {

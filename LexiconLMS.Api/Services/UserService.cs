@@ -1,5 +1,4 @@
 ﻿using LexiconLMS.Core.Identity;
-using LexiconLMS.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

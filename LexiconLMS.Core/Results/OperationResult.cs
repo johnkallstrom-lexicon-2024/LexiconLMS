@@ -1,5 +1,5 @@
 
-namespace LexiconLMS.Core.Services
+namespace LexiconLMS.Core.Results
 {
     public class OperationResult
     {

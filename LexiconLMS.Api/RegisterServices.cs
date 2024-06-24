@@ -5,6 +5,11 @@
         public static IServiceCollection AddApiServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IActivityService, ActivityService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IModuleService, ModuleService>();
+            services.AddScoped(typeof(IService<>), typeof(ApiService<>));
 
             return services;
         }
