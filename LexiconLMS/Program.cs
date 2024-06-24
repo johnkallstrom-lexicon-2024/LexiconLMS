@@ -6,6 +6,7 @@ using LexiconLMS.Persistence.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LexiconLMS.Core.Services;
+using LexiconLMS.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,17 +29,10 @@ builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<LexiconDbCon
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
-
-    await DatabaseInitializer.SeedIdentityAsync(userManager, roleManager);
-}
-
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    await app.SeedDatabaseAsync();
 }
 else
 {
