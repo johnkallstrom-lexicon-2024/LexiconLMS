@@ -102,6 +102,7 @@ namespace LexiconLMS.Core.Services
                 result.Add("Module ID is required.");
             }
 
+            // validate that the activity is scheduled within the module's start and end date
             var module = await GetModuleAsync(activity.ModuleId);
             if (module != null)
             {

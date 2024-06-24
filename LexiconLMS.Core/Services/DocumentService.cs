@@ -20,7 +20,6 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<Document>> GetAllDocumentsAsync()
         {
             return await _documentRepository.Entities
-                .AsNoTracking()
                 .Include(d => d.User)
                 .Include(d => d.Course)
                 .Include(d => d.Module)
@@ -32,35 +31,35 @@ namespace LexiconLMS.Core.Services
         public async Task<Document?> GetDocumentAsync(int id)
         {
             return await _documentRepository.Entities
-                .AsNoTracking()
                 .Include(d => d.User)
                 .Include(d => d.Course)
                 .Include(d => d.Module)
                 .Include(d => d.Activity)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(d => d.Id == id);
         }
 
         public async Task<IEnumerable<Document>> GetDocumentsByCriteriaAsync(Expression<Func<Document, bool>> criteria)
         {
             return await _documentRepository.Entities
-                .AsNoTracking()
                 .Where(criteria)
                 .Include(d => d.User)
                 .Include(d => d.Course)
                 .Include(d => d.Module)
                 .Include(d => d.Activity)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Document>> FindDocumentsAsync(string searchString)
         {
             return await _documentRepository.Entities
-                .AsNoTracking()
                 .Where(d => EF.Functions.Like(d.SearchableString, $"%{searchString}%"))
                 .Include(d => d.User)
                 .Include(d => d.Course)
                 .Include(d => d.Module)
                 .Include(d => d.Activity)
+                .AsNoTracking()
                 .ToListAsync();
         }
 

@@ -20,7 +20,6 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<Course>> GetCoursesAsync()
         {
             return await _courseRepository.Entities
-                .AsNoTracking()
                 .Include(c => c.Modules)
                 .Include(c => c.Documents)
                 .ToListAsync();
@@ -29,7 +28,6 @@ namespace LexiconLMS.Core.Services
         public async Task<Course?> GetCourseAsync(int id)
         {
             return await _courseRepository.Entities
-                .AsNoTracking()
                 .Include(c => c.Documents)
                 .Include(c => c.Modules)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -40,7 +38,6 @@ namespace LexiconLMS.Core.Services
             if (course.Users == null || !course.Users.Any())
             {
                 var loadedCourse = await _courseRepository.Entities
-                    .AsNoTracking()
                     .Where(c => c.Id == course.Id)
                     .Include(c => c.Users)
                     .FirstOrDefaultAsync();
@@ -60,7 +57,6 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<Document>> GetDocumentsAsync(int courseId)
         {
             var courseWithDocuments = await _courseRepository.Entities
-                .AsNoTracking()
                 .Where(c => c.Id == courseId)
                 .Include(c => c.Documents)
                 .FirstOrDefaultAsync();

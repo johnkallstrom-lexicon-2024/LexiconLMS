@@ -24,19 +24,19 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<Module>> GetCourseModulesAsync(int courseId)
         {
             return await _moduleRepository.Entities
-                .AsNoTracking()
                 .Where(m => m.CourseId == courseId)
                 .Include(m => m.Activities)
                 .Include(m => m.Documents)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Activity>> GetActivitiesAsync(int moduleId)
         {
             var module = await _moduleRepository.Entities
-                .AsNoTracking()
                 .Where(m => m.Id == moduleId)
                 .Include(m => m.Activities)
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
             return module?.Activities ?? Enumerable.Empty<Activity>();
         }
@@ -44,9 +44,9 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<Document>> GetDocumentsAsync(int moduleId)
         {
             var module = await _moduleRepository.Entities
-                .AsNoTracking()
                 .Where(m => m.Id == moduleId)
                 .Include(m => m.Documents)
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
             return module?.Documents ?? Enumerable.Empty<Document>();
         }
@@ -61,8 +61,8 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<Module>> FindModulesAsync(string searchString)
         {
             return await _moduleRepository.Entities
-                .AsNoTracking()
                 .Where(m => m.SearchableString.Contains(searchString))
+                .AsNoTracking()
                 .ToListAsync();
         }
 
