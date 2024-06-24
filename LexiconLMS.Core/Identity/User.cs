@@ -3,11 +3,10 @@ using LexiconLMS.Core.Entities;
 
 namespace LexiconLMS.Core.Identity
 {
-    public class User : BaseIdentityEntity
+    public class User : IdentityUser<int>
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
-        public string Role { get; set; } = default!;
 
         // Navigation properties
         public int? CourseId { get; set; }
