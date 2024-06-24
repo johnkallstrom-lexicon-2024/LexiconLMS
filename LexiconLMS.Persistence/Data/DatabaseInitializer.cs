@@ -2,7 +2,7 @@
 using LexiconLMS.Persistence.Fakers;
 using Microsoft.AspNetCore.Identity;
 
-namespace LexiconLMS.Persistence
+namespace LexiconLMS.Persistence.Data
 {
     public class DatabaseInitializer
     {
@@ -14,7 +14,7 @@ namespace LexiconLMS.Persistence
         }
 
         public static async Task SeedIdentityAsync(
-            UserManager<User> userManager, 
+            UserManager<User> userManager,
             RoleManager<Role> roleManager)
         {
             await CreateRoles(roleManager);
