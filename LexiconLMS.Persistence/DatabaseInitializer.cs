@@ -1,17 +1,25 @@
 ﻿using Bogus;
 using LexiconLMS.Persistence.Fakers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LexiconLMS.Persistence
 {
-    public class DatabaseInitializer
+    public static class DatabaseInitializer
     {
         private static UserFaker _userFaker = new();
         private static Faker _faker = new();
 
-        public static async Task SeedIdentityDataAsync(UserManager<User> userManager, RoleManager<Role> roleManager)
+        public static async Task SeedIdentityAsync(IServiceProvider serviceProvider)
         {
-            await CreateRoles(roleManager);
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+                var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
+
+                await CreateRoles(roleManager);
+                await CreateUsers(userManager);
+            }
         }
 
         public static async Task CreateRoles(RoleManager<Role> roleManager)
@@ -31,10 +39,8 @@ namespace LexiconLMS.Persistence
             }
         }
 
-        public static async Task CreateUser(UserManager<User> userManager, RoleManager<Role> roleManager)
+        public static async Task CreateUsers(UserManager<User> userManager)
         {
-            var roles = roleManager.Rol
-
             var users = _userFaker.Generate(100);
             if (users != null && users.Count() > 0)
             {
@@ -43,9 +49,6 @@ namespace LexiconLMS.Persistence
                     user.PasswordHash = userManager.PasswordHasher.HashPassword(user, _faker.Internet.Password());
 
                     var identityResult = await userManager.CreateAsync(user);
-                    if (identityResult.Succeeded)
-                    {
-                    }
                 }
             }
         }
