@@ -16,5 +16,6 @@ namespace LexiconLMS.Core.Services
         Task AddCourseAsync(Course course);
         Task DeleteCourseAsync(Course course);
         Task UpdateCourseAsync(Course course);
+        Task<OperationResult> ValidateCourseAsync(Course course);
     }
 }

@@ -8,10 +8,11 @@ namespace LexiconLMS.Core.Services
         Task DeleteModuleAsync(Module module);
         Task<IEnumerable<Module>> FindModulesAsync(string searchString);
         Task<IEnumerable<Module>> GetModulesAsync();
-        Task<IEnumerable<Document>> GetDocumentsByModuleAsync(int moduleId);
+        Task<IEnumerable<Module>> GetCourseModulesAsync(int courseId);
         Task<Module?> GetModuleAsync(int id);
-        Task<IEnumerable<Module>> GetModulesAsync(int courseId);
+        Task<IEnumerable<Document>> GetDocumentsAsync(int moduleId);
         Task UpdateModuleAsync(Module module);
         Task<IEnumerable<Activity>> GetActivitiesAsync(int moduleId);
+        Task<OperationResult> ValidateCourseModuleAsync(Module module, bool isEditing = false);
     }
 }
