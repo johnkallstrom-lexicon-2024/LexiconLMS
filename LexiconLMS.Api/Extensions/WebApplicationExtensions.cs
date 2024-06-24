@@ -3,7 +3,7 @@ using LexiconLMS.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace LexiconLMS.Extensions
+namespace LexiconLMS.Api.Extensions
 {
     public static class WebApplicationExtensions
     {

@@ -1,6 +1,4 @@
-﻿using LexiconLMS.Core.Interfaces;
-
-namespace LexiconLMS.Api.Controllers
+﻿namespace LexiconLMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
