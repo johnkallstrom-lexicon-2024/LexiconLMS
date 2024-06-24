@@ -1,6 +1,4 @@
-﻿using LexiconLMS.Core.Attributes;
-
-namespace LexiconLMS.Core.Entities
+﻿namespace LexiconLMS.Core.Entities
 {
     public abstract class BaseEntity
     {
