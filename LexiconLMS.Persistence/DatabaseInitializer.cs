@@ -1,25 +1,20 @@
 ﻿using Bogus;
 using LexiconLMS.Persistence.Fakers;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace LexiconLMS.Persistence
 {
-    public static class DatabaseInitializer
+    public class DatabaseInitializer
     {
         private static UserFaker _userFaker = new();
         private static Faker _faker = new();
 
-        public static async Task SeedIdentityAsync(IServiceProvider serviceProvider)
+        public static async Task SeedIdentityAsync(
+            UserManager<User> userManager, 
+            RoleManager<Role> roleManager)
         {
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-                var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
-
-                await CreateRoles(roleManager);
-                await CreateUsers(userManager);
-            }
+            await CreateRoles(roleManager);
+            await CreateUsers(userManager);
         }
 
         public static async Task CreateRoles(RoleManager<Role> roleManager)
