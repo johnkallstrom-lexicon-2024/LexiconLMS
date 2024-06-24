@@ -15,12 +15,12 @@ namespace LexiconLMS.Core.Services
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _dbContext.Set<TEntity>().ToListAsync();
+            return await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
         public async Task<TEntity> GetByIdAsync(TEntity id)
         {
-            return await _dbContext.Set<TEntity>().FindAsync(id.Id);
+            return await _dbContext.Set<TEntity>().AsNoTracking().Where(e => e.Id.Equals(id)).FirstOrDefaultAsync();
         }
 
         public async Task CreateAsync(TEntity entity)
@@ -38,6 +38,7 @@ namespace LexiconLMS.Core.Services
         public async Task DeleteAsync(TEntity id)
         {
             var entity = await GetByIdAsync(id);
+            // TODO: Check if entity is null and throw exception
             _dbContext.Set<TEntity>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
@@ -53,7 +54,7 @@ namespace LexiconLMS.Core.Services
                 result.Errors.Append("Id cannot be null.");
             }
 
-            // Add more validation logic as required
+            // TODO: Add more validation logic as required, possibly with the help of attributes
 
             return await Task.FromResult(result);
         }

@@ -21,32 +21,32 @@ namespace LexiconLMS.Core.Services
             return await _moduleRepository.Entities.AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<Module>> GetModulesAsync(int courseId)
+        public async Task<IEnumerable<Module>> GetCourseModulesAsync(int courseId)
         {
             return await _moduleRepository.Entities
+                .AsNoTracking()
                 .Where(m => m.CourseId == courseId)
                 .Include(m => m.Activities)
                 .Include(m => m.Documents)
-                .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Activity>> GetActivitiesAsync(int moduleId)
         {
             var module = await _moduleRepository.Entities
+                .AsNoTracking()
                 .Where(m => m.Id == moduleId)
                 .Include(m => m.Activities)
-                .AsNoTracking()
                 .FirstOrDefaultAsync();
             return module?.Activities ?? Enumerable.Empty<Activity>();
         }
 
-        public async Task<IEnumerable<Document>> GetDocumentsByModuleAsync(int moduleId)
+        public async Task<IEnumerable<Document>> GetDocumentsAsync(int moduleId)
         {
             var module = await _moduleRepository.Entities
+                .AsNoTracking()
                 .Where(m => m.Id == moduleId)
                 .Include(m => m.Documents)
-                .AsNoTracking()
                 .FirstOrDefaultAsync();
             return module?.Documents ?? Enumerable.Empty<Document>();
         }
@@ -61,8 +61,8 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<Module>> FindModulesAsync(string searchString)
         {
             return await _moduleRepository.Entities
-                .Where(m => m.SearchableString.Contains(searchString))
                 .AsNoTracking()
+                .Where(m => m.SearchableString.Contains(searchString))
                 .ToListAsync();
         }
 
@@ -82,6 +82,51 @@ namespace LexiconLMS.Core.Services
         {
             await _moduleRepository.DeleteAsync(module);
             await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<OperationResult> ValidateCourseModuleAsync(Module module, bool isEditing = false)
+        {
+            List<string> result = new();
+
+            if (module.Id == 0 && isEditing)
+            {
+                result.Add("Module ID is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(module.Name))
+            {
+                result.Add("Module Name is required.");
+            }
+
+            if (module.CourseId == 0)
+            {
+                result.Add("Course ID is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(module.Description))
+            {
+                result.Add("Module Description is required.");
+            }
+
+            if (module.EndDate < module.StartDate)
+            {
+                result.Add("End date must be greater than start date.");
+            }
+
+            var overlappingModules = await _moduleRepository.FindAsync(c =>
+                       c.CourseId == module.CourseId &&
+                       c.Id != module.Id &&
+                       ((module.StartDate >= c.StartDate && module.StartDate <= c.EndDate) ||
+                       (module.EndDate >= c.StartDate && module.EndDate <= c.EndDate) ||
+                       (module.StartDate <= c.StartDate && module.EndDate >= c.EndDate)));
+
+            if (overlappingModules.Any())
+            {
+                var overlappingModule = overlappingModules.First();
+                result.Add($"Module overlaps with existing module {overlappingModule.Name} with the period of {overlappingModule.StartDate} to {overlappingModule.EndDate}.");
+            }
+
+            return result.Any() ? OperationResult.Fail(result) : OperationResult.Ok();
         }
     }
 }

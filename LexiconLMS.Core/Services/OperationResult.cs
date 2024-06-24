@@ -1,17 +1,25 @@
+
 namespace LexiconLMS.Core.Services
 {
     public class OperationResult
     {
         public bool Success { get; set; }
-        public string Message { get; set; } = string.Empty;
+        public string Message => string.Join(", ", Errors ?? Enumerable.Empty<string>());
         public IEnumerable<string> Errors { get; set; }
 
-        public OperationResult()
+        public OperationResult(bool success = true)
         {
-            Errors = new List<string>();
+            Success = success;
+            Errors = Enumerable.Empty<string>();
         }
 
-        public static OperationResult Ok() => new OperationResult { Success = true };
-        public static OperationResult Fail(IEnumerable<string> messages) => new OperationResult { Success = false, Errors = messages };
+        public OperationResult(IEnumerable<string> errors)
+        {
+            Success = false;
+            Errors = errors;
+        }
+
+        public static OperationResult Ok() => new OperationResult(true);
+        public static OperationResult Fail(IEnumerable<string> errors) => new OperationResult(errors);
     }
 }

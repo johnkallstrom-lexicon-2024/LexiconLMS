@@ -11,7 +11,6 @@ namespace LexiconLMS.Core.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Course> _courseRepository;
 
-        // Generate code to user eager loading
         public CourseService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
@@ -20,16 +19,17 @@ namespace LexiconLMS.Core.Services
 
         public async Task<IEnumerable<Course>> GetCoursesAsync()
         {
-            // Example of selective eager loading based on use case
             return await _courseRepository.Entities
-                .Include(c => c.Modules) // Assuming Modules are always needed
+                .AsNoTracking()
+                .Include(c => c.Modules)
+                .Include(c => c.Documents)
                 .ToListAsync();
         }
 
         public async Task<Course?> GetCourseAsync(int id)
         {
-            // Eager load only necessary entities
             return await _courseRepository.Entities
+                .AsNoTracking()
                 .Include(c => c.Documents)
                 .Include(c => c.Modules)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -40,6 +40,7 @@ namespace LexiconLMS.Core.Services
             if (course.Users == null || !course.Users.Any())
             {
                 var loadedCourse = await _courseRepository.Entities
+                    .AsNoTracking()
                     .Where(c => c.Id == course.Id)
                     .Include(c => c.Users)
                     .FirstOrDefaultAsync();
@@ -59,6 +60,7 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<Document>> GetDocumentsAsync(int courseId)
         {
             var courseWithDocuments = await _courseRepository.Entities
+                .AsNoTracking()
                 .Where(c => c.Id == courseId)
                 .Include(c => c.Documents)
                 .FirstOrDefaultAsync();
@@ -101,6 +103,43 @@ namespace LexiconLMS.Core.Services
         {
             await _courseRepository.DeleteAsync(course);
             await _courseRepository.SaveChangesAsync();
+        }
+
+        public async Task<OperationResult> ValidateCourseAsync(Course course)
+        {
+            List<string> result = new();
+
+            if (course.Id == 0)
+            {
+                result.Add("Course ID is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(course.Name))
+            {
+                result.Add("Course Name is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(course.Description))
+            {
+                result.Add("Course Description is required.");
+            }
+
+            if (course.EndDate < course.StartDate)
+            {
+                result.Add("End date must be greater than start date.");
+            }
+
+            var overlappingCourses = await _courseRepository.FindAsync(c =>
+                           (course.StartDate >= c.StartDate && course.StartDate <= c.EndDate) ||
+                           (course.EndDate >= c.StartDate && course.EndDate <= c.EndDate));
+
+            var overlappingCourse = overlappingCourses.FirstOrDefault(c => c.Id != course.Id);
+            if (overlappingCourse is not null)
+            {
+                result.Add($"Course overlaps with course {overlappingCourse.Name} with the period of {overlappingCourse.StartDate} to {overlappingCourse.EndDate}.");
+            }
+
+            return result.Any() ? OperationResult.Fail(result) : OperationResult.Ok();
         }
     }
 }

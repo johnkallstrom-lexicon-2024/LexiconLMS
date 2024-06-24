@@ -59,5 +59,36 @@ namespace LexiconLMS.Core.Services
             await _userRepository.DeleteAsync(user);
             await _unitOfWork.SaveChangesAsync();
         }
+
+        public async Task<OperationResult> ValidateUserAsync(User user)
+            => await Task.Run(() =>
+            {
+                if (string.IsNullOrWhiteSpace(user.FirstName))
+                {
+                    return OperationResult.Failure("First name is required");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.LastName))
+                {
+                    return OperationResult.Failure("Last name is required");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.Email))
+                {
+                    return OperationResult.Failure("Email is required");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.UserName))
+                {
+                    return OperationResult.Failure("Username is required");
+                }
+
+                if (string.IsNullOrWhiteSpace(user.Password))
+                {
+                    return OperationResult.Failure("Password is required");
+                }
+
+                return OperationResult.Success();
+            });
     }
 }
