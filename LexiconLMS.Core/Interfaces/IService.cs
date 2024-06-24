@@ -9,13 +9,18 @@ using System.Threading.Tasks;
 namespace LexiconLMS.Core.Interfaces
 {
     public interface IService<TEntity>
-            where TEntity : class, IEntity, IEquatable<TEntity>
+        : IService<TEntity, int>
+        where TEntity : class, IEntity, IEquatable<TEntity>, new()
     {
-        Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<TEntity> GetByIdAsync(TEntity id);
-        Task CreateAsync(TEntity entity);
-        Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(TEntity id);
-        Task<OperationResult> ValidateAsync(TEntity entity);
+    }
+    public interface IService<TEntity, TKey>
+        where TEntity : class, IEntity, IEquatable<TEntity>, new()
+        where TKey : notnull, IEquatable<TKey>
+    {
+        Task CreateAsync(TEntity entity, CancellationToken cancellation = default);
+        Task<IEnumerable<TEntity>> GetAsync(CancellationToken cancellation = default);
+        Task<TEntity> GetAsync(TKey id, CancellationToken cancellation = default);
+        Task UpdateAsync(TEntity entity, CancellationToken cancellation = default);
+        Task<OperationResult> ValidateAsync(TEntity entity, CancellationToken cancellation = default);
     }
 }
