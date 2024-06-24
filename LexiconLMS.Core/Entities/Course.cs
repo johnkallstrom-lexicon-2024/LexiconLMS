@@ -1,5 +1,3 @@
-using LexiconLMS.Core.Identity;
-
 namespace LexiconLMS.Core.Entities
 {
     public class Course : BaseEntity

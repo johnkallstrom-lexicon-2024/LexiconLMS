@@ -1,4 +1,3 @@
-
 namespace LexiconLMS.Core.Results
 {
     public class OperationResult
