@@ -18,8 +18,16 @@ namespace LexiconLMS.Api.Services
 
         public async Task<IEnumerable<UserDto>> GetUsersAsync()
         {
-            var users = await _userManager.Users.ToListAsync();
-            return _mapper.Map<IEnumerable<UserDto>>(users);
+            var result = new List<UserDto>();
+
+            foreach (var user in _userManager.Users)
+            {
+                var dto = _mapper.Map<UserDto>(user);
+                dto.Roles = await _userManager.GetRolesAsync(user);
+                result.Add(dto);
+            }
+
+            return result;
         }
 
         public async Task<UserDto?> GetUserByIdAsync(int id)
