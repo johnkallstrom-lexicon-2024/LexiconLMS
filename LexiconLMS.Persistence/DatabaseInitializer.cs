@@ -9,12 +9,16 @@ namespace LexiconLMS.Persistence
         private static UserFaker _userFaker = new();
         private static Faker _faker = new();
 
+        public static async Task SeedAsync(LexiconDbContext context)
+        {
+        }
+
         public static async Task SeedIdentityAsync(
             UserManager<User> userManager, 
             RoleManager<Role> roleManager)
         {
             await CreateRoles(roleManager);
-            await CreateUsers(userManager);
+            await CreateUsers(userManager, roleManager);
         }
 
         public static async Task CreateRoles(RoleManager<Role> roleManager)
@@ -34,9 +38,11 @@ namespace LexiconLMS.Persistence
             }
         }
 
-        public static async Task CreateUsers(UserManager<User> userManager)
+        public static async Task CreateUsers(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
+            var roles = roleManager.Roles.ToList();
             var users = _userFaker.Generate(100);
+
             if (users != null && users.Count() > 0)
             {
                 foreach (var user in users)
@@ -44,6 +50,16 @@ namespace LexiconLMS.Persistence
                     user.PasswordHash = userManager.PasswordHasher.HashPassword(user, _faker.Internet.Password());
 
                     var identityResult = await userManager.CreateAsync(user);
+                    if (identityResult.Succeeded)
+                    {
+                        foreach (var role in roles)
+                        {
+                            if (role != null && await roleManager.RoleExistsAsync(role.Name))
+                            {
+                                await userManager.AddToRoleAsync(user, role.Name);
+                            }
+                        }
+                    }
                 }
             }
         }
