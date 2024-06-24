@@ -27,7 +27,9 @@ builder.Services.AddScoped<IModuleService, ModuleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped(typeof(IService<>), typeof(ApiService<>));
 
-builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<LexiconDbContext>();
+builder.Services
+    .AddIdentity<User, Role>()
+    .AddEntityFrameworkStores<LexiconDbContext>();
 
 var app = builder.Build();
 
