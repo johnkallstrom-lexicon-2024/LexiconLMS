@@ -1,7 +1,9 @@
+using LexiconLMS.Core.Attributes;
 using LexiconLMS.Core.Identity;
 
 namespace LexiconLMS.Core.Entities
 {
+    [DateOrder("StartDate", "EndDate")]
     public class Course : BaseEntity
     {
         public required string Name { get; set; }
