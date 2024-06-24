@@ -1,8 +1,5 @@
-using LexiconLMS.Core.Attributes;
-
 namespace LexiconLMS.Core.Entities
 {
-    [DateOrder("StartDate", "EndDate")]
     public class Activity : BaseEntity
     {
         public required string Name { get; set; }
