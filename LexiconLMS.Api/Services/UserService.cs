@@ -30,16 +30,32 @@ namespace LexiconLMS.Api.Services
             return result;
         }
 
-        public async Task<UserDto?> GetUserByIdAsync(int id)
+        public async Task<UserDto> GetUserByIdAsync(int id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
-            return _mapper.Map<UserDto>(user);
+            if (user is null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            var dto = _mapper.Map<UserDto>(user);
+            dto.Roles = await _userManager.GetRolesAsync(user);
+
+            return dto;
         }
 
-        public async Task<UserDto?> GetUserByEmailAsync(string email)
+        public async Task<UserDto> GetUserByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            return _mapper.Map<UserDto>(user);
+            if (user is null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            var dto = _mapper.Map<UserDto>(user);
+            dto.Roles = await _userManager.GetRolesAsync(user);
+
+            return dto;
         }
     }
 }
