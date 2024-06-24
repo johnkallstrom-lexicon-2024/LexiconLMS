@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LexiconLMS.Core.Services;
 using LexiconLMS.Extensions;
+using LexiconLMS.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<IModuleService, ModuleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped(typeof(IService<>), typeof(ApiService<>));
 
 builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<LexiconDbContext>();
 

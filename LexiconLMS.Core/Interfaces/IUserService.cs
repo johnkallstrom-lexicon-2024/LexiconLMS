@@ -1,4 +1,5 @@
-﻿using LexiconLMS.Core.Identity;
+﻿using LexiconLMS.Core.Entities;
+using LexiconLMS.Core.Identity;
 
 namespace LexiconLMS.Core.Services
 {
@@ -6,7 +7,9 @@ namespace LexiconLMS.Core.Services
     {
         Task AddUserAsync(User user);
         Task DeleteUserAsync(User user);
+        Task<IEnumerable<Document>> GetAllDocuments(int userId);
         Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<Course?> GetCourseAsync(int courseId);
         Task<User?> GetUserAsync(int id);
         Task UpdateUserAsync(User user);
     }
