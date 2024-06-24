@@ -9,7 +9,7 @@ namespace LexiconLMS.Core.Identity
         public required string LastName { get; set; }
 
         // Navigation properties
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
         public Course Course { get; set; } = default!;
         public ICollection<Document> Documents { get; set; } = new List<Document>();
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LexiconLMS.Persistence.Migrations
 {
     [DbContext(typeof(LexiconDbContext))]
-    [Migration("20240620105554_Initial")]
+    [Migration("20240624111632_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -214,7 +214,7 @@ namespace LexiconLMS.Persistence.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("LexiconLMS.Core.Identity.User", b =>
@@ -232,7 +232,7 @@ namespace LexiconLMS.Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -295,7 +295,7 @@ namespace LexiconLMS.Persistence.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -458,9 +458,7 @@ namespace LexiconLMS.Persistence.Migrations
                 {
                     b.HasOne("LexiconLMS.Core.Entities.Course", "Course")
                         .WithMany("Users")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseId");
 
                     b.Navigation("Course");
                 });
