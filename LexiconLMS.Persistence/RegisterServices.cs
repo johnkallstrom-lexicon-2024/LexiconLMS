@@ -16,7 +16,7 @@ namespace LexiconLMS.Persistence
             });
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(provider.GetRequiredService<DbContext>()));
+            services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(provider.GetRequiredService<LexiconDbContext>()));
 
             services
                 .AddIdentityCore<User>()

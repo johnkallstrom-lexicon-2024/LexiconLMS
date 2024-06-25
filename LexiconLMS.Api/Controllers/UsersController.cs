@@ -4,11 +4,21 @@
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly IActivityService _activityService;
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IActivityService activityService)
         {
             _userService = userService;
+            _activityService = activityService;
+        }
+
+        [HttpGet("/activities")]
+        public async Task<IActionResult> GetActivities()
+        {
+            var data = await _activityService.GetActivitiesAsync();
+
+            return Ok(data);
         }
 
         [HttpGet]
