@@ -25,25 +25,15 @@ namespace LexiconLMS.Core.Services
             return users;
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<User?> GetUserByIdAsync(int id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
-            if (user is null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
             return user;
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<User?> GetUserByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if (user is null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
             return user;
         }
 
