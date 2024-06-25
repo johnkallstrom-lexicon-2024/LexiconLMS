@@ -23,7 +23,7 @@ namespace LexiconLMS.Api.Controllers
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetUsersAsync();
-            return Ok(users);
+            return Ok(_mapper.Map<IEnumerable<UserModel>>(users));
         }
 
         [HttpGet("{id}")]
@@ -35,7 +35,7 @@ namespace LexiconLMS.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(user);
+            return Ok(_mapper.Map<UserModel>(user));
         }
 
         [HttpPost]
