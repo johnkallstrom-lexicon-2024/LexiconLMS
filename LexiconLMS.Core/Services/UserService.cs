@@ -72,8 +72,13 @@ namespace LexiconLMS.Core.Services
             return OperationResult.Ok();
         }
 
-        public Task<OperationResult> UpdateUserAsync(User user, string newPassword, string[] roles)
+        public async Task<OperationResult> UpdateUserAsync(User user, string newPassword, string[] roles)
         {
+            if (user is null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             throw new NotImplementedException();
         }
 
