@@ -59,31 +59,41 @@ namespace LexiconLMS.Api.Controllers
             return CreatedAtAction(nameof(GetCourses), new { id = course.Id }, course);
         }
 
-        //// PUT: api/courses/{id}
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult> PutCourse(int id, [FromBody] Course course)
-        //{
-        //    if (id != course.Id)
-        //    {
-        //        return BadRequest("Course ID in the URL does not match the course ID in the request body.");
-        //    }
+        // PUT: api/courses/{id}
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutCourse(int id, [FromBody] Course course)
+        {
+            if (id != course.Id)
+            {
+                return BadRequest("Course ID in the URL does not match the course ID in the request body.");
+            }
 
-        //    var existingCourse = await _courseService.GetCourseAsync(id);
-        //    if (existingCourse == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var existingCourse = await _courseService.GetCourseAsync(id);
+            if (existingCourse == null)
+            {
+                return NotFound();
+            }
 
-        //    var validationResult = await _courseService.ValidateCourseAsync(course);
-        //    if (!validationResult.Success)
-        //    {
-        //        return BadRequest(validationResult.Errors);
-        //    }
+            // Update the existing course properties with the new values
+            existingCourse.Name = course.Name;
+            existingCourse.Description = course.Description;
+            existingCourse.StartDate = course.StartDate;
+            existingCourse.EndDate = course.EndDate;
+            existingCourse.Users = course.Users;
+            existingCourse.Documents = course.Documents;
+            existingCourse.Modules = course.Modules;
+            // Add any other properties that need to be updated
 
-        //    await _courseService.UpdateCourseAsync(course);
+            var validationResult = await _courseService.ValidateCourseAsync(existingCourse);
+            if (!validationResult.Success)
+            {
+                return BadRequest(validationResult.Errors);
+            }
 
-        //    return NoContent();
-        //}
+            await _courseService.UpdateCourseAsync(existingCourse);
+
+            return NoContent();
+        }
 
         // DELETE: api/courses/5
         [HttpDelete("{id}")]
