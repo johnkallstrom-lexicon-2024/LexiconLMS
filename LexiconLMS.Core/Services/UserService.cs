@@ -46,7 +46,7 @@ namespace LexiconLMS.Core.Services
             return user;
         }
 
-        public async Task<User> CreateUserAsync(User user, string password, string[] roles)
+        public async Task<OperationResult> CreateUserAsync(User user, string password, string[] roles)
         {
             if (user is null)
             {
@@ -66,8 +66,12 @@ namespace LexiconLMS.Core.Services
                     }
                 }
             }
+            else
+            {
+                return OperationResult.Fail(identityResult.Errors.Select(e => e.Description));
+            }
 
-            return user;
+            return OperationResult.Ok();
         }
     }
 }

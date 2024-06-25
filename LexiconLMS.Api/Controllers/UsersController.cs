@@ -57,8 +57,8 @@ namespace LexiconLMS.Api.Controllers
 
             var user = _mapper.Map<User>(model);
 
-            var createdUser = await _userService.CreateUserAsync(user, model.Password, model.Roles.ToArray());
-            return CreatedAtAction(nameof(GetUserById), new { user.Id }, createdUser);
+            var result = await _userService.CreateUserAsync(user, model.Password, model.Roles.ToArray());
+            return Ok(result);
         }
     }
 }
