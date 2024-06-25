@@ -2,8 +2,9 @@
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserDto>> GetUsersAsync();
-        Task<UserDto> GetUserByIdAsync(int id);
-        Task<UserDto> GetUserByEmailAsync(string email);
+        Task<IEnumerable<User>> GetUsersAsync();
+        Task<User> GetUserByIdAsync(int id);
+        Task<User> GetUserByEmailAsync(string email);
+        Task<int> CreateUserAsync(User user, string password, string[] roles);
     }
 }

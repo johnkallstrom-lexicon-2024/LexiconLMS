@@ -1,33 +1,28 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace LexiconLMS.Core.Services
 {
     public class UserService : IUserService
     {
-        private readonly IMapper _mapper;
+        private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
 
-        public UserService(UserManager<User> userManager, IMapper mapper)
+        public UserService(
+            UserManager<User> userManager, 
+            RoleManager<Role> roleManager)
         {
             _userManager = userManager;
-            _mapper = mapper;
+            _roleManager = roleManager;
         }
 
-        public async Task<IEnumerable<UserDto>> GetUsersAsync()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            var result = new List<UserDto>();
-
-            foreach (var user in _userManager.Users)
-            {
-                var dto = _mapper.Map<UserDto>(user);
-                dto.Roles = await _userManager.GetRolesAsync(user);
-                result.Add(dto);
-            }
-
-            return result;
+            var users = await _userManager.Users.ToListAsync();
+            return users;
         }
 
-        public async Task<UserDto> GetUserByIdAsync(int id)
+        public async Task<User> GetUserByIdAsync(int id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user is null)
@@ -35,13 +30,10 @@ namespace LexiconLMS.Core.Services
                 throw new ArgumentNullException(nameof(user));
             }
 
-            var dto = _mapper.Map<UserDto>(user);
-            dto.Roles = await _userManager.GetRolesAsync(user);
-
-            return dto;
+            return user;
         }
 
-        public async Task<UserDto> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user is null)
@@ -49,10 +41,29 @@ namespace LexiconLMS.Core.Services
                 throw new ArgumentNullException(nameof(user));
             }
 
-            var dto = _mapper.Map<UserDto>(user);
-            dto.Roles = await _userManager.GetRolesAsync(user);
+            return user;
+        }
 
-            return dto;
+        public async Task<int> CreateUserAsync(User user, string password, string[] roles)
+        {
+            if (user is null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            var identityResult = await _userManager.CreateAsync(user, password);
+            if (identityResult.Succeeded)
+            {
+                foreach (var role in roles)
+                {
+                    if (await _roleManager.RoleExistsAsync(role))
+                    {
+                        await _userManager.AddToRoleAsync(user, role);
+                    }
+                }
+            }
+
+            return user.Id;
         }
     }
 }

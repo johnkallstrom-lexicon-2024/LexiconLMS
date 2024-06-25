@@ -1,14 +1,19 @@
-﻿namespace LexiconLMS.Api.Controllers
+﻿using AutoMapper;
+using LexiconLMS.Core.Identity;
+
+namespace LexiconLMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -28,6 +33,20 @@
             }
 
             return Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(UserCreateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var user = _mapper.Map<User>(model);
+
+            var id = await _userService.CreateUserAsync(user, model.Password, model.Roles.ToArray());
+            return CreatedAtAction(nameof(GetUserById), new { id });
         }
     }
 }
