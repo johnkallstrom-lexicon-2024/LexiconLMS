@@ -1,6 +1,4 @@
-﻿using LexiconLMS.Core.Entities;
-using LexiconLMS.Core.Repository;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LexiconLMS.Core.Services
@@ -69,6 +67,27 @@ namespace LexiconLMS.Core.Services
             else
             {
                 return OperationResult.Fail(identityResult.Errors.Select(e => e.Description));
+            }
+
+            return OperationResult.Ok();
+        }
+
+        public Task<OperationResult> UpdateUserAsync(User user, string newPassword, string[] roles)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<OperationResult> DeleteUserAsync(User user)
+        {
+            if (user is null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            var identityResult = await _userManager.DeleteAsync(user);
+            if (!identityResult.Succeeded)
+            {
+                return OperationResult.Fail(identityResult.Errors.Select(x => x.Description));
             }
 
             return OperationResult.Ok();
