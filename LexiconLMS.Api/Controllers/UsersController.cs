@@ -41,11 +41,6 @@ namespace LexiconLMS.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UserCreateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             if (model.CourseId.HasValue)
             {
                 Course? course = await _courseService.GetCourseAsync(model.CourseId.Value);
