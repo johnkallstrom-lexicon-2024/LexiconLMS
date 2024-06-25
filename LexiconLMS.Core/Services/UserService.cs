@@ -5,15 +5,18 @@ namespace LexiconLMS.Core.Services
 {
     public class UserService : IUserService
     {
+        private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
 
         public UserService(
             UserManager<User> userManager,
-            RoleManager<Role> roleManager)
+            RoleManager<Role> roleManager,
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
@@ -98,9 +101,38 @@ namespace LexiconLMS.Core.Services
             return OperationResult.Ok();
         }
 
-        public Task<OperationResult> LoginAsync(string email, string password)
+        public async Task<OperationResult> LoginWithUserNameAsync(string username, string password)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByNameAsync(username);
+            if (user is null)
+            {
+                return OperationResult.Fail(new List<string> { $"No user with the username {username} exists" });
+            }
+
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: false);
+            if (!signInResult.Succeeded)
+            {
+                return OperationResult.Fail(new List<string> { "The password you entered is incorrect" });
+            }
+
+            return OperationResult.Ok();
+        }
+
+        public async Task<OperationResult> LoginWithEmailAsync(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user is null)
+            {
+                return OperationResult.Fail(new List<string> { $"No user with the email {email} exists" });
+            }
+
+            var signInResult = await _signInManager.PasswordSignInAsync(user, password, isPersistent: false, lockoutOnFailure: false);
+            if (!signInResult.Succeeded)
+            {
+                return OperationResult.Fail(new List<string> { "The password you entered is incorrect" });
+            }
+
+            return OperationResult.Ok();
         }
     }
 }
