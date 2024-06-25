@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LexiconLMS.Core.Entities;
 using LexiconLMS.Core.Identity;
 
 namespace LexiconLMS.Api.Controllers
@@ -9,11 +10,13 @@ namespace LexiconLMS.Api.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
+        private readonly ICourseService _courseService;
 
-        public UsersController(IUserService userService, IMapper mapper)
+        public UsersController(IUserService userService, IMapper mapper, ICourseService courseService)
         {
             _userService = userService;
             _mapper = mapper;
+            _courseService = courseService;
         }
 
         [HttpGet]
@@ -43,10 +46,19 @@ namespace LexiconLMS.Api.Controllers
                 return BadRequest();
             }
 
+            if (model.CourseId.HasValue)
+            {
+                Course? course = await _courseService.GetCourseAsync(model.CourseId.Value);
+                if (course is null)
+                {
+                    return BadRequest(new { Message = $"The course with id {model.CourseId.Value} does not exist" });
+                }
+            }
+
             var user = _mapper.Map<User>(model);
 
-            var id = await _userService.CreateUserAsync(user, model.Password, model.Roles.ToArray());
-            return CreatedAtAction(nameof(GetUserById), new { id });
+            var createdUser = await _userService.CreateUserAsync(user, model.Password, model.Roles.ToArray());
+            return CreatedAtAction(nameof(GetUserById), new { user.Id }, createdUser);
         }
     }
 }

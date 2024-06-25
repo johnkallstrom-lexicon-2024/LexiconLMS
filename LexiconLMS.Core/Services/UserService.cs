@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using LexiconLMS.Core.Entities;
+using LexiconLMS.Core.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LexiconLMS.Core.Services
@@ -9,7 +11,7 @@ namespace LexiconLMS.Core.Services
         private readonly UserManager<User> _userManager;
 
         public UserService(
-            UserManager<User> userManager, 
+            UserManager<User> userManager,
             RoleManager<Role> roleManager)
         {
             _userManager = userManager;
@@ -44,14 +46,16 @@ namespace LexiconLMS.Core.Services
             return user;
         }
 
-        public async Task<int> CreateUserAsync(User user, string password, string[] roles)
+        public async Task<User> CreateUserAsync(User user, string password, string[] roles)
         {
             if (user is null)
             {
                 throw new ArgumentNullException(nameof(user));
             }
 
-            var identityResult = await _userManager.CreateAsync(user, password);
+            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, password);
+
+            var identityResult = await _userManager.CreateAsync(user);
             if (identityResult.Succeeded)
             {
                 foreach (var role in roles)
@@ -63,7 +67,7 @@ namespace LexiconLMS.Core.Services
                 }
             }
 
-            return user.Id;
+            return user;
         }
     }
 }
