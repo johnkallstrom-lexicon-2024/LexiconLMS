@@ -3,7 +3,6 @@ namespace LexiconLMS.Core.Results
     public class OperationResult
     {
         public bool Success { get; set; }
-        public string Message => string.Join(", ", Errors ?? Enumerable.Empty<string>());
         public IEnumerable<string> Errors { get; set; }
 
         public OperationResult(bool success = true)
