@@ -105,7 +105,7 @@ namespace LexiconLMS.Api.Services
         {
             List<string> result = new();
 
-            if (course.Id == 0)
+            if (course.Id != 0 && course.Id < 0)
             {
                 result.Add("Course ID is required.");
             }
