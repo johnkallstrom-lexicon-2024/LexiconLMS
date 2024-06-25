@@ -2,10 +2,11 @@
 using LexiconLMS.Persistence.Fakers;
 using Microsoft.AspNetCore.Identity;
 
-namespace LexiconLMS.Persistence
+namespace LexiconLMS.Persistence.Data
 {
     public class DatabaseInitializer
     {
+        private static readonly string[] _roles = ["Teacher", "Student"];
         private static UserFaker _userFaker = new();
         private static Faker _faker = new();
 
@@ -14,18 +15,16 @@ namespace LexiconLMS.Persistence
         }
 
         public static async Task SeedIdentityAsync(
-            UserManager<User> userManager, 
+            UserManager<User> userManager,
             RoleManager<Role> roleManager)
         {
             await CreateRoles(roleManager);
-            await CreateUsers(userManager, roleManager);
+            await CreateUsers(userManager);
         }
 
         public static async Task CreateRoles(RoleManager<Role> roleManager)
         {
-            string[] roles = ["Teacher", "Student"];
-
-            foreach (var role in roles)
+            foreach (var role in _roles)
             {
                 if (!await roleManager.RoleExistsAsync(role))
                 {
@@ -38,9 +37,8 @@ namespace LexiconLMS.Persistence
             }
         }
 
-        public static async Task CreateUsers(UserManager<User> userManager, RoleManager<Role> roleManager)
+        public static async Task CreateUsers(UserManager<User> userManager)
         {
-            var roles = roleManager.Roles.ToList();
             var users = _userFaker.Generate(100);
 
             if (users != null && users.Count() > 0)
@@ -52,13 +50,8 @@ namespace LexiconLMS.Persistence
                     var identityResult = await userManager.CreateAsync(user);
                     if (identityResult.Succeeded)
                     {
-                        foreach (var role in roles)
-                        {
-                            if (role != null && await roleManager.RoleExistsAsync(role.Name))
-                            {
-                                await userManager.AddToRoleAsync(user, role.Name);
-                            }
-                        }
+                        string role = _roles[_faker.Random.Int(min: 0, max: (_roles.Count() - 1))];
+                        await userManager.AddToRoleAsync(user, role);
                     }
                 }
             }

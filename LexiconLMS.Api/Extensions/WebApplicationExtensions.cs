@@ -1,9 +1,9 @@
 ﻿using LexiconLMS.Core.Identity;
-using LexiconLMS.Persistence;
+using LexiconLMS.Persistence.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace LexiconLMS.Extensions
+namespace LexiconLMS.Api.Extensions
 {
     public static class WebApplicationExtensions
     {

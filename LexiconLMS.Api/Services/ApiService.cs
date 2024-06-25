@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace LexiconLMS.Core.Services
+namespace LexiconLMS.Api.Services
 {
     public class ApiService<TEntity> : ApiService<TEntity, int> where TEntity : class, IEntity, IEquatable<TEntity>, new()
     {

@@ -4,7 +4,7 @@ using LexiconLMS.Core.Identity;
 using LexiconLMS.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace LexiconLMS.Core.Services
+namespace LexiconLMS.Api.Services
 {
     public class CourseService : ICourseService
     {

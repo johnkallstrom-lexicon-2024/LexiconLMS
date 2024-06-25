@@ -3,7 +3,7 @@ using LexiconLMS.Core.Exceptions;
 using LexiconLMS.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace LexiconLMS.Core.Services
+namespace LexiconLMS.Api.Services
 {
     public class ModuleService : IModuleService
     {
