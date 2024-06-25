@@ -97,5 +97,9 @@ namespace LexiconLMS.Core.Services
 
             return OperationResult.Ok();
         }
+
+        public Task<OperationResult> LoginAsync(string email, string password)
+        {
+        }
     }
 }

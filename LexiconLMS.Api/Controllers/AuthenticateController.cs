@@ -2,9 +2,9 @@
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticateController : ControllerBase
     {
-        public IActionResult Login()
+        public IActionResult Login(AuthenticateModel model)
         {
             return Ok();
         }
