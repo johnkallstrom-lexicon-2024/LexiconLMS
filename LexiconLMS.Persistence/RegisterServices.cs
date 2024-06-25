@@ -18,17 +18,13 @@ namespace LexiconLMS.Persistence
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(provider.GetRequiredService<LexiconDbContext>()));
 
-            services
-                .AddIdentityCore<User>()
-                .AddRoles<Role>()
-                .AddEntityFrameworkStores<LexiconDbContext>();
-
-            services.Configure<IdentityOptions>(options =>
+            services.AddIdentity<User, Role>(options =>
             {
+                options.User.RequireUniqueEmail = true;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-            });
-
+            }).AddEntityFrameworkStores<LexiconDbContext>();
+                    
             return services;
         }
     }
