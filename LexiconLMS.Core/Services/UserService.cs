@@ -100,6 +100,7 @@ namespace LexiconLMS.Core.Services
 
         public Task<OperationResult> LoginAsync(string email, string password)
         {
+            throw new NotImplementedException();
         }
     }
 }

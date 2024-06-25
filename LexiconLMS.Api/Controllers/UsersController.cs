@@ -39,7 +39,7 @@ namespace LexiconLMS.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserCreateModel model)
+        public async Task<IActionResult> CreateUser([FromBody] UserCreateModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -58,6 +58,25 @@ namespace LexiconLMS.Api.Controllers
             var user = _mapper.Map<User>(model);
 
             var result = await _userService.CreateUserAsync(user, model.Password, model.Roles.ToArray());
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser()
+        {
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser([FromQuery] int id)
+        {
+            var user = await _userService.GetUserByIdAsync(id);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userService.DeleteUserAsync(user);
             return Ok(result);
         }
     }
