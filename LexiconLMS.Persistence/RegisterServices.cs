@@ -23,6 +23,12 @@ namespace LexiconLMS.Persistence
                 .AddRoles<Role>()
                 .AddEntityFrameworkStores<LexiconDbContext>();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+
             return services;
         }
     }
