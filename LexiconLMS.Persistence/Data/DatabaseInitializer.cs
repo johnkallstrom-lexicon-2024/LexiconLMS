@@ -12,6 +12,7 @@ namespace LexiconLMS.Persistence.Data
 
         public static async Task SeedAsync(LexiconDbContext context)
         {
+            await Task.CompletedTask;
         }
 
         public static async Task SeedIdentityAsync(

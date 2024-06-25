@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
-using LexiconLMS.Core.Identity;
 
-namespace LexiconLMS.Api.Mappings
+namespace LexiconLMS.Core.Mappings
 {
     public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-            CreateMap<User, UserDto>()
+            CreateMap<User, UserModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+
+            CreateMap<UserCreateModel, User>();
         }
     }
 }

@@ -4,7 +4,7 @@ using LexiconLMS.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace LexiconLMS.Api.Services
+namespace LexiconLMS.Core.Services
 {
     public class DocumentService : IDocumentService
     {

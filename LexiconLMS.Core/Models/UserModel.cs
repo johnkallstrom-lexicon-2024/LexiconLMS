@@ -1,6 +1,6 @@
-﻿namespace LexiconLMS.Api.Models
+﻿namespace LexiconLMS.Core.Models
 {
-    public record UserDto
+    public record UserModel
     {
         public int Id { get; init; }
         public required string Name { get; set; }
