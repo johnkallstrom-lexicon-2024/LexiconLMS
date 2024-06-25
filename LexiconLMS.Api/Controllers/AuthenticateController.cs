@@ -4,10 +4,25 @@
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult Login(AuthenticateModel model)
+        private readonly IUserService _userService;
+
+        public AuthenticateController(IUserService userService)
         {
-            return Ok();
+            _userService = userService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(AuthenticateModel model)
+        {
+            var result = await _userService.LoginWithEmailAsync(model.Email, model.Password);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
         }
     }
 }
