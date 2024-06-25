@@ -1,10 +1,12 @@
-﻿using System.Reflection;
+﻿using LexiconLMS.Core.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
-namespace LexiconLMS.Api
+namespace LexiconLMS.Core
 {
     public static class RegisterServices
     {
-        public static IServiceCollection AddApiServices(this IServiceCollection services)
+        public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

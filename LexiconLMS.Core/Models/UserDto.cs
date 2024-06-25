@@ -1,4 +1,4 @@
-﻿namespace LexiconLMS.Api.Models
+﻿namespace LexiconLMS.Core.Models
 {
     public record UserDto
     {

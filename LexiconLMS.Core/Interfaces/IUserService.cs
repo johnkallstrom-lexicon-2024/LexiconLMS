@@ -1,4 +1,4 @@
-﻿namespace LexiconLMS.Api.Services.Interfaces
+﻿namespace LexiconLMS.Core.Interfaces
 {
     public interface IUserService
     {

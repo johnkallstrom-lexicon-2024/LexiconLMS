@@ -1,7 +1,7 @@
 ﻿using LexiconLMS.Core.Entities;
 using LexiconLMS.Core.Identity;
 
-namespace LexiconLMS.Core.Services
+namespace LexiconLMS.Core.Interfaces
 {
     public interface ICourseService
     {

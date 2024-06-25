@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using LexiconLMS.Core.Identity;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
 
-namespace LexiconLMS.Api.Services
+namespace LexiconLMS.Core.Services
 {
     public class UserService : IUserService
     {

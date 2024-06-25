@@ -1,6 +1,6 @@
 ﻿using LexiconLMS.Core.Entities;
 
-namespace LexiconLMS.Core.Services
+namespace LexiconLMS.Core.Interfaces
 {
     public interface IModuleService
     {

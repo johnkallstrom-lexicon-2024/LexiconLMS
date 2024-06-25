@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using LexiconLMS.Core.Identity;
 
-namespace LexiconLMS.Api.Mappings
+namespace LexiconLMS.Core.Mappings
 {
     public class MappingProfile : Profile
     {
