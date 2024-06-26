@@ -1,12 +1,12 @@
 ﻿namespace LexiconLMS.Core.Models
 {
-    public record UserModel
+    public class UserModel
     {
-        public int Id { get; init; }
-        public required string Name { get; init; }
-        public string? UserName { get; init; }
-        public string? Email { get; init; }
+        public int Id { get; set; }
+        public required string Name { get; set; }
+        public string? UserName { get; set; }
+        public string? Email { get; set; }
 
-        public IEnumerable<string> Roles { get; init; } = [];
+        public IEnumerable<string> Roles { get; set; } = [];
     }
 }

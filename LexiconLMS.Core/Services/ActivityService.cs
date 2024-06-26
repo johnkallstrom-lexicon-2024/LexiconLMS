@@ -1,8 +1,4 @@
-﻿using LexiconLMS.Core.Entities;
-using LexiconLMS.Core.Exceptions;
-using LexiconLMS.Core.Repository;
-
-namespace LexiconLMS.Core.Services
+﻿namespace LexiconLMS.Core.Services
 {
     public class ActivityService : IActivityService
     {
