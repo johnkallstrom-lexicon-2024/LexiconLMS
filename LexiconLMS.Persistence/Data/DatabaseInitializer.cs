@@ -67,21 +67,6 @@ namespace LexiconLMS.Persistence.Data
             await CreateUsers(userManager);
         }
 
-        public static IEnumerable<Course> GenerateCoursesWithModules()
-        {
-            var courses = _courseFaker.Generate(50);
-            foreach (var course in courses)
-            {
-                var modules = _moduleFaker.Generate(10);
-                foreach (var module in modules)
-                {
-                    course.Modules.Add(module);
-                }
-            }
-
-            return courses;
-        }
-
         public static async Task CreateRoles(RoleManager<Role> roleManager)
         {
             foreach (var role in _roles)
