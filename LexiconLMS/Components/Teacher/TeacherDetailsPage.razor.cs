@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LexiconLMS.Components.Pages
+namespace LexiconLMS.Components.Teacher
 {
     public partial class TeacherDetailsPage
     {
