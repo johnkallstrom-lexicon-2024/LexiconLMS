@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace LexiconLMS.Core.Repository
+﻿namespace LexiconLMS.Core.Interfaces
 {
     public interface IUnitOfWork
     {
-        IRepository<TEntity>? GetRepository<TEntity>() where TEntity : class;
-        Task<int> SaveChangesAsync();
+        public IRepository<Activity> ActivityRepository { get; }
+        public IRepository<Course> CourseRepository { get; }
+        public IRepository<Document> DocumentRepository { get; }
+        public IRepository<Module> ModuleRepository { get; }
+        Task SaveAsync();
     }
 }

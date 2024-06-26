@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-
-namespace LexiconLMS.Core.Mappings
+﻿namespace LexiconLMS.Core.Mappings
 {
     public class MappingProfile : Profile
     {

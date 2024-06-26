@@ -1,77 +1,24 @@
-﻿using LexiconLMS.Core.Entities;
-using LexiconLMS.Core.Repository;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
-namespace LexiconLMS.Core.Services
+﻿namespace LexiconLMS.Core.Services
 {
     public class UserService : IUserService
     {
+        private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
 
         public UserService(
             UserManager<User> userManager,
-            RoleManager<Role> roleManager)
+            RoleManager<Role> roleManager,
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
-        public async Task<IEnumerable<User>> GetUsersAsync()
+        public Task LoginAsync(string email, string password)
         {
-            var users = await _userManager.Users.ToListAsync();
-            return users;
-        }
-
-        public async Task<User> GetUserByIdAsync(int id)
-        {
-            var user = await _userManager.FindByIdAsync(id.ToString());
-            if (user is null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            return user;
-        }
-
-        public async Task<User> GetUserByEmailAsync(string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user is null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            return user;
-        }
-
-        public async Task<OperationResult> CreateUserAsync(User user, string password, string[] roles)
-        {
-            if (user is null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, password);
-
-            var identityResult = await _userManager.CreateAsync(user);
-            if (identityResult.Succeeded)
-            {
-                foreach (var role in roles)
-                {
-                    if (await _roleManager.RoleExistsAsync(role))
-                    {
-                        await _userManager.AddToRoleAsync(user, role);
-                    }
-                }
-            }
-            else
-            {
-                return OperationResult.Fail(identityResult.Errors.Select(e => e.Description));
-            }
-
-            return OperationResult.Ok();
+            throw new NotImplementedException();
         }
     }
 }

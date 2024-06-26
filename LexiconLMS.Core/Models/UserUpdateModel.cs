@@ -1,6 +1,6 @@
 ﻿namespace LexiconLMS.Core.Models
 {
-    public record UserCreateModel
+    public class UserUpdateModel
     {
         [Required]
         public string FirstName { get; set; } = default!;
