@@ -1,12 +1,12 @@
-﻿namespace LexiconLMS.Core.Services
+﻿namespace LexiconLMS.Core.Identity
 {
-    public class UserService : IUserService
+    public class IdentityService : IIdentityService
     {
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
 
-        public UserService(
+        public IdentityService(
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
             SignInManager<User> signInManager)

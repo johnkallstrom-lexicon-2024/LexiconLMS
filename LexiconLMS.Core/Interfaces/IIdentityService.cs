@@ -1,6 +1,6 @@
 ﻿namespace LexiconLMS.Core.Interfaces
 {
-    public interface IUserService
+    public interface IIdentityService
     {
     }
 }

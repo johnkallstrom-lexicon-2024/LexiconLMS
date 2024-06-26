@@ -1,4 +1,4 @@
-﻿using LexiconLMS.Persistence.Repository;
+﻿using LexiconLMS.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
