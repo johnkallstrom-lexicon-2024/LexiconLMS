@@ -49,8 +49,8 @@ namespace LexiconLMS.Persistence.Data
 
             foreach (var module in modules)
             {
-                var activities = _activityFaker.Generate(ACTIVITIES_PER_MODULE);
-                foreach (var activity in activities)
+                var moduleActivities = _activityFaker.Generate(ACTIVITIES_PER_MODULE);
+                foreach (var activity in moduleActivities)
                 {
                     module.Activities.Add(activity);
                 }
