@@ -1,6 +1,5 @@
 ﻿using LexiconLMS.Core.Entities;
 using LexiconLMS.Core.Exceptions;
-using LexiconLMS.Core.Identity;
 using LexiconLMS.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -75,22 +74,14 @@ namespace LexiconLMS.Core.Services
             return await Task.FromResult(course.Modules.ToList());
         }
 
-        public async Task<IEnumerable<Course>> FindCoursesAsync(string searchString)
-        {
-            return await _courseRepository.FindAsync(c => c.SearchableString.Contains(searchString));
-        }
-
         public async Task AddCourseAsync(Course course)
         {
-            course.Created = DateTime.UtcNow;
-            course.LastModified = DateTime.UtcNow;
             await _courseRepository.AddAsync(course);
             await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task UpdateCourseAsync(Course course)
         {
-            course.LastModified = DateTime.UtcNow;
             await _courseRepository.UpdateAsync(course);
             await _unitOfWork.SaveChangesAsync();
         }
@@ -99,43 +90,6 @@ namespace LexiconLMS.Core.Services
         {
             await _courseRepository.DeleteAsync(course);
             await _courseRepository.SaveChangesAsync();
-        }
-
-        public async Task<OperationResult> ValidateCourseAsync(Course course)
-        {
-            List<string> result = new();
-
-            if (course.Id == 0)
-            {
-                result.Add("Course ID is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(course.Name))
-            {
-                result.Add("Course Name is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(course.Description))
-            {
-                result.Add("Course Description is required.");
-            }
-
-            if (course.EndDate < course.StartDate)
-            {
-                result.Add("End date must be greater than start date.");
-            }
-
-            var overlappingCourses = await _courseRepository.FindAsync(c =>
-                           (course.StartDate >= c.StartDate && course.StartDate <= c.EndDate) ||
-                           (course.EndDate >= c.StartDate && course.EndDate <= c.EndDate));
-
-            var overlappingCourse = overlappingCourses.FirstOrDefault(c => c.Id != course.Id);
-            if (overlappingCourse is not null)
-            {
-                result.Add($"Course overlaps with course {overlappingCourse.Name} with the period of {overlappingCourse.StartDate} to {overlappingCourse.EndDate}.");
-            }
-
-            return result.Any() ? OperationResult.Fail(result) : OperationResult.Ok();
         }
     }
 }

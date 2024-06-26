@@ -62,17 +62,12 @@ namespace LexiconLMS.Core.Services
 
         public async Task AddActivityAsync(Activity activity)
         {
-            // Consider adding validation here
-            activity.Created = DateTime.UtcNow;
-            activity.LastModified = DateTime.UtcNow;
             await _activityRepository.AddAsync(activity);
             await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task UpdateActivityAsync(Activity activity)
         {
-            // Consider adding validation here
-            activity.LastModified = DateTime.UtcNow;
             await _activityRepository.UpdateAsync(activity);
             await _unitOfWork.SaveChangesAsync();
         }
@@ -81,45 +76,6 @@ namespace LexiconLMS.Core.Services
         {
             await _activityRepository.DeleteAsync(activity);
             await _unitOfWork.SaveChangesAsync();
-        }
-
-        public async Task<OperationResult> ValidateActivityAsync(Activity activity)
-        {
-            List<string> result = new();
-
-            if (activity.Id == 0)
-            {
-                result.Add("Activity ID is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(activity.Name))
-            {
-                result.Add("Activity name is required.");
-            }
-
-            if (activity.ModuleId == 0)
-            {
-                result.Add("Module ID is required.");
-            }
-
-            // validate that the activity is scheduled within the module's start and end date
-            var module = await GetModuleAsync(activity.ModuleId);
-            if (module != null)
-            {
-                if (activity.StartDate < module.StartDate)
-                {
-                    result.Add("Activity start date is before the module start date.");
-                }
-
-                if (activity.EndDate > module.EndDate)
-                {
-                    result.Add("Activity end date is after the module end date.");
-                }
-            }
-
-            return result.Any()
-                ? OperationResult.Fail(result)
-                : OperationResult.Ok();
         }
     }
 }

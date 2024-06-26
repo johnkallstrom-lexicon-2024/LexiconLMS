@@ -1,14 +1,12 @@
-using LexiconLMS.Core.Identity;
-
 namespace LexiconLMS.Core.Entities
 {
     public class Document : BaseEntity
     {
-        public required string Name { get; set; }
-        public required string Description { get; set; }
+        public string Name { get; set; } = default!;
+        public string Description { get; set; } = default!;
         public DateTime UploadTime { get; set; }
 
-        public string SearchableString => $"{Name} {Description} {UploadTime:yyyy-MM-dd}";
+        public string SearchableString => $"{Name} {Description}";
 
         public int? UserId { get; set; }
         public User User { get; set; } = default!;
