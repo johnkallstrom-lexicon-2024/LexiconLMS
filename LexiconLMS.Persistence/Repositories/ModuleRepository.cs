@@ -9,29 +9,26 @@
             _context = context;
         }
 
-        public Task<IEnumerable<Module>> GetListAsync()
+        public async Task<IEnumerable<Module>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var modules = await _context.Modules.ToListAsync();
+            return modules;
         }
 
-        public Task<Module?> GetByIdAsync(int id)
+        public async Task<Module?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var document = await _context.Modules.FirstOrDefaultAsync(d => d.Id == id);
+            return document;
         }
 
-        public Task<Module> CreateAsync(Module entity)
+        public async Task<Module> CreateAsync(Module entity)
         {
-            throw new NotImplementedException();
+            var entry = await _context.Modules.AddAsync(entity);
+            return entry.Entity;
         }
 
-        public void Update(Module entity)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(Module entity) => _context.Modules.Update(entity);
 
-        public void Delete(Module entity)
-        {
-            throw new NotImplementedException();
-        }
+        public void Delete(Module entity) => _context.Modules.Remove(entity);
     }
 }

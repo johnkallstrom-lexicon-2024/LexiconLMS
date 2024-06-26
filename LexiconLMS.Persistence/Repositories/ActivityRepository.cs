@@ -9,29 +9,26 @@
             _context = context;
         }
 
-        public Task<IEnumerable<Activity>> GetListAsync()
+        public async Task<IEnumerable<Activity>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var activities = await _context.Activities.ToListAsync();
+            return activities;
         }
 
-        public Task<Activity?> GetByIdAsync(int id)
+        public async Task<Activity?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var activity = await _context.Activities.FirstOrDefaultAsync(a => a.Id == id);
+            return activity;
         }
 
-        public Task<Activity> CreateAsync(Activity entity)
+        public async Task<Activity> CreateAsync(Activity entity)
         {
-            throw new NotImplementedException();
+            var entry = await _context.Activities.AddAsync(entity);
+            return entry.Entity;
         }
 
-        public void Update(Activity entity)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(Activity entity) => _context.Activities.Update(entity);
 
-        public void Delete(Activity entity)
-        {
-            throw new NotImplementedException();
-        }
+        public void Delete(Activity entity) => _context.Activities.Remove(entity);
     }
 }
