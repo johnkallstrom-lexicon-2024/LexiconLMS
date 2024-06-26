@@ -8,8 +8,8 @@ namespace LexiconLMS.Persistence.Fakers
         {
             RuleFor(m => m.Name, f => $"Module {f.Commerce.Ean8()}");
             RuleFor(m => m.Description, f => f.Lorem.Paragraph());
-            RuleFor(m => m.StartDate, DateTime.Now.AddMonths(1));
-            RuleFor(m => m.EndDate, DateTime.Now.AddMonths(2));
+            RuleFor(m => m.StartDate, DateTime.Now.AddMonths(1).AddDays(14));
+            RuleFor(m => m.EndDate, DateTime.Now.AddMonths(3));
             RuleFor(m => m.Created, DateTime.Now);
         }
     }
