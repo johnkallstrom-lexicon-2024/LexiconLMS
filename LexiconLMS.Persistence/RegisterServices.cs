@@ -1,8 +1,6 @@
-﻿using LexiconLMS.Core.Repository;
-using LexiconLMS.Persistence.Repository;
+﻿using LexiconLMS.Persistence.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
 
 namespace LexiconLMS.Persistence
 {
@@ -15,8 +13,7 @@ namespace LexiconLMS.Persistence
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(provider.GetRequiredService<LexiconDbContext>()));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddIdentity<User, Role>(options =>
             {
@@ -24,7 +21,7 @@ namespace LexiconLMS.Persistence
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             }).AddEntityFrameworkStores<LexiconDbContext>();
-                    
+
             return services;
         }
     }

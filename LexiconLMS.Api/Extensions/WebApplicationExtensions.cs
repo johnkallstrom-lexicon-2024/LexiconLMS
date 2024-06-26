@@ -20,6 +20,6 @@ namespace LexiconLMS.Api.Extensions
 
                 await IdentityDataInitializer.SeedAsync(userManager, roleManager);
             }
-        } 
+        }
     }
 }

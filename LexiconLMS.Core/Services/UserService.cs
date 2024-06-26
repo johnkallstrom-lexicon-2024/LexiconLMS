@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace LexiconLMS.Core.Services
+﻿namespace LexiconLMS.Core.Services
 {
     public class UserService : IUserService
     {
