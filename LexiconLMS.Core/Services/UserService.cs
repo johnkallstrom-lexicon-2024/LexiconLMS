@@ -65,7 +65,7 @@ namespace LexiconLMS.Core.Services
             return OperationResult.Ok();
         }
 
-        public async Task<OperationResult> UpdateUserAsync(User user, string newPassword, string[] roles)
+        public Task<OperationResult> UpdateUserAsync(User user, string newPassword, string[] roles)
         {
             if (user is null)
             {
@@ -86,23 +86,6 @@ namespace LexiconLMS.Core.Services
             if (!identityResult.Succeeded)
             {
                 return OperationResult.Fail(identityResult.Errors.Select(x => x.Description));
-            }
-
-            return OperationResult.Ok();
-        }
-
-        public async Task<OperationResult> LoginWithUserNameAsync(string username, string password)
-        {
-            var user = await _userManager.FindByNameAsync(username);
-            if (user is null)
-            {
-                return OperationResult.Fail(new List<string> { $"No user with the username {username} exists" });
-            }
-
-            var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: false);
-            if (!signInResult.Succeeded)
-            {
-                return OperationResult.Fail(new List<string> { "The password you entered is incorrect" });
             }
 
             return OperationResult.Ok();

@@ -8,8 +8,6 @@ namespace LexiconLMS.Core.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public string SearchableString => $"{Name} {Description} {StartDate:yyyy-MM-dd}";
-
         public int ModuleId { get; set; }
         public Module Module { get; set; } = default!;
 

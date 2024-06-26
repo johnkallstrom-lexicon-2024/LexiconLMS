@@ -8,8 +8,6 @@ namespace LexiconLMS.Core.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public string SearchableString => $"{Name} {Description} {StartDate:yyyy-MM-dd}";
-
         public ICollection<User> Users { get; set; } = new List<User>();
         public ICollection<Document> Documents { get; set; } = new List<Document>();
         public ICollection<Module> Modules { get; set; } = new List<Module>();

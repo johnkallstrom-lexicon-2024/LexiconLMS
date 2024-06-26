@@ -6,8 +6,6 @@ namespace LexiconLMS.Core.Entities
         public string Description { get; set; } = default!;
         public DateTime UploadTime { get; set; }
 
-        public string SearchableString => $"{Name} {Description}";
-
         public int? UserId { get; set; }
         public User User { get; set; } = default!;
 
