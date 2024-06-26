@@ -1,4 +1,5 @@
-﻿using LexiconLMS.Persistence.Repositories;
+﻿using LexiconLMS.Persistence.Data;
+using LexiconLMS.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
