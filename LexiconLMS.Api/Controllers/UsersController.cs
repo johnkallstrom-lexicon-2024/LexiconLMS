@@ -14,20 +14,13 @@
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _userService.GetUsersAsync();
-            return Ok(users);
+            return Ok();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
+            return Ok();
         }
 
         [HttpPost]

@@ -18,7 +18,7 @@ namespace LexiconLMS.Api.Extensions
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
 
-                await DatabaseInitializer.SeedIdentityAsync(userManager, roleManager);
+                await IdentityDataInitializer.SeedAsync(userManager, roleManager);
             }
         } 
     }

@@ -4,18 +4,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace LexiconLMS.Persistence.Data
 {
-    public class DatabaseInitializer
+    public class IdentityDataInitializer
     {
         private static readonly string[] _roles = ["Teacher", "Student"];
         private static UserFaker _userFaker = new();
         private static Faker _faker = new();
 
-        public static async Task SeedAsync(LexiconDbContext context)
-        {
-            await Task.CompletedTask;
-        }
-
-        public static async Task SeedIdentityAsync(
+        public static async Task SeedAsync(
             UserManager<User> userManager,
             RoleManager<Role> roleManager)
         {
