@@ -1,12 +1,12 @@
-﻿namespace LexiconLMS.Core.Identity
+﻿namespace LexiconLMS.Core.Services
 {
-    public class IdentityService : IIdentityService
+    public class UserService : IUserService
     {
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
 
-        public IdentityService(
+        public UserService(
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
             SignInManager<User> signInManager)
@@ -14,6 +14,11 @@
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+        }
+
+        public Task LoginAsync(string email, string password)
+        {
+            throw new NotImplementedException();
         }
     }
 }

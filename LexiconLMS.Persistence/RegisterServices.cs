@@ -14,6 +14,10 @@ namespace LexiconLMS.Persistence
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRepository<Activity>, ActivityRepository>();
+            services.AddScoped<IRepository<Course>, CourseRepository>();
+            services.AddScoped<IRepository<Document>, DocumentRepository>();
+            services.AddScoped<IRepository<Module>, ModuleRepository>();
 
             services.AddIdentity<User, Role>(options =>
             {

@@ -2,6 +2,13 @@
 {
     public class ModuleRepository : IRepository<Module>
     {
+        private readonly LexiconDbContext _context;
+
+        public ModuleRepository(LexiconDbContext context)
+        {
+            _context = context;
+        }
+
         public Task<Module> CreateAsync(Module entity)
         {
             throw new NotImplementedException();

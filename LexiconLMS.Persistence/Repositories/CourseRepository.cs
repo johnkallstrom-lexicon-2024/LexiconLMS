@@ -2,6 +2,13 @@
 {
     public class CourseRepository : IRepository<Course>
     {
+        private readonly LexiconDbContext _context;
+
+        public CourseRepository(LexiconDbContext context)
+        {
+            _context = context;
+        }
+
         public Task<Course> GetListAsync()
         {
             throw new NotImplementedException();

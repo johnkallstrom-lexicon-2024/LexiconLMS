@@ -10,7 +10,7 @@ namespace LexiconLMS.Core
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IDocumentService, DocumentService>();

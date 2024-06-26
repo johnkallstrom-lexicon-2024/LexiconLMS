@@ -2,6 +2,13 @@
 {
     public class DocumentRepository : IRepository<Document>
     {
+        private readonly LexiconDbContext _context;
+
+        public DocumentRepository(LexiconDbContext context)
+        {
+            _context = context;
+        }
+
         public Task<Document> GetListAsync()
         {
             throw new NotImplementedException();
