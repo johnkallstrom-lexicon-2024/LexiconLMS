@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LexiconLMS.Core", "LexiconL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LexiconLMS.Persistence", "LexiconLMS.Persistence\LexiconLMS.Persistence.csproj", "{4FAEACE5-8211-4C8A-A763-C03992FA33A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiconLMS.Api", "LexiconLMS.Api\LexiconLMS.Api.csproj", "{7DFCF141-F1C3-4DC5-B04B-6A8FC2F66590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LexiconLMS.Api", "LexiconLMS.Api\LexiconLMS.Api.csproj", "{7DFCF141-F1C3-4DC5-B04B-6A8FC2F66590}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
