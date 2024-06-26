@@ -6,6 +6,7 @@ namespace LexiconLMS.Persistence.Data
 {
     public class DatabaseInitializer
     {
+        private const int TOTAL_DOCUMENTS = 100;
         private const int TOTAL_USERS = 50;
         private const int TOTAL_COURSES = 25;
         private const int MODULES_PER_COURSE = 10;
@@ -17,6 +18,7 @@ namespace LexiconLMS.Persistence.Data
         private static CourseFaker _courseFaker = new();
         private static ModuleFaker _moduleFaker = new();
         private static ActivityFaker _activityFaker = new();
+        private static DocumentFaker _documentFaker = new();
         private static UserFaker _userFaker = new();
 
         public static async Task SeedAsync(
@@ -56,6 +58,9 @@ namespace LexiconLMS.Persistence.Data
             }
 
             context.Modules.UpdateRange(modules);
+
+            var documents = _documentFaker.Generate(TOTAL_DOCUMENTS);
+            await context.Documents.AddRangeAsync(documents);
             await context.SaveChangesAsync();
 
             await CreateRoles(roleManager);

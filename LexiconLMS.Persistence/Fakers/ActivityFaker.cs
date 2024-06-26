@@ -8,7 +8,7 @@ namespace LexiconLMS.Persistence.Fakers
         {
             var length = Enum.GetValues<ActivityType>().Length;
 
-            RuleFor(a => a.Name, f => $"Activity {f.IndexFaker}");
+            RuleFor(a => a.Name, f => $"Activity {f.Commerce.Ean8()}");
             RuleFor(a => a.Description, f => f.Lorem.Paragraphs());
             RuleFor(a => a.Type, f => (ActivityType)f.Random.Int(min: 0, max: (length - 1)));
             RuleFor(a => a.StartDate, DateTime.Now.AddMonths(1));
