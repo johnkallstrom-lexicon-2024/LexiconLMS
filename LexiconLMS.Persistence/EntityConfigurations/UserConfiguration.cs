@@ -1,6 +1,4 @@
-﻿using LexiconLMS.Core.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LexiconLMS.Persistence.EntityConfigurations
 {
@@ -14,7 +12,8 @@ namespace LexiconLMS.Persistence.EntityConfigurations
             builder
                 .HasOne(u => u.Course)
                 .WithMany(c => c.Users)
-                .HasForeignKey(u => u.CourseId);
+                .HasForeignKey(u => u.CourseId)
+                .IsRequired(false);
         }
     }
 }

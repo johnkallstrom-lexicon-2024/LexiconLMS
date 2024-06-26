@@ -1,17 +1,13 @@
-using LexiconLMS.Core.Identity;
-
 namespace LexiconLMS.Core.Entities
 {
     public class Course : BaseEntity
     {
-        public required string Name { get; set; }
-        public required string Description { get; set; }
+        public string Name { get; set; } = default!;
+        public string Description { get; set; } = default!;
+
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public string SearchableString => $"{Name} {Description} {StartDate:yyyy-MM-dd}";
-
-        // Navigation properties
         public ICollection<User> Users { get; set; } = new List<User>();
         public ICollection<Document> Documents { get; set; } = new List<Document>();
         public ICollection<Module> Modules { get; set; } = new List<Module>();

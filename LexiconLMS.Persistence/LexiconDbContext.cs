@@ -1,3 +1,5 @@
+using LexiconLMS.Persistence.Extensions;
+
 namespace LexiconLMS.Persistence
 {
     public class LexiconDbContext : IdentityDbContext<User, Role, int>
@@ -15,6 +17,7 @@ namespace LexiconLMS.Persistence
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+            builder.RenameIdentityTables();
         }
     }
 }
