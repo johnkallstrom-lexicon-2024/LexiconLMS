@@ -1,5 +1,4 @@
-﻿
-namespace LexiconLMS.Persistence.Repositories
+﻿namespace LexiconLMS.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {

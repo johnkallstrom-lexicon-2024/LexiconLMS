@@ -9,7 +9,7 @@
             _context = context;
         }
 
-        public Task<Document> GetListAsync()
+        public Task<IEnumerable<Document>> GetListAsync()
         {
             throw new NotImplementedException();
         }
@@ -24,12 +24,12 @@
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Document entity)
+        public void Update(Document entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(Document entity)
+        public void Delete(Document entity)
         {
             throw new NotImplementedException();
         }

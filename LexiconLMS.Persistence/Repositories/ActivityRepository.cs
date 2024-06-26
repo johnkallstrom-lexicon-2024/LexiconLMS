@@ -9,7 +9,7 @@
             _context = context;
         }
 
-        public Task<Activity> GetListAsync()
+        public Task<IEnumerable<Activity>> GetListAsync()
         {
             throw new NotImplementedException();
         }
@@ -24,12 +24,12 @@
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Activity entity)
+        public void Update(Activity entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(Activity entity)
+        public void Delete(Activity entity)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,4 @@
-﻿namespace LexiconLMS.Core.Repository
+﻿namespace LexiconLMS.Core.Interfaces
 {
     public interface IUnitOfWork
     {

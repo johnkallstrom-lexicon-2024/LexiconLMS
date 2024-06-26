@@ -9,29 +9,26 @@
             _context = context;
         }
 
-        public Task<Course> GetListAsync()
+        public async Task<IEnumerable<Course>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var courses = await _context.Courses.ToListAsync();
+            return courses;
         }
 
-        public Task<Course?> GetByIdAsync(int id)
+        public async Task<Course?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == id);
+            return course;
         }
 
-        public Task<Course> CreateAsync(Course entity)
+        public async Task<Course> CreateAsync(Course entity)
         {
-            throw new NotImplementedException();
+            var entry = await _context.Courses.AddAsync(entity);
+            return entry.Entity;
         }
 
-        public Task UpdateAsync(Course entity)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(Course entity) => _context.Update(entity);
 
-        public Task DeleteAsync(Course entity)
-        {
-            throw new NotImplementedException();
-        }
+        public void Delete(Course entity) => _context.Remove(entity);
     }
 }
