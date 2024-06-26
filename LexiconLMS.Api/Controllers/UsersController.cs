@@ -4,6 +4,7 @@
     [ApiController]
     public class UsersController : ControllerBase
     {
+        [HttpGet]
         public IActionResult GetUsers()
         {
             return Ok();
