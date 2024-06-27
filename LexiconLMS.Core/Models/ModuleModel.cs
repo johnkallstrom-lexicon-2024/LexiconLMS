@@ -1,23 +1,10 @@
-﻿using LexiconLMS.Core.Entities;
-using System.ComponentModel.DataAnnotations;
-
-namespace LexiconLMS.Api.Models
+﻿namespace LexiconLMS.Core.Models
 {
     public class ModuleModel
     {
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string Description { get; set; }
-
-        [Required]
+        public string Name { get; set; } = default!;
+        public string Description { get; set; } = default!;
         public DateTime StartDate { get; set; }
-
-        [Required]
         public DateTime EndDate { get; set; }
-
-        [Required]
-        public int CourseId { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace LexiconLMS.Persistence.Repositories
+﻿using LexiconLMS.Persistence.Data;
+
+namespace LexiconLMS.Persistence.Repositories
 {
     public class ActivityRepository : IRepository<Activity>
     {

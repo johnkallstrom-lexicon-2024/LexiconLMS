@@ -1,23 +1,16 @@
-﻿<nav class="navbar navbar-expand-lg bg-warning">
+﻿<nav class="navbar navbar-expand-lg bg-navbar">
     <div class="container">
-        <NavLink class="navbar-brand" href="/" Match="NavLinkMatch.All">Lexicon LMS</NavLink>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <NavLink class="nav-link" href="/teachers" Match="NavLinkMatch.All">Teachers</NavLink>
-                </li>
-                <li class="nav-item">
-                    <NavLink class="nav-link" href="/students" Match="NavLinkMatch.All">Students</NavLink>
-                </li>
-            </ul>
-            <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <NavLink class="nav-link" href="/login" Match="NavLinkMatch.All">Login</NavLink>
-                </li>
-            </ul>
-        </div>
+        <NavLink class="navbar-brand d-flex align-items-center" href="/" Match="NavLinkMatch.All">
+            <img src="/images/Logo.png" alt="Logo" class="logo-navbar" />
+            <span class="brand-text">Lexicon LMS</span>
+        </NavLink>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <NavLink class="nav-link" href="/teachers" Match="NavLinkMatch.All">Teachers</NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="/students" Match="NavLinkMatch.All">Students</NavLink>
+            </li>
+        </ul>
     </div>
 </nav>

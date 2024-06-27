@@ -1,3 +1,25 @@
 ﻿@page "/"
 
 <PageTitle>LexiconLMS - Home</PageTitle>
+
+
+<div class="d-flex justify-content-center align-items-start min-vh-100 custom-mt">
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="card p-5 text-center">
+            <div class="card-body">
+                <h1 class="mb-5">Welcome to Lexicon LMS</h1>
+                @* <EditForm Model="Model"> *@
+                    <div class="mb-4">
+                        <input type="text" class="form-control" id="formLoginEmail" placeholder="Email/Username">
+                    </div>
+                    <div class="mb-4">
+                        <input type="password" class="form-control" id="formLoginPassword" placeholder="Password">
+                    </div>
+                    <div>
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                    </div>
+                @* </EditForm> *@
+            </div>
+        </div>
+    </div>
+</div>
