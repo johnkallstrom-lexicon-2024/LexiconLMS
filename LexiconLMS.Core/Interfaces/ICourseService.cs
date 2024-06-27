@@ -2,7 +2,10 @@
 {
     public interface ICourseService
     {
-        Task<IEnumerable<CourseModel>> GetCoursesAsync();
-        Task<CourseModel> GetCourseByIdAsync(int id);
+        Task<IEnumerable<Course>> GetCoursesAsync();
+        Task<Course?> GetCourseByIdAsync(int id);
+        Task<Course> CreateCourseAsync(Course course);
+        Task UpdateCourseAsync(Course course);
+        Task DeleteCourseAsync(Course course);
     }
 }
