@@ -1,4 +1,5 @@
-﻿using LexiconLMS.Core.Entities;
+﻿using AutoMapper;
+using LexiconLMS.Core.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,18 +9,22 @@ namespace LexiconLMS.Api.Controllers
     [ApiController]
     public class DocumentsController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IDocumentService _documentService;
 
-        public DocumentsController(IDocumentService documentService)
+        public DocumentsController(IDocumentService documentService, IMapper mapper)
         {
             _documentService = documentService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetDocuments()
         {
             var documents = await _documentService.GetAllDocumentsAsync();
-            return Ok(documents);
+
+            var model = _mapper.Map<IEnumerable<DocumentModel>>(documents);
+            return Ok(model);
         }
 
         [HttpGet("{id}")]
@@ -31,7 +36,9 @@ namespace LexiconLMS.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(document);
+            var model = _mapper.Map<DocumentModel>(document);
+
+            return Ok(model);
         }
 
         [HttpPost]
