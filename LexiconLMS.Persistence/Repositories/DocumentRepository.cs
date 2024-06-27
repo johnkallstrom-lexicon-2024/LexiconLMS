@@ -1,4 +1,6 @@
-﻿namespace LexiconLMS.Persistence.Repositories
+﻿using LexiconLMS.Persistence.Data;
+
+namespace LexiconLMS.Persistence.Repositories
 {
     public class DocumentRepository : IRepository<Document>
     {
@@ -9,26 +11,29 @@
             _context = context;
         }
 
-        public async Task<IEnumerable<Document>> GetListAsync()
+        public Task<IEnumerable<Document>> GetListAsync()
         {
-            var documents = await _context.Documents.ToListAsync();
-            return documents;
+            throw new NotImplementedException();
         }
 
-        public async Task<Document?> GetByIdAsync(int id)
+        public Task<Document?> GetByIdAsync(int id)
         {
-            var document = await _context.Documents.FirstOrDefaultAsync(d => d.Id == id);
-            return document;
+            throw new NotImplementedException();
         }
 
-        public async Task<Document> CreateAsync(Document entity)
+        public Task<Document> CreateAsync(Document entity)
         {
-            var entry = await _context.Documents.AddAsync(entity);
-            return entry.Entity;
+            throw new NotImplementedException();
         }
 
-        public void Update(Document entity) => _context.Documents.Update(entity);
+        public void Update(Document entity)
+        {
+            throw new NotImplementedException();
+        }
 
-        public void Delete(Document entity) => _context.Documents.Remove(entity);
+        public void Delete(Document entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
