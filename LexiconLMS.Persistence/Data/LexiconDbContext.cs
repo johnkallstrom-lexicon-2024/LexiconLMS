@@ -1,6 +1,6 @@
 using LexiconLMS.Persistence.Extensions;
 
-namespace LexiconLMS.Persistence
+namespace LexiconLMS.Persistence.Data
 {
     public class LexiconDbContext : IdentityDbContext<User, Role, int>
     {

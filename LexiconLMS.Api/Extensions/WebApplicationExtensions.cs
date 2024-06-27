@@ -11,14 +11,14 @@ namespace LexiconLMS.Api.Extensions
         {
             using (var scope = app.Services.CreateScope())
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<LexiconDbContext>();
-                await dbContext.Database.EnsureDeletedAsync();
-                await dbContext.Database.MigrateAsync();
-
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+                var context = scope.ServiceProvider.GetRequiredService<LexiconDbContext>();
 
-                await IdentityDataInitializer.SeedAsync(userManager, roleManager);
+                await context.Database.EnsureDeletedAsync();
+                await context.Database.MigrateAsync();
+
+                await DatabaseInitializer.SeedAsync(context, userManager, roleManager);
             }
         }
     }

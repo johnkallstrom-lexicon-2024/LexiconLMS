@@ -10,7 +10,7 @@ namespace LexiconLMS.Core.Entities
         public int CourseId { get; set; }
         public Course Course { get; set; } = default!;
 
-        public ICollection<Document> Documents { get; set; } = new List<Document>();
-        public ICollection<Activity> Activities { get; set; } = new List<Activity>();
+        public ICollection<Document> Documents { get; set; } = [];
+        public ICollection<Activity> Activities { get; set; } = [];
     }
 }
