@@ -15,10 +15,5 @@
             _roleManager = roleManager;
             _signInManager = signInManager;
         }
-
-        public Task LoginAsync(string email, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

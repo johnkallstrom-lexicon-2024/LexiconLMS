@@ -1,4 +1,6 @@
-﻿namespace LexiconLMS.Components.Pages
+﻿using LexiconLMS.Core.Models.User;
+
+namespace LexiconLMS.Components.Pages
 {
     public partial class LoginPage
     {
