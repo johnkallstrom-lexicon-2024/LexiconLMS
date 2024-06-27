@@ -3,3 +3,13 @@
 <PageTitle>LexiconLMS - Students</PageTitle>
 
 <h3>Student Overview</h3>
+@*@if (users == null)
+{
+    <p>Loading students...</p>
+}
+else
+{
+  <StudentList />
+}
+*@
+<StudentList />
