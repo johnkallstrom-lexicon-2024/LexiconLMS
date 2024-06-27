@@ -33,7 +33,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateModule(ModuleCreateModel model)
+        public async Task<IActionResult> CreateModule([FromBody] ModuleCreateModel model)
         {
             var module = _mapper.Map<Module>(model);
             var createdModule = await _moduleService.CreateModuleAsync(module);

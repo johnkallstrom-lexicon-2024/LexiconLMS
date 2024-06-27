@@ -13,13 +13,19 @@ namespace LexiconLMS.Persistence.Repositories
 
         public async Task<IEnumerable<Document>> GetListAsync()
         {
-            var documents = await _context.Documents.ToListAsync();
+            var documents = await _context.Documents
+                .Include(d => d.User)
+                .ToListAsync();
+
             return documents;
         }
 
         public async Task<Document?> GetByIdAsync(int id)
         {
-            var document = await _context.Documents.FirstOrDefaultAsync(d => d.Id == id);
+            var document = await _context.Documents
+                .Include(d => d.User)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
             return document;
         }
 

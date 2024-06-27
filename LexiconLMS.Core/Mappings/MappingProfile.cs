@@ -21,7 +21,8 @@ namespace LexiconLMS.Core.Mappings
             CreateMap<CourseUpdateModel, Course>();
 
             // Document
-            CreateMap<Document, DocumentModel>();
+            CreateMap<Document, DocumentModel>().ForMember(dest => dest.UploadedAt, opt => opt.MapFrom(src => src.UploadTime));
+
             CreateMap<DocumentCreateModel, Document>();
             CreateMap<DocumentUpdateModel, Document>();
 
