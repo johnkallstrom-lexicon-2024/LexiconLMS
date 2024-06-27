@@ -16,5 +16,13 @@
             var courses = await _unitOfWork.CourseRepository.GetListAsync();
             return _mapper.Map<IEnumerable<CourseModel>>(courses);
         }
+
+
+        public async Task<CourseModel> GetCourseByIdAsync(int id)
+        {
+            var course = await _unitOfWork.CourseRepository.GetByIdAsync(id);
+            return _mapper.Map<CourseModel>(course);
+        }
+
     }
 }
