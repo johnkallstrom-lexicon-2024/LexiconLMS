@@ -6,6 +6,8 @@ namespace LexiconLMS.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("Users");
+
             // User One-to-Many relationship with Course
             builder
                 .HasOne(u => u.Course)

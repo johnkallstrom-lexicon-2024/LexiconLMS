@@ -1,8 +1,6 @@
-﻿using LexiconLMS.Core.Repository;
-using LexiconLMS.Persistence.Repository;
+﻿using LexiconLMS.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
 
 namespace LexiconLMS.Persistence
 {
@@ -13,15 +11,21 @@ namespace LexiconLMS.Persistence
             services.AddDbContext<LexiconDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(provider.GetRequiredService<LexiconDbContext>()));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRepository<Activity>, ActivityRepository>();
+            services.AddScoped<IRepository<Course>, CourseRepository>();
+            services.AddScoped<IRepository<Document>, DocumentRepository>();
+            services.AddScoped<IRepository<Module>, ModuleRepository>();
 
-            services
-                .AddIdentityCore<User>()
-                .AddRoles<Role>()
-                .AddEntityFrameworkStores<LexiconDbContext>();
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<LexiconDbContext>();
 
             return services;
         }
