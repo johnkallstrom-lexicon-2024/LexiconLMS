@@ -1,0 +1,16 @@
+﻿using LexiconLMS.Core.Models.Module;
+using LexiconLMS.Core.Models.User;
+
+namespace LexiconLMS.Core.Models.Course
+{
+    public class CourseModel
+    {
+        public string Name { get; set; } = default!;
+        public string Description { get; set; } = default!;
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+
+        public IEnumerable<UserModel> Users { get; set; } = [];
+        public IEnumerable<ModuleModel> Models { get; set; } = [];
+    }
+}

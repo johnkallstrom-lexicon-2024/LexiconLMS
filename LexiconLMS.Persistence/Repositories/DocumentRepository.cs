@@ -11,29 +11,26 @@ namespace LexiconLMS.Persistence.Repositories
             _context = context;
         }
 
-        public Task<IEnumerable<Document>> GetListAsync()
+        public async Task<IEnumerable<Document>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var documents = await _context.Documents.ToListAsync();
+            return documents;
         }
 
-        public Task<Document?> GetByIdAsync(int id)
+        public async Task<Document?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var document = await _context.Documents.FirstOrDefaultAsync(d => d.Id == id);
+            return document;
         }
 
-        public Task<Document> CreateAsync(Document entity)
+        public async Task<Document> CreateAsync(Document entity)
         {
-            throw new NotImplementedException();
+            var entry = await _context.Documents.AddAsync(entity);
+            return entry.Entity;
         }
 
-        public void Update(Document entity)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(Document entity) => _context.Update(entity);
 
-        public void Delete(Document entity)
-        {
-            throw new NotImplementedException();
-        }
+        public void Delete(Document entity) => _context.Remove(entity);
     }
 }
