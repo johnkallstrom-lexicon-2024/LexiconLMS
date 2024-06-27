@@ -7,6 +7,7 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public IEnumerable<CourseModel> Courses { get; set; } = [];
         public IEnumerable<UserModel> Users { get; set; } = [];
     }
 }

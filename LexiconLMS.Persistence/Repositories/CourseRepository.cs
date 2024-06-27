@@ -11,7 +11,10 @@
 
         public async Task<IEnumerable<Course>> GetListAsync()
         {
-            var courses = await _context.Courses.ToListAsync();
+            var courses = await _context.Courses
+                .Include(c => c.Modules)
+                .ToListAsync();
+
             return courses;
         }
 
