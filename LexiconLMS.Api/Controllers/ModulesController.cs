@@ -35,25 +35,15 @@
         [HttpPost]
         public async Task<IActionResult> CreateModule(ModuleCreateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var module = _mapper.Map<Module>(model);
-            await _moduleService.CreateModuleAsync(module);
+            var createdModule = await _moduleService.CreateModuleAsync(module);
 
-            return CreatedAtAction(nameof(GetModuleById), new { Id = module.Id }, module);
+            return CreatedAtAction(nameof(GetModuleById), new { Id = module.Id }, createdModule);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateModule(int id, [FromBody] ModuleUpdateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var existingModule = await _moduleService.GetModuleByIdAsync(id);
             if (existingModule == null)
             {
