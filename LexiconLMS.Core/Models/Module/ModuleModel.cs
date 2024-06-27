@@ -1,4 +1,4 @@
-﻿namespace LexiconLMS.Core.Models
+﻿namespace LexiconLMS.Core.Models.Module
 {
     public class ModuleModel
     {

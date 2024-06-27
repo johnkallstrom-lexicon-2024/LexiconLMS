@@ -33,54 +33,35 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddDocument([FromBody] DocumentModel model)
+        public async Task<IActionResult> CreateDocument([FromBody] DocumentCreateModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            //var document = new Document
-            //{
-            //    Name = model.Name,
-            //    Description = model.Description,
-            //    UploadTime = model.UploadTime,
-            //    UserId = model.UserId,
-            //    CourseId = model.CourseId,
-            //    ModuleId = model.ModuleId,
-            //    ActivityId = model.ActivityId
-            //};
+            var document = _mapper.Map<Document>(model);
+            await _documentService.CreateDocumentAsync(document);
 
-            //await _documentService.AddDocumentAsync(document);
-
-            //return CreatedAtAction(nameof(GetDocumentById), new { id = document.Id }, document);
-
-            return Ok();
+            return CreatedAtAction(nameof(GetDocumentById), new { id = document.Id }, document);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDocument(int id, [FromBody] DocumentModel model)
+        public async Task<IActionResult> UpdateDocument(int id, [FromBody] DocumentUpdateModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            //var existingDocument = await _documentService.GetDocumentAsync(id);
-            //if (existingDocument == null)
-            //{
-            //    return NotFound();
-            //}
+            var existingDocument = await _documentService.GetDocumentByIdAsync(id);
+            if (existingDocument == null)
+            {
+                return NotFound();
+            }
 
-            //existingDocument.Name = model.Name;
-            //existingDocument.Description = model.Description;
-            //existingDocument.UploadTime = model.UploadTime;
-            //existingDocument.UserId = model.UserId;
-            //existingDocument.CourseId = model.CourseId;
-            //existingDocument.ModuleId = model.ModuleId;
-            //existingDocument.ActivityId = model.ActivityId;
-
-            //await _documentService.UpdateDocumentAsync(existingDocument);
+            existingDocument = _mapper.Map(source: model, destination: existingDocument);
+            await _documentService.UpdateDocumentAsync(existingDocument);
 
             return NoContent();
         }

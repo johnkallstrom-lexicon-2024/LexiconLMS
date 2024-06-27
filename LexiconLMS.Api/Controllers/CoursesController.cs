@@ -39,7 +39,7 @@
 
         //post:api/courses
         [HttpPost]
-        public async Task<IActionResult> PostCourse([FromBody] CourseCreateModel model)
+        public async Task<IActionResult> CreateCourse([FromBody] CourseCreateModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -54,7 +54,7 @@
 
         // PUT: api/courses/{id}
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutCourse(int id, [FromBody] CourseUpdateModel model)
+        public async Task<ActionResult> UpdateCourse(int id, [FromBody] CourseUpdateModel model)
         {
             var existingCourse = await _courseService.GetCourseByIdAsync(id);
             if (existingCourse == null)

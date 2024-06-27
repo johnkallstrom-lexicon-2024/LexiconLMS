@@ -1,8 +1,11 @@
-﻿global using LexiconLMS.Api.Extensions;
+﻿global using AutoMapper;
+global using LexiconLMS.Api.Extensions;
 global using LexiconLMS.Core;
+global using LexiconLMS.Core.Entities;
 global using LexiconLMS.Core.Interfaces;
-global using LexiconLMS.Core.Models;
+global using LexiconLMS.Core.Models.Activity;
+global using LexiconLMS.Core.Models.Course;
+global using LexiconLMS.Core.Models.Document;
+global using LexiconLMS.Core.Models.Module;
 global using LexiconLMS.Persistence;
 global using Microsoft.AspNetCore.Mvc;
-global using AutoMapper;
-global using LexiconLMS.Core.Entities;

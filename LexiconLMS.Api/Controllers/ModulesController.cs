@@ -17,7 +17,7 @@
         public async Task<IActionResult> GetModules()
         {
             var modules = await _moduleService.GetModulesAsync();
-            return Ok(modules);
+            return Ok(_mapper.Map<IEnumerable<ModuleModel>>(modules));
         }
 
         [HttpGet("{id}")]
@@ -29,36 +29,25 @@
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(_mapper.Map<ModuleModel>(module));
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddModule(ModuleModel model)
+        public async Task<IActionResult> CreateModule(ModuleCreateModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            //// Map ModuleCreateModel to Module entity
-            //var module = new Module
-            //{
-            //    Name = model.Name,
-            //    Description = model.Description,
-            //    StartDate = model.StartDate,
-            //    EndDate = model.EndDate,
-            //    CourseId = model.CourseId,
-            //};
+            var module = _mapper.Map<Module>(model);
+            await _moduleService.CreateModuleAsync(module);
 
-            //await _moduleService.AddModuleAsync(module);
-
-            //return CreatedAtAction(nameof(GetModuleById), new { Id = module.Id }, module);
-
-            return Ok();
+            return CreatedAtAction(nameof(GetModuleById), new { Id = module.Id }, module);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateModule(int id, [FromBody] ModuleModel model)
+        public async Task<IActionResult> UpdateModule(int id, [FromBody] ModuleUpdateModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -71,12 +60,7 @@
                 return NotFound();
             }
 
-            //existingModule.Name = model.Name;
-            //existingModule.Description = model.Description;
-            //existingModule.StartDate = model.StartDate;
-            //existingModule.EndDate = model.EndDate;
-            //existingModule.CourseId = model.CourseId;
-
+            existingModule = _mapper.Map(source: model, destination: existingModule);
             await _moduleService.UpdateModuleAsync(existingModule);
 
             return NoContent();

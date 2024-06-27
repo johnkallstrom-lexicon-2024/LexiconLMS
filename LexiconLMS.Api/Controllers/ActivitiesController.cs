@@ -32,21 +32,21 @@
             return Ok(_mapper.Map<ActivityModel>(activity));
         }
         [HttpPost]
-        public async Task<IActionResult> AddActivity([FromBody] ActivityModel activityModel)
+        public async Task<IActionResult> CreateActivity([FromBody] ActivityCreateModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var activity = _mapper.Map<Activity>(activityModel);
+            var activity = _mapper.Map<Activity>(model);
 
             await _activityService.CreateActivityAsync(activity);
             return CreatedAtAction(nameof(GetActivityById), new { id = activity.Id }, activity);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateActivity(int id, [FromBody] ActivityModel activityModel)
+        public async Task<IActionResult> UpdateActivity(int id, [FromBody] ActivityUpdateModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +59,7 @@
                 return NotFound();
             }
 
-            existingActivity = _mapper.Map(source: activityModel, destination: existingActivity);
+            existingActivity = _mapper.Map(source: model, destination: existingActivity);
 
             await _activityService.UpdateActivityAsync(existingActivity);
             return NoContent();
