@@ -1,95 +1,68 @@
-﻿using LexiconLMS.Core.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace LexiconLMS.Api.Controllers
+﻿namespace LexiconLMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CoursesController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly ICourseService _courseService;
 
-        public CoursesController(ICourseService courseService)
+        public CoursesController(ICourseService courseService, IMapper mapper)
         {
             _courseService = courseService;
+            _mapper = mapper;
         }
 
         //Get: api/courses
 
         [HttpGet]
-        public async Task<ActionResult> GetCourses()
+        public async Task<IActionResult> GetCourses()
         {
             var courses = await _courseService.GetCoursesAsync();
-            return Ok(courses);
+            return Ok(_mapper.Map<IEnumerable<CourseModel>>(courses));
         }
 
         //get specific course
         //get: api/courses/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<Course>> GetCourse(int id)
+        public async Task<IActionResult> GetCourse(int id)
         {
-            var course = await _courseService.GetCourseAsync(id);
+            var course = await _courseService.GetCourseByIdAsync(id);
             if (course == null)
             {
                 return NotFound();
             }
 
-            return Ok(course);
+            return Ok(_mapper.Map<CourseModel>(course));
         }
 
 
         //post:api/courses
         [HttpPost]
-        public async Task<ActionResult> PostCourse([FromBody] Course course)
+        public async Task<IActionResult> PostCourse([FromBody] CourseCreateModel model)
         {
-            if (course == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Course is null.");
+                return BadRequest();
             }
 
-            var validationResult = await _courseService.ValidateCourseAsync(course);
-            if (!validationResult.Success)
-            {
-                return BadRequest(validationResult.Errors);
-            }
+            var course = _mapper.Map<Course>(model);
+            var createdCourse = await _courseService.CreateCourseAsync(course);
 
-            await _courseService.AddCourseAsync(course);
-
-            return CreatedAtAction(nameof(GetCourses), new { id = course.Id }, course);
+            return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, createdCourse);
         }
 
         // PUT: api/courses/{id}
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutCourse(int id, [FromBody] Course course)
+        public async Task<ActionResult> PutCourse(int id, [FromBody] CourseUpdateModel model)
         {
-            if (id != course.Id)
-            {
-                return BadRequest("Course ID in the URL does not match the course ID in the request body.");
-            }
-
-            var existingCourse = await _courseService.GetCourseAsync(id);
+            var existingCourse = await _courseService.GetCourseByIdAsync(id);
             if (existingCourse == null)
             {
                 return NotFound();
             }
 
-            // Update the existing course properties with the new values
-            existingCourse.Name = course.Name;
-            existingCourse.Description = course.Description;
-            existingCourse.StartDate = course.StartDate;
-            existingCourse.EndDate = course.EndDate;
-            existingCourse.Users = course.Users;
-            existingCourse.Documents = course.Documents;
-            existingCourse.Modules = course.Modules;
-            // Add any other properties that need to be updated
-
-            var validationResult = await _courseService.ValidateCourseAsync(existingCourse);
-            if (!validationResult.Success)
-            {
-                return BadRequest(validationResult.Errors);
-            }
-
+            existingCourse = _mapper.Map(source: model, destination: existingCourse);
             await _courseService.UpdateCourseAsync(existingCourse);
 
             return NoContent();
@@ -99,7 +72,7 @@ namespace LexiconLMS.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
-            var course = await _courseService.GetCourseAsync(id);
+            var course = await _courseService.GetCourseByIdAsync(id);
             if (course == null)
             {
                 return NotFound();

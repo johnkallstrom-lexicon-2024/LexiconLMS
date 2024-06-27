@@ -1,19 +1,16 @@
-﻿using LexiconLMS.Core.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using LexiconLMS.Api.Models;
-
-namespace LexiconLMS.Api.Controllers
+﻿namespace LexiconLMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ModulesController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IModuleService _moduleService;
 
-        public ModulesController(IModuleService moduleService)
+        public ModulesController(IModuleService moduleService, IMapper mapper)
         {
             _moduleService = moduleService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -26,13 +23,13 @@ namespace LexiconLMS.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetModuleById(int id)
         {
-            var module = await _moduleService.GetModuleAsync(id);
+            var module = await _moduleService.GetModuleByIdAsync(id);
             if (module == null)
             {
                 return NotFound();
             }
 
-            return Ok(module);
+            return Ok();
         }
 
         [HttpPost]
@@ -43,19 +40,21 @@ namespace LexiconLMS.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Map ModuleCreateModel to Module entity
-            var module = new Module
-            {
-                Name = model.Name,
-                Description = model.Description,
-                StartDate = model.StartDate,
-                EndDate = model.EndDate,
-                CourseId = model.CourseId,
-            };
+            //// Map ModuleCreateModel to Module entity
+            //var module = new Module
+            //{
+            //    Name = model.Name,
+            //    Description = model.Description,
+            //    StartDate = model.StartDate,
+            //    EndDate = model.EndDate,
+            //    CourseId = model.CourseId,
+            //};
 
-            await _moduleService.AddModuleAsync(module);
+            //await _moduleService.AddModuleAsync(module);
 
-            return CreatedAtAction(nameof(GetModuleById), new { Id = module.Id }, module);
+            //return CreatedAtAction(nameof(GetModuleById), new { Id = module.Id }, module);
+
+            return Ok();
         }
 
         [HttpPut("{id}")]
@@ -66,17 +65,17 @@ namespace LexiconLMS.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var existingModule = await _moduleService.GetModuleAsync(id);
+            var existingModule = await _moduleService.GetModuleByIdAsync(id);
             if (existingModule == null)
             {
                 return NotFound();
             }
 
-            existingModule.Name = model.Name;
-            existingModule.Description = model.Description;
-            existingModule.StartDate = model.StartDate;
-            existingModule.EndDate = model.EndDate;
-            existingModule.CourseId = model.CourseId;
+            //existingModule.Name = model.Name;
+            //existingModule.Description = model.Description;
+            //existingModule.StartDate = model.StartDate;
+            //existingModule.EndDate = model.EndDate;
+            //existingModule.CourseId = model.CourseId;
 
             await _moduleService.UpdateModuleAsync(existingModule);
 
@@ -86,7 +85,7 @@ namespace LexiconLMS.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteModule(int id)
         {
-            var module = await _moduleService.GetModuleAsync(id);
+            var module = await _moduleService.GetModuleByIdAsync(id);
             if (module == null)
             {
                 return NotFound();

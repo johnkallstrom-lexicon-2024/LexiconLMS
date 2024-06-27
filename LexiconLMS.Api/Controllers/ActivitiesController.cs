@@ -1,57 +1,47 @@
-﻿using LexiconLMS.Core.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace LexiconLMS.Api.Controllers
+﻿namespace LexiconLMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ActivitiesController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IActivityService _activityService;
 
-        public ActivitiesController(IActivityService activityService)
+        public ActivitiesController(IActivityService activityService, IMapper mapper)
         {
             _activityService = activityService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetActivity()
+        public async Task<IActionResult> GetActivities()
         {
-            var activity = await _activityService.GetActivitiesAsync();
-            return Ok(activity);
+            var activities = await _activityService.GetActivitiesAsync();
+            return Ok(_mapper.Map<IEnumerable<ActivityModel>>(activities));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivityById(int id)
         {
-            var activity = await _activityService.GetActivityAsync(id);
+            var activity = await _activityService.GetActivityByIdAsync(id);
             if (activity == null)
             {
                 return NotFound();
             }
 
-            return Ok(activity);
+            return Ok(_mapper.Map<ActivityModel>(activity));
         }
         [HttpPost]
-        public async Task<IActionResult> AddActivity([FromBody]  ActivityModel activityModel)
+        public async Task<IActionResult> AddActivity([FromBody] ActivityModel activityModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var activity = new Activity
-            {
-                Name = activityModel.Name,
-                Description = activityModel.Description,
-                Type = activityModel.Type,
-                StartDate = activityModel.StartDate,
-                EndDate = activityModel.EndDate,
-                ModuleId = activityModel.ModuleId,
-            };
+            var activity = _mapper.Map<Activity>(activityModel);
 
-            await _activityService.AddActivityAsync(activity);
+            await _activityService.CreateActivityAsync(activity);
             return CreatedAtAction(nameof(GetActivityById), new { id = activity.Id }, activity);
         }
 
@@ -63,18 +53,13 @@ namespace LexiconLMS.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var existingActivity = await _activityService.GetActivityAsync(id);
+            var existingActivity = await _activityService.GetActivityByIdAsync(id);
             if (existingActivity == null)
             {
                 return NotFound();
             }
 
-            existingActivity.Name = activityModel.Name;
-            existingActivity.Description = activityModel.Description;
-            existingActivity.Type = activityModel.Type;
-            existingActivity.StartDate = activityModel.StartDate;
-            existingActivity.EndDate = activityModel.EndDate;
-            existingActivity.ModuleId = activityModel.ModuleId;
+            existingActivity = _mapper.Map(source: activityModel, destination: existingActivity);
 
             await _activityService.UpdateActivityAsync(existingActivity);
             return NoContent();
@@ -83,7 +68,7 @@ namespace LexiconLMS.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivity(int id)
         {
-            var activity = await _activityService.GetActivityAsync(id);
+            var activity = await _activityService.GetActivityByIdAsync(id);
             if (activity == null)
             {
                 return NotFound();
