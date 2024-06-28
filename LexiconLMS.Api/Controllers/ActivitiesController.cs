@@ -17,7 +17,7 @@
         public async Task<IActionResult> GetActivities()
         {
             var activities = await _activityService.GetActivitiesAsync();
-            return Ok(_mapper.Map<IEnumerable<ActivityModel>>(activities));
+            return Ok(_mapper.Map<IEnumerable<ActivityListModel>>(activities));
         }
 
         [HttpGet("{id}")]
@@ -31,18 +31,14 @@
 
             return Ok(_mapper.Map<ActivityModel>(activity));
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateActivity([FromBody] ActivityCreateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var activity = _mapper.Map<Activity>(model);
+            var createdActivity = await _activityService.CreateActivityAsync(activity);
 
-            await _activityService.CreateActivityAsync(activity);
-            return CreatedAtAction(nameof(GetActivityById), new { id = activity.Id }, activity);
+            return CreatedAtAction(nameof(GetActivityById), new { id = activity.Id }, createdActivity);
         }
 
         [HttpPut("{id}")]
@@ -60,8 +56,8 @@
             }
 
             existingActivity = _mapper.Map(source: model, destination: existingActivity);
-
             await _activityService.UpdateActivityAsync(existingActivity);
+
             return NoContent();
         }
 
@@ -75,6 +71,7 @@
             }
 
             await _activityService.DeleteActivityAsync(activity);
+
             return NoContent();
         }
 

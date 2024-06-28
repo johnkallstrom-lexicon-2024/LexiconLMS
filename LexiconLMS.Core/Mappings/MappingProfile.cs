@@ -12,21 +12,25 @@ namespace LexiconLMS.Core.Mappings
         {
             // Activity
             CreateMap<Activity, ActivityModel>();
+            CreateMap<Activity, ActivityListModel>();
             CreateMap<ActivityCreateModel, Activity>();
             CreateMap<ActivityUpdateModel, Activity>();
 
             // Course
             CreateMap<Course, CourseModel>();
+            CreateMap<Course, CourseListModel>();
             CreateMap<CourseCreateModel, Course>();
             CreateMap<CourseUpdateModel, Course>();
 
             // Document
-            CreateMap<Document, DocumentModel>();
+            CreateMap<Document, DocumentModel>().ForMember(dest => dest.UploadedAt, opt => opt.MapFrom(src => src.UploadTime));
+            CreateMap<Document, DocumentListModel>();
             CreateMap<DocumentCreateModel, Document>();
             CreateMap<DocumentUpdateModel, Document>();
 
             // Module
             CreateMap<Module, ModuleModel>();
+            CreateMap<Module, ModuleListModel>();
             CreateMap<ModuleCreateModel, Module>();
             CreateMap<ModuleUpdateModel, Module>();
 

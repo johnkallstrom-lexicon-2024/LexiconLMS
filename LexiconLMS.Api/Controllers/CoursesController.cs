@@ -13,17 +13,13 @@
             _mapper = mapper;
         }
 
-        //Get: api/courses
-
         [HttpGet]
         public async Task<IActionResult> GetCourses()
         {
             var courses = await _courseService.GetCoursesAsync();
-            return Ok(_mapper.Map<IEnumerable<CourseModel>>(courses));
+            return Ok(_mapper.Map<IEnumerable<CourseListModel>>(courses));
         }
 
-        //get specific course
-        //get: api/courses/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCourse(int id)
         {
@@ -37,22 +33,15 @@
         }
 
 
-        //post:api/courses
         [HttpPost]
         public async Task<IActionResult> CreateCourse([FromBody] CourseCreateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var course = _mapper.Map<Course>(model);
             var createdCourse = await _courseService.CreateCourseAsync(course);
 
             return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, createdCourse);
         }
 
-        // PUT: api/courses/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCourse(int id, [FromBody] CourseUpdateModel model)
         {
@@ -68,7 +57,6 @@
             return NoContent();
         }
 
-        // DELETE: api/courses/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
