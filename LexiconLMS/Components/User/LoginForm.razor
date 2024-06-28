@@ -1,0 +1,15 @@
+﻿<EditForm Model="Model">
+    <div class="mb-4">
+        <input type="text" class="form-control" id="formLoginEmail" placeholder="Email/Username">
+    </div>
+    <div class="mb-4">
+        <input type="password" class="form-control" id="formLoginPassword" placeholder="Password">
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+    </div>
+</EditForm>
+
+@code {
+    public LoginModel Model { get; set; } = new();
+}

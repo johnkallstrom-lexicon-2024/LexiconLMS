@@ -1,0 +1,27 @@
+﻿@page "/courses"
+
+<PageTitle>LexiconLMS - Courses</PageTitle>
+
+<table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Start</th>
+            <th scope="col">End</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Courses)
+        {
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.Name</td>
+                <td>@course.Description</td>
+                <td>@course.StartDate</td>
+                <td>@course.EndDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
