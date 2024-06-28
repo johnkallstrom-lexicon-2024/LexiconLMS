@@ -1,6 +1,6 @@
 ﻿namespace LexiconLMS.Core.Models.Module
 {
-    public class ModuleCreateModel
+    public class ModuleCreateModel : BaseModel
     {
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;

@@ -3,7 +3,7 @@ using LexiconLMS.Core.Models.Document;
 
 namespace LexiconLMS.Core.Models.User
 {
-    public class UserModel
+    public class UserModel : BaseModel
     {
         public int Id { get; set; }
         public required string Name { get; set; }

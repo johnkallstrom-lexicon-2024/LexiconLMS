@@ -1,6 +1,6 @@
 ﻿namespace LexiconLMS.Core.Models.Activity
 {
-    public class ActivityCreateModel
+    public class ActivityCreateModel : BaseModel
     {
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;

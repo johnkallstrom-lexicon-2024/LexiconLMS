@@ -1,6 +1,6 @@
 ﻿namespace LexiconLMS.Core.Models.User
 {
-    public class UserTrimModel
+    public class UserTrimModel : BaseModel
     {
         public int Id { get; set; }
         public required string Name { get; set; }

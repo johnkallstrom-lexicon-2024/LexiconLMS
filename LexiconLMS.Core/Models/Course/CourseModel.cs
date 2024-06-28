@@ -4,7 +4,7 @@ using LexiconLMS.Core.Models.User;
 
 namespace LexiconLMS.Core.Models.Course
 {
-    public class CourseModel
+    public class CourseModel : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;

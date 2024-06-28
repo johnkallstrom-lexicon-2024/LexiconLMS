@@ -1,6 +1,6 @@
 ﻿namespace LexiconLMS.Core.Models.Document
 {
-    public class DocumentTrimModel
+    public class DocumentTrimModel : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;

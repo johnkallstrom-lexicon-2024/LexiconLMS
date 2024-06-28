@@ -1,6 +1,6 @@
 ﻿namespace LexiconLMS.Core.Models.Course
 {
-    public class CourseTrimModel
+    public class CourseTrimModel : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;

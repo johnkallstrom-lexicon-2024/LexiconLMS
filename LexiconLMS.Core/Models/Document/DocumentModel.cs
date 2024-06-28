@@ -2,7 +2,7 @@
 
 namespace LexiconLMS.Core.Models.Document
 {
-    public class DocumentModel
+    public class DocumentModel : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;

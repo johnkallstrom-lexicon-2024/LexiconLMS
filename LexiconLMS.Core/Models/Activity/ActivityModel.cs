@@ -3,7 +3,7 @@ using LexiconLMS.Core.Models.Module;
 
 namespace LexiconLMS.Core.Models.Activity
 {
-    public class ActivityModel
+    public class ActivityModel : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
