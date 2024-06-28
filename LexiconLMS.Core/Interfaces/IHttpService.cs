@@ -2,10 +2,9 @@
 {
     public interface IHttpService
     {
-        Task<IEnumerable<TModel>> GetListAsync<TModel>(string url);
-        Task<TModel?> GetAsync<TModel>(string url);
-        Task PostAsync(string url, object data);
-        Task PutAsync(string url, object data);
+        Task<TData?> GetAsync<TData>(string url);
+        Task PostAsync<TData>(string url, TData data);
+        Task PutAsync<TData>(string url, TData data);
         Task DeleteAsync(string url);
     }
 }
