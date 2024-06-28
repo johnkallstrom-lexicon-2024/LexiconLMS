@@ -8,9 +8,6 @@ namespace LexiconLMS.Persistence.EntityConfigurations
         {
             builder.ToTable("Activities");
             builder.HasKey(a => a.Id);
-
-            builder.Property(a => a.Created).ValueGeneratedOnAdd();
-            builder.Property(a => a.LastModified).ValueGeneratedOnUpdate();
         }
     }
 }

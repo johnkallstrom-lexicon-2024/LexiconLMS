@@ -36,9 +36,6 @@ namespace LexiconLMS.Persistence.EntityConfigurations
                 .WithMany(a => a.Documents)
                 .HasForeignKey(d => d.ActivityId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Property(d => d.Created).ValueGeneratedOnAdd();
-            builder.Property(d => d.LastModified).ValueGeneratedOnUpdate();
         }
     }
 }
