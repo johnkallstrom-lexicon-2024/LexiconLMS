@@ -24,7 +24,7 @@ namespace LexiconLMS.Persistence.Data
         {
             var entries = ChangeTracker
                 .Entries()
-                .Where(e => e.Entity is BaseEntity && e.State == EntityState.Added || e.State == EntityState.Modified)
+                .Where(e => e.Entity is BaseEntity && e.State == EntityState.Added || e.State == EntityState.Unchanged)
                 .ToList();
 
             foreach (var entry in entries)
@@ -32,14 +32,8 @@ namespace LexiconLMS.Persistence.Data
                 var entity = entry.Entity as BaseEntity;
                 if (entity != null)
                 {
-                    if (entry.State == EntityState.Added)
-                    {
-                        entity.Created = DateTime.Now;
-                    }
-                    if (entry.State == EntityState.Modified)
-                    {
-                        entity.LastModified = DateTime.Now;
-                    }
+                    if (entry.State == EntityState.Added) entity.Created = DateTime.Now;
+                    if (entry.State == EntityState.Modified) entity.LastModified = DateTime.Now;
                 }
             }
 
