@@ -8,7 +8,7 @@ namespace LexiconLMS.Core.Entities
         public DateTime EndDate { get; set; }
 
         public ICollection<User> Users { get; set; } = [];
-        public ICollection<Document> Documents { get; set; } = [];
         public ICollection<Module> Modules { get; set; } = [];
+        public ICollection<Document> Documents { get; set; } = [];
     }
 }

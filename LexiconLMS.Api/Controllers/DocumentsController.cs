@@ -17,7 +17,7 @@
         public async Task<IActionResult> GetDocuments()
         {
             var documents = await _documentService.GetDocumentsAsync();
-            return Ok(_mapper.Map<IEnumerable<DocumentModel>>(documents));
+            return Ok(_mapper.Map<IEnumerable<DocumentListModel>>(documents));
         }
 
         [HttpGet("{id}")]
@@ -35,25 +35,15 @@
         [HttpPost]
         public async Task<IActionResult> CreateDocument([FromBody] DocumentCreateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var document = _mapper.Map<Document>(model);
-            await _documentService.CreateDocumentAsync(document);
+            var createdDocument = await _documentService.CreateDocumentAsync(document);
 
-            return CreatedAtAction(nameof(GetDocumentById), new { id = document.Id }, document);
+            return CreatedAtAction(nameof(GetDocumentById), new { id = document.Id }, createdDocument);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDocument(int id, [FromBody] DocumentUpdateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var existingDocument = await _documentService.GetDocumentByIdAsync(id);
             if (existingDocument == null)
             {
