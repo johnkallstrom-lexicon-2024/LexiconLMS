@@ -32,7 +32,6 @@
             return Ok(_mapper.Map<CourseModel>(course));
         }
 
-
         [HttpPost]
         public async Task<IActionResult> CreateCourse([FromBody] CourseCreateModel model)
         {
