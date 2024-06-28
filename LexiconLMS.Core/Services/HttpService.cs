@@ -11,21 +11,21 @@ namespace LexiconLMS.Core.Services
             _httpClient = httpClient;
         }
 
-        public async Task<TModel?> GetAsync<TModel>(string url)
+        public async Task<TData?> GetAsync<TData>(string url)
         {
-            TModel? data = default;
+            TData? data = default;
 
             var httpResponse = await _httpClient.GetAsync(url);
             if (httpResponse.IsSuccessStatusCode)
             {
-                data = await httpResponse.Content.ReadFromJsonAsync<TModel>();
+                data = await httpResponse.Content.ReadFromJsonAsync<TData>();
             }
 
             return data;
         }
 
-        public async Task PostAsync<TModel>(string url, TModel data) => await _httpClient.PostAsJsonAsync(url, data);
-        public async Task PutAsync<TModel>(string url, TModel data) => await _httpClient.PutAsJsonAsync(url, data);
+        public async Task PostAsync<TData>(string url, TData data) => await _httpClient.PostAsJsonAsync(url, data);
+        public async Task PutAsync<TData>(string url, TData data) => await _httpClient.PutAsJsonAsync(url, data);
         public async Task DeleteAsync(string url) => await _httpClient.DeleteAsync(url);
     }
 }
