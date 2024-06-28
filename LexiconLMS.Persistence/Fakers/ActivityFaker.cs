@@ -13,7 +13,6 @@ namespace LexiconLMS.Persistence.Fakers
             RuleFor(a => a.Type, f => (ActivityType)f.Random.Int(min: 0, max: (length - 1)));
             RuleFor(a => a.StartDate, DateTime.Now.AddMonths(1).AddDays(14));
             RuleFor(a => a.EndDate, DateTime.Now.AddMonths(2));
-            RuleFor(a => a.Created, DateTime.Now);
         }
     }
 }

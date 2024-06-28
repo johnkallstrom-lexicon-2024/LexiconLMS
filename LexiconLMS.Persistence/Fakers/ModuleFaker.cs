@@ -10,7 +10,6 @@ namespace LexiconLMS.Persistence.Fakers
             RuleFor(m => m.Description, f => f.Lorem.Paragraphs(count: 1));
             RuleFor(m => m.StartDate, DateTime.Now.AddMonths(1).AddDays(14));
             RuleFor(m => m.EndDate, DateTime.Now.AddMonths(3));
-            RuleFor(m => m.Created, DateTime.Now);
         }
     }
 }
