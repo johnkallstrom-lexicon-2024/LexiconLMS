@@ -11,8 +11,4 @@
     <ProjectReference Include="..\LexiconLMS.Core\LexiconLMS.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="HttpServices\" />
-  </ItemGroup>
-
 </Project>

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LexiconLMS.Persistence\LexiconLMS.Persistence.csproj" />
+    <ProjectReference Include="..\LexiconLMS\LexiconLMS.csproj" />
   </ItemGroup>
 
 </Project>

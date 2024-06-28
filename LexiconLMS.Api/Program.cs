@@ -1,3 +1,6 @@
+using LexiconLMS.Core.Services;
+using LexiconLMS.Http;
+using LexiconLMS.HttpServices;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +12,8 @@ builder.Services.AddControllers().AddJsonOptions(config =>
 });
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
-
+builder.Services.AddScoped<IHttpService, HttpService>();
+builder.Services.AddScoped<ICourseService, HttpCourseService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
