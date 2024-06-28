@@ -32,8 +32,14 @@ namespace LexiconLMS.Persistence.Data
                 var entity = entry.Entity as BaseEntity;
                 if (entity != null)
                 {
-                    if (entry.State == EntityState.Added) entity.Created = DateTime.Now;
-                    if (entry.State == EntityState.Modified) entity.LastModified = DateTime.Now;
+                    if (entry.State == EntityState.Added)
+                    {
+                        entity.Created = DateTime.Now;
+                    }
+                    if (entry.State == EntityState.Modified)
+                    {
+                        entity.LastModified = DateTime.Now;
+                    }
                 }
             }
 
