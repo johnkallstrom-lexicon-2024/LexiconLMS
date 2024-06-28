@@ -17,7 +17,7 @@
         public async Task<IActionResult> GetModules()
         {
             var modules = await _moduleService.GetModulesAsync();
-            return Ok(_mapper.Map<IEnumerable<ModuleListModel>>(modules));
+            return Ok(_mapper.Map<IEnumerable<ModuleTrimModel>>(modules));
         }
 
         [HttpGet("{id}")]
