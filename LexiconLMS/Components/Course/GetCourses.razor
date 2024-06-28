@@ -12,10 +12,12 @@
                             <li class="list-group-item"><strong>Start:</strong> @course.StartDate.ToShortDateString()</li>
                             <li class="list-group-item"><strong>End:</strong> @course.EndDate.ToShortDateString()</li>
                         </ul>
-                        <a href="#" class="btn btn-primary mt-2">Go somewhere</a>
+                        <a href="/edit-course/@course.Id" class="btn btn-primary mt-2">Edit</a>
+                        <a href="/delete-course/@course.Id" class="btn btn-danger mt-2">Delete</a>
                     </div>
                 </div>
             </div>
         }
     </div>
+    <a href="/create-course" class="btn btn-success mt-4">Create New Course</a>
 </div>

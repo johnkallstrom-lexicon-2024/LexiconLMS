@@ -1,5 +1,34 @@
-﻿<h3>AddCourse</h3>
+﻿@page "/create-course"
+@inject IHttpService HttpService
+@inject NavigationManager NavigationManager
+
+<h3>Create Course</h3>
+
+<div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" @bind="course.Name" class="form-control" id="name" />
+</div>
+<div class="form-group">
+    <label for="description">Description</label>
+    <textarea @bind="course.Description" class="form-control" id="description"></textarea>
+</div>
+<div class="form-group">
+    <label for="startDate">Start Date</label>
+    <input type="date" @bind="course.StartDate" class="form-control" id="startDate" />
+</div>
+<div class="form-group">
+    <label for="endDate">End Date</label>
+    <input type="date" @bind="course.EndDate" class="form-control" id="endDate" />
+</div>
+<button class="btn btn-primary" @onclick="CreateCourseAsync">Create</button>
 
 @code {
+    private CourseModel course = new CourseModel();
 
+    private async Task CreateCourseAsync()
+    {
+        await HttpService.PostAsync(Endpoints.Courses, course);
+        NavigationManager.NavigateTo("/courses");
+    }
 }
+

@@ -1,5 +1,26 @@
-﻿<h3>DeleteCourse</h3>
+﻿@page "/delete-course/{id:int}"
+@inject IHttpService HttpService
+@inject NavigationManager NavigationManager
+
+<h3>Delete Course</h3>
+
+<p>Are you sure you want to delete this course?</p>
+<button class="btn btn-danger" @onclick="DeleteCourseAsync">Delete</button>
+<button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
 
+    private async Task DeleteCourseAsync()
+    {
+        await HttpService.DeleteAsync($"{Endpoints.Courses}/{Id}");
+        NavigationManager.NavigateTo("/teachers");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/courses");
+    }
 }
+

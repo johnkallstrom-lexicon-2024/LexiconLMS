@@ -1,5 +1,42 @@
-﻿<h3>EditCourse</h3>
+﻿@page "/edit-course/{id:int}"
+@inject IHttpService HttpService
+@inject NavigationManager NavigationManager
+
+<h3>Edit Course</h3>
+
+<div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" @bind="course.Name" class="form-control" id="name" />
+</div>
+<div class="form-group">
+    <label for="description">Description</label>
+    <textarea @bind="course.Description" class="form-control" id="description"></textarea>
+</div>
+<div class="form-group">
+    <label for="startDate">Start Date</label>
+    <input type="date" @bind="course.StartDate" class="form-control" id="startDate" />
+</div>
+<div class="form-group">
+    <label for="endDate">End Date</label>
+    <input type="date" @bind="course.EndDate" class="form-control" id="endDate" />
+</div>
+<button class="btn btn-primary" @onclick="EditCourseAsync">Save</button>
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
 
+    private CourseModel course = new CourseModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = await HttpService.GetAsync<CourseModel>($"{Endpoints.Courses}/{Id}");
+    }
+
+    private async Task EditCourseAsync()
+    {
+        await HttpService.PutAsync($"{Endpoints.Courses}/{Id}", course);
+        NavigationManager.NavigateTo("/courses");
+    }
 }
+
