@@ -4,7 +4,7 @@ namespace LexiconLMS.Persistence.Fakers
 {
     public class CourseFaker : Faker<Course>
     {
-        private readonly string[] _names = ["Crash Course in JavaScript", "Foundations of C#", "React 101", "Azure Cloud Development", "SQL Databases"];
+        private readonly string[] _names = ["Crash Course in JavaScript", "Foundations of C#", "React 101", "Azure Cloud Development", "SQL Databases", "Unity Beginner Course"];
 
         public CourseFaker()
         {
