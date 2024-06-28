@@ -14,6 +14,9 @@ namespace LexiconLMS.Persistence.EntityConfigurations
                 .HasMany(c => c.Modules)
                 .WithOne(m => m.Course)
                 .HasForeignKey(m => m.CourseId);
+
+            builder.Property(c => c.Created).ValueGeneratedOnAdd();
+            builder.Property(c => c.LastModified).ValueGeneratedOnUpdate();
         }
     }
 }
