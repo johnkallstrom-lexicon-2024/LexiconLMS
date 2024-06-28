@@ -1,0 +1,21 @@
+﻿<div class="container">
+    <div class="row">
+        @foreach (var course in Courses)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Name</h5>
+                        <p class="card-text">@course.Description</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Id:</strong> @course.Id</li>
+                            <li class="list-group-item"><strong>Start:</strong> @course.StartDate.ToShortDateString()</li>
+                            <li class="list-group-item"><strong>End:</strong> @course.EndDate.ToShortDateString()</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary mt-2">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

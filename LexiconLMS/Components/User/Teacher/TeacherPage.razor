@@ -1,4 +1,5 @@
 ﻿@page "/teachers"
+@using LexiconLMS.Components.Course
 
 <PageTitle>LexiconLMS - Teachers</PageTitle>
 
@@ -6,16 +7,12 @@
 
 <h3>Courses</h3>
 <div class="d-flex flex-row">
-    <TeacherCard />
-    <TeacherCard />
-    <TeacherCard />
+    <GetCourses/>
 </div>
 
 <h3>Modules</h3>
 <div class="d-flex flex-row">
-<TeacherCard />
-<TeacherCard />
-<TeacherCard />
+
 </div>
 <a class="btn btn-secondary" href="/teachers/details/1">Details page</a>
 @code {
