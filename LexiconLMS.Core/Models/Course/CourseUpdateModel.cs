@@ -1,6 +1,6 @@
 ﻿namespace LexiconLMS.Core.Models.Course
 {
-    public class CourseUpdateModel
+    public class CourseUpdateModel : BaseModel
     {
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;

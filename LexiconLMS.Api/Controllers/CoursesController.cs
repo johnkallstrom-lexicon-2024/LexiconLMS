@@ -17,7 +17,7 @@
         public async Task<IActionResult> GetCourses()
         {
             var courses = await _courseService.GetCoursesAsync();
-            return Ok(_mapper.Map<IEnumerable<CourseListModel>>(courses));
+            return Ok(_mapper.Map<IEnumerable<CourseTrimModel>>(courses));
         }
 
         [HttpGet("{id}")]

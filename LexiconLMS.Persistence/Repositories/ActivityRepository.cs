@@ -19,7 +19,10 @@ namespace LexiconLMS.Persistence.Repositories
 
         public async Task<Activity?> GetByIdAsync(int id)
         {
-            var activity = await _context.Activities.FirstOrDefaultAsync(a => a.Id == id);
+            var activity = await _context.Activities
+                .Include(a => a.Module)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
             return activity;
         }
 

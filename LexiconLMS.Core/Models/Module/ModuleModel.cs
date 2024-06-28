@@ -3,7 +3,7 @@ using LexiconLMS.Core.Models.Course;
 
 namespace LexiconLMS.Core.Models.Module
 {
-    public class ModuleModel
+    public class ModuleModel : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
@@ -14,7 +14,7 @@ namespace LexiconLMS.Core.Models.Module
         public DateTime Created { get; set; }
         public DateTime? LastModified { get; set; }
 
-        public CourseModel Course { get; set; } = default!;
-        public ICollection<ActivityModel> Activities { get; set; } = [];
+        public CourseTrimModel Course { get; set; } = default!;
+        public ICollection<ActivityTrimModel> Activities { get; set; } = [];
     }
 }

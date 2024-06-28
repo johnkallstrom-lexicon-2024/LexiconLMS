@@ -1,11 +1,8 @@
-﻿using LexiconLMS.Core.Models.Activity;
-using LexiconLMS.Core.Models.Course;
-using LexiconLMS.Core.Models.Module;
-using LexiconLMS.Core.Models.User;
+﻿using LexiconLMS.Core.Models.User;
 
 namespace LexiconLMS.Core.Models.Document
 {
-    public class DocumentModel
+    public class DocumentModel : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
@@ -15,9 +12,6 @@ namespace LexiconLMS.Core.Models.Document
         public DateTime Created { get; set; }
         public DateTime? LastModified { get; set; }
 
-        public UserModel User { get; set; } = default!;
-        public CourseModel Course { get; set; } = default!;
-        public ModuleModel Module { get; set; } = default!;
-        public ActivityModel Activity { get; set; } = default!;
+        public UserTrimModel User { get; set; } = default!;
     }
 }
