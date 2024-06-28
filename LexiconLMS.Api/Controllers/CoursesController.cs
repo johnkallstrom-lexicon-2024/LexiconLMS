@@ -17,7 +17,7 @@
         public async Task<IActionResult> GetCourses()
         {
             var courses = await _courseService.GetCoursesAsync();
-            return Ok(_mapper.Map<IEnumerable<CourseListModel>>(courses));
+            return Ok(_mapper.Map<IEnumerable<CourseTrimModel>>(courses));
         }
 
         [HttpGet("{id}")]
@@ -31,7 +31,6 @@
 
             return Ok(_mapper.Map<CourseModel>(course));
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateCourse([FromBody] CourseCreateModel model)

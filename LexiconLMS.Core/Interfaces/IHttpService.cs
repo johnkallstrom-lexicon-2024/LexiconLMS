@@ -1,11 +1,10 @@
 ﻿namespace LexiconLMS.Core.Interfaces
 {
-    public interface IHttpService<TEntity> where TEntity : BaseEntity
+    public interface IHttpService
     {
-        Task<IEnumerable<TEntity>> GetListAsync(string url);
-        Task<TEntity?> GetAsync(string url);
-        Task PostAsync(string url, object data);
-        Task PutAsync(string url, object data);
+        Task<TData?> GetAsync<TData>(string url);
+        Task PostAsync<TData>(string url, TData data);
+        Task PutAsync<TData>(string url, TData data);
         Task DeleteAsync(string url);
     }
 }

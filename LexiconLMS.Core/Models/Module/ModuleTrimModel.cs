@@ -1,6 +1,6 @@
 ﻿namespace LexiconLMS.Core.Models.Module
 {
-    public class ModuleListModel
+    public class ModuleTrimModel : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
