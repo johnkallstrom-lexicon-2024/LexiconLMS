@@ -1,6 +1,3 @@
-using LexiconLMS.Core.Interfaces;
-using LexiconLMS.Http;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()

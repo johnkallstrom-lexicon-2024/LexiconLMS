@@ -1,6 +1,6 @@
-﻿using LexiconLMS.Core.Interfaces;
+﻿using System.Net.Http.Json;
 
-namespace LexiconLMS.Http
+namespace LexiconLMS.Core.Services
 {
     public class HttpService : IHttpService
     {
