@@ -1,6 +1,6 @@
-﻿namespace LexiconLMS.Core.Models.Module
+﻿namespace LexiconLMS.Core.Models.Course
 {
-    public class ModuleListModel
+    public class CourseTrimModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;

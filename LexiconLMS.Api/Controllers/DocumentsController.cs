@@ -17,7 +17,7 @@
         public async Task<IActionResult> GetDocuments()
         {
             var documents = await _documentService.GetDocumentsAsync();
-            return Ok(_mapper.Map<IEnumerable<DocumentListModel>>(documents));
+            return Ok(_mapper.Map<IEnumerable<DocumentTrimModel>>(documents));
         }
 
         [HttpGet("{id}")]

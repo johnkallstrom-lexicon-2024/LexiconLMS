@@ -14,7 +14,7 @@ namespace LexiconLMS.Core.Models.Module
         public DateTime Created { get; set; }
         public DateTime? LastModified { get; set; }
 
-        public CourseModel Course { get; set; } = default!;
-        public ICollection<ActivityModel> Activities { get; set; } = [];
+        public CourseTrimModel Course { get; set; } = default!;
+        public ICollection<ActivityTrimModel> Activities { get; set; } = [];
     }
 }

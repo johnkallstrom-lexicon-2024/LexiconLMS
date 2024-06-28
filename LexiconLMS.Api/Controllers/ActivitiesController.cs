@@ -17,7 +17,7 @@
         public async Task<IActionResult> GetActivities()
         {
             var activities = await _activityService.GetActivitiesAsync();
-            return Ok(_mapper.Map<IEnumerable<ActivityListModel>>(activities));
+            return Ok(_mapper.Map<IEnumerable<ActivityTrimModel>>(activities));
         }
 
         [HttpGet("{id}")]
