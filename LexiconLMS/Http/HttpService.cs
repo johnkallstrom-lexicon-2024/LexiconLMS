@@ -41,19 +41,8 @@ namespace LexiconLMS.Http
             return default;
         }
 
-        public Task PostAsync(string url, object data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task PutAsync(string url, object data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(string url)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task PostAsync<TModel>(string url, TModel data) => await _httpClient.PostAsJsonAsync(url, data);
+        public async Task PutAsync<TModel>(string url, TModel data) => await _httpClient.PutAsJsonAsync(url, data);
+        public async Task DeleteAsync(string url) => await _httpClient.DeleteAsync(url);
     }
 }
