@@ -2,6 +2,5 @@
 {
     public partial class Home
     {
-        //public LoginModel Model { get; set; } = new();
     }
 }
