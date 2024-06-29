@@ -1,4 +1,6 @@
-﻿namespace LexiconLMS.Persistence.Repositories
+﻿using LexiconLMS.Persistence.Data;
+
+namespace LexiconLMS.Persistence.Repositories
 {
     public class CourseRepository : IRepository<Course>
     {
@@ -12,12 +14,18 @@
         public async Task<IEnumerable<Course>> GetListAsync()
         {
             var courses = await _context.Courses.ToListAsync();
+
             return courses;
         }
 
         public async Task<Course?> GetByIdAsync(int id)
         {
-            var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == id);
+            var course = await _context.Courses
+                .Include(c => c.Users)
+                .Include(c => c.Modules)
+                .Include(c => c.Documents)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             return course;
         }
 

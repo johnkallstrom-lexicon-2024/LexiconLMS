@@ -1,4 +1,6 @@
-﻿namespace LexiconLMS.Persistence.Repositories
+﻿using LexiconLMS.Persistence.Data;
+
+namespace LexiconLMS.Persistence.Repositories
 {
     public class ActivityRepository : IRepository<Activity>
     {
@@ -17,7 +19,10 @@
 
         public async Task<Activity?> GetByIdAsync(int id)
         {
-            var activity = await _context.Activities.FirstOrDefaultAsync(a => a.Id == id);
+            var activity = await _context.Activities
+                .Include(a => a.Module)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
             return activity;
         }
 

@@ -8,6 +8,6 @@
         public int? CourseId { get; set; }
         public Course Course { get; set; } = default!;
 
-        public ICollection<Document> Documents { get; set; } = new List<Document>();
+        public ICollection<Document> Documents { get; set; } = [];
     }
 }
