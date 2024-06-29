@@ -6,11 +6,11 @@ namespace LexiconLMS.Persistence.Data
 {
     public class DatabaseInitializer
     {
-        private const int TOTAL_USERS = 50;
+        private const int TOTAL_USERS = 15;
         private const int TOTAL_DOCUMENTS_PER_USER = 5;
-        private const int TOTAL_COURSES = 25;
-        private const int TOTAL_MODULES_PER_COURSE = 10;
-        private const int TOTAL_ACTIVITIES_PER_MODULE = 5;
+        private const int TOTAL_COURSES = 10;
+        private const int TOTAL_MODULES_PER_COURSE = 5;
+        private const int TOTAL_ACTIVITIES_PER_MODULE = 3;
 
         private static readonly string[] _roles = ["Teacher", "Student"];
         

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LexiconLMS.Persistence.Migrations
 {
     [DbContext(typeof(LexiconDbContext))]
-    [Migration("20240626145852_Initial")]
+    [Migration("20240628150546_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -34,6 +34,7 @@ namespace LexiconLMS.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -43,7 +44,8 @@ namespace LexiconLMS.Persistence.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastModified")
+                    b.Property<DateTime?>("LastModified")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ModuleId")
@@ -75,6 +77,7 @@ namespace LexiconLMS.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -84,7 +87,8 @@ namespace LexiconLMS.Persistence.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastModified")
+                    b.Property<DateTime?>("LastModified")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -114,13 +118,15 @@ namespace LexiconLMS.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastModified")
+                    b.Property<DateTime?>("LastModified")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ModuleId")
@@ -161,6 +167,7 @@ namespace LexiconLMS.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -170,7 +177,8 @@ namespace LexiconLMS.Persistence.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastModified")
+                    b.Property<DateTime?>("LastModified")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")

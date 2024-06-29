@@ -33,7 +33,6 @@ namespace LexiconLMS.Persistence.Repositories
         }
 
         public void Update(Activity entity) => _context.Activities.Update(entity);
-
         public void Delete(Activity entity) => _context.Activities.Remove(entity);
     }
 }

@@ -12,7 +12,6 @@ namespace LexiconLMS.Persistence
             services.AddDbContext<LexiconDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

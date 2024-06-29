@@ -9,7 +9,6 @@ namespace LexiconLMS.Persistence.Fakers
             RuleFor(d => d.Name, f => $"Document {f.Commerce.Ean8()}");
             RuleFor(d => d.Description, f => f.Lorem.Paragraphs(count: 1));
             RuleFor(d => d.UploadTime, DateTime.Now);
-            RuleFor(d => d.Created, DateTime.Now);
         }
     }
 }
