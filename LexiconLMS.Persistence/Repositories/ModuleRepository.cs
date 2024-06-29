@@ -19,7 +19,11 @@ namespace LexiconLMS.Persistence.Repositories
 
         public async Task<Module?> GetByIdAsync(int id)
         {
-            var document = await _context.Modules.FirstOrDefaultAsync(d => d.Id == id);
+            var document = await _context.Modules
+                .Include(m => m.Course)
+                .Include(m => m.Activities)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
             return document;
         }
 

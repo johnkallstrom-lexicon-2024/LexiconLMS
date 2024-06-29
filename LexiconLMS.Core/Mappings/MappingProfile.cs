@@ -36,6 +36,7 @@ namespace LexiconLMS.Core.Mappings
 
             // User
             CreateMap<User, UserModel>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+            CreateMap<User, UserTrimModel>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
             CreateMap<UserCreateModel, User>();
             CreateMap<UserUpdateModel, User>();
 
