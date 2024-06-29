@@ -21,6 +21,7 @@ namespace LexiconLMS.Persistence.Repositories
         {
             var activity = await _context.Activities
                 .Include(a => a.Module)
+                .Include(a => a.Documents)
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             return activity;

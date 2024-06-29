@@ -22,6 +22,7 @@ namespace LexiconLMS.Persistence.Repositories
             var document = await _context.Modules
                 .Include(m => m.Course)
                 .Include(m => m.Activities)
+                .Include(m => m.Documents)
                 .FirstOrDefaultAsync(d => d.Id == id);
 
             return document;

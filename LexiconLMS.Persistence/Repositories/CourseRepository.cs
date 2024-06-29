@@ -14,7 +14,6 @@ namespace LexiconLMS.Persistence.Repositories
         public async Task<IEnumerable<Course>> GetListAsync()
         {
             var courses = await _context.Courses.ToListAsync();
-
             return courses;
         }
 
