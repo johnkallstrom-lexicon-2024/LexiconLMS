@@ -35,9 +35,11 @@ namespace LexiconLMS.Core.Services
                 users = await _userManager.GetUsersInRoleAsync(parameters.Role);
             }
 
+            users = _userManager.Users.AsQueryable();
+
             if (!string.IsNullOrWhiteSpace(parameters.SearchTerm))
             {
-                users = users.Where(u => u.FirstName.Contains(parameters.SearchTerm) || u.LastName.Contains(parameters.SearchTerm));
+                users = users.Where(u => parameters.SearchTerm.Contains($"{u.FirstName} {u.LastName}"));
             }
 
             return users.ToList();
