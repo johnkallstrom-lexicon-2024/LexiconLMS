@@ -4,7 +4,7 @@ namespace LexiconLMS.Core.Interfaces
 {
     public interface IUserService
     {
-        Task<Result> LoginUserAsync(string email, string password);
+        Task<Result<string>> LoginUserAsync(string email, string password);
         Task<IEnumerable<User>> GetUsersAsync();
         Task<IEnumerable<User>> GetUsersAsync(UserQueryParams parameters);
         Task<User?> GetUserByIdAsync(int id);

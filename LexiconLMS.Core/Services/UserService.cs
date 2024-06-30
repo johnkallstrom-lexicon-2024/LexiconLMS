@@ -5,6 +5,7 @@ namespace LexiconLMS.Core.Services
 {
     public class UserService : IUserService
     {
+        private readonly IJwtProvider _jwtProvider;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
@@ -12,28 +13,31 @@ namespace LexiconLMS.Core.Services
         public UserService(
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            IJwtProvider jwtProvider)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _jwtProvider = jwtProvider;
         }
 
-        public async Task<Result> LoginUserAsync(string email, string password)
+        public async Task<Result<string>> LoginUserAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user is null)
             {
-                return Result.Fail([$"No user with email {email} exists"]);
+                return Result<string>.Fail([$"No user with email {email} exists"]);
             }
 
             var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: false);
             if (!signInResult.Succeeded)
             {
-                return Result.Fail([$"Incorrect password"]);
+                return Result<string>.Fail([$"Incorrect password"]);
             }
 
-            return Result.Ok();
+            string token = _jwtProvider.GenerateToken(user);
+            return Result<string>.Ok(token);
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
