@@ -1,33 +1,42 @@
-﻿@page "/create-course"
+﻿@page "/courses/create"
 @inject IHttpService HttpService
 @inject NavigationManager NavigationManager
 
 <h3>Create Course</h3>
-
-<div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" @bind="course.Name" class="form-control" id="name" />
+<div class="row">
+    <div class="col-sm-8 col-xl-6">
+        <div class="card">
+            <div class="card-body">
+                <EditForm Model="Model" OnValidSubmit="Submit">
+                    <div class="mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" @bind="Model.Name" class="form-control" id="name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="description">Description</label>
+                        <textarea @bind="Model.Description" class="form-control" id="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" @bind="Model.StartDate" class="form-control" id="startDate" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="endDate">End Date</label>
+                        <input type="date" @bind="Model.EndDate" class="form-control" id="endDate" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="form-group">
-    <label for="description">Description</label>
-    <textarea @bind="course.Description" class="form-control" id="description"></textarea>
-</div>
-<div class="form-group">
-    <label for="startDate">Start Date</label>
-    <input type="date" @bind="course.StartDate" class="form-control" id="startDate" />
-</div>
-<div class="form-group">
-    <label for="endDate">End Date</label>
-    <input type="date" @bind="course.EndDate" class="form-control" id="endDate" />
-</div>
-<button class="btn btn-primary" @onclick="CreateCourseAsync">Create</button>
 
 @code {
-    private CourseModel course = new CourseModel();
+    private CourseCreateModel Model = new();
 
-    private async Task CreateCourseAsync()
+    private async Task Submit()
     {
-        await HttpService.PostAsync(Endpoints.Courses, course);
+        await HttpService.PostAsync(Endpoints.Courses, Model);
         NavigationManager.NavigateTo("/courses");
     }
 }
