@@ -24,7 +24,7 @@ namespace LexiconLMS.Components.User
             if (response != null && response.Success)
             {
                 await LocalStorage.SetItemAsync("token", response.Token);
-                NavigationManager.NavigateTo("/teachers");
+                NavigationManager.NavigateTo("/", forceLoad: true);
             }
         }
     }
