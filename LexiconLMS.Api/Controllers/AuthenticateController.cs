@@ -1,4 +1,5 @@
 ﻿using LexiconLMS.Core.Models.User;
+using LexiconLMS.Core.Results;
 
 namespace LexiconLMS.Api.Controllers
 {
@@ -16,7 +17,9 @@ namespace LexiconLMS.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginUser(LoginModel model)
         {
-            return Ok();
+            string token = "invalid";
+            var result = Result<string>.Ok(token);
+            return Ok(result);
         }
     }
 }
