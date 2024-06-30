@@ -1,4 +1,4 @@
-﻿
+﻿using LexiconLMS.Core.Parameters;
 using Microsoft.EntityFrameworkCore;
 
 namespace LexiconLMS.Core.Services
@@ -22,7 +22,25 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
             var users = await _userManager.Users.ToListAsync();
+
             return users;
+        }
+
+        public async Task<IEnumerable<User>> GetUsersAsync(UserQueryParams parameters)
+        {
+            var users = Enumerable.Empty<User>();
+
+            if (!string.IsNullOrWhiteSpace(parameters.Role))
+            {
+                users = await _userManager.GetUsersInRoleAsync(parameters.Role);
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.SearchTerm))
+            {
+                users = users.Where(u => u.FirstName.Contains(parameters.SearchTerm) || u.LastName.Contains(parameters.SearchTerm));
+            }
+
+            return users.ToList();
         }
 
         public async Task<User?> GetUserByIdAsync(int id)
@@ -35,6 +53,17 @@ namespace LexiconLMS.Core.Services
         {
             var user = await _userManager.FindByEmailAsync(email);
             return user;
+        }
+
+        public async Task<IEnumerable<string>> GetUserRolesAsync(User user)
+        {
+            if (user is null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            return roles.ToList();
         }
     }
 }
