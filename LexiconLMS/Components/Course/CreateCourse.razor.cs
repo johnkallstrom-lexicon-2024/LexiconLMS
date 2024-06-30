@@ -23,7 +23,7 @@ namespace LexiconLMS.Components.Course
             if (IsSaved)
             {
                 Message = "Course added successfully";
-                NavigationManager.NavigateTo("/teachers");
+                NavigationManager.NavigateTo("/courses");
             }
             else
             {

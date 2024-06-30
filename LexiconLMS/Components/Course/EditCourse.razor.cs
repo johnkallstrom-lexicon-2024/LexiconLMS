@@ -7,17 +7,32 @@ namespace LexiconLMS.Components.Course
         [Parameter]
         public int Id { get; set; }
 
-        private CourseUpdateModel Course = new CourseUpdateModel();
-
+        [SupplyParameterFromForm]
+        public CourseUpdateModel Course { get; set; }
+ 
+        protected bool IsSaved;
         protected override async Task OnInitializedAsync()
         {
+            IsSaved = false;
             Course = await HttpService.GetAsync<CourseUpdateModel>($"{Endpoints.Courses}/{Id}");
+            
         }
 
-        private async Task EditCourseAsync()
+        protected async Task EditCourseAsync()
         {
             await HttpService.PutAsync($"{Endpoints.Courses}/{Id}", Course);
-            NavigationManager.NavigateTo("/teachers");
+            NavigationManager.NavigateTo("/courses");
+        }
+
+        protected async Task HandleValidSubmit()
+        {
+            await 
+            IsSaved = true;
+        }
+
+        protected async Task HandleInvalidSubmit()
+        {
+
         }
     }
 }
