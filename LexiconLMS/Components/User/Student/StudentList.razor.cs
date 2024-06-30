@@ -1,13 +1,23 @@
-﻿using static System.Net.WebRequestMethods;
+﻿using LexiconLMS.Core.Interfaces;
+using LexiconLMS.Core.Models.User;
+using Microsoft.AspNetCore.Components;
+using static System.Net.WebRequestMethods;
 
-namespace LexiconLMS.Components.UserModel
+namespace LexiconLMS.Components.Student
 {
-    partial class StudentList
+    public partial class StudentList
     {
-        private List<Core.Models.User.UserModel> _users;
-        /*protected override async Task OnInitializedAsync()
+        /*
+        public List<UserModel> Users { get; set; } = default!;
+        private UserModel _user;
+
+        [Inject]
+        public IUserService? UserService { get; set; }
+
+        protected async override Task OnInitializedAsync()
         {
-            _users = await Http.GetFromJsonAsync<List<UserModel>>("https://yourapiendpoint.com/api/student");
-        }*/
+            Users = new List<UserModel>();
+        }
+        */
     }
 }
