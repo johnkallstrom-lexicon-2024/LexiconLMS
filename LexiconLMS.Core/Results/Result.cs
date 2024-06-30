@@ -5,10 +5,6 @@
         public bool Success { get; }
         public List<string> Errors { get; } = [];
 
-        public Result()
-        {
-        }
-
         public Result(bool success)
         {
             Success = success;
@@ -28,10 +24,6 @@
         public bool Success { get; }
         public List<string> Errors { get; } = [];
         public TValue Value { get; } = default!;
-
-        public Result()
-        {
-        }
 
         public Result(bool success, TValue value)
         {
