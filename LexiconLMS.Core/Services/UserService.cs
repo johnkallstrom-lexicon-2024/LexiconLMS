@@ -39,7 +39,9 @@ namespace LexiconLMS.Core.Services
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchTerm))
             {
-                users = users.Where(u => parameters.SearchTerm.Contains($"{u.FirstName} {u.LastName}"));
+                users = users.Where(u => parameters.SearchTerm.Contains($"{u.FirstName} {u.LastName}") || 
+                parameters.SearchTerm.Contains(u.UserName) || 
+                parameters.SearchTerm.Contains(u.Email));
             }
 
             return users.ToList();
