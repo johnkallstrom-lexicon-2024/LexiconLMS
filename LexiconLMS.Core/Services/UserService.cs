@@ -19,6 +19,23 @@ namespace LexiconLMS.Core.Services
             _signInManager = signInManager;
         }
 
+        public async Task<Result> LoginUserAsync(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user is null)
+            {
+                return Result.Fail([$"No user with email {email} exists"]);
+            }
+
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: false);
+            if (!signInResult.Succeeded)
+            {
+                return Result.Fail([$"Incorrect password"]);
+            }
+
+            return Result.Ok();
+        }
+
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
             var users = await _userManager.Users.ToListAsync();

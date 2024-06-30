@@ -17,8 +17,7 @@ namespace LexiconLMS.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginUser(LoginModel model)
         {
-            string token = "invalid";
-            var result = Result<string>.Ok(token);
+            var result = await _userService.LoginUserAsync(model.Email, model.Password);
             return Ok(result);
         }
     }
