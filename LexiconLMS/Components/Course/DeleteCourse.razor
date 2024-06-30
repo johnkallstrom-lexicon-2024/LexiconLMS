@@ -8,19 +8,4 @@
 <button class="btn btn-danger" @onclick="DeleteCourseAsync">Delete</button>
 <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
 
-@code {
-    [Parameter]
-    public int Id { get; set; }
-
-    private async Task DeleteCourseAsync()
-    {
-        await HttpService.DeleteAsync($"{Endpoints.Courses}/{Id}");
-        NavigationManager.NavigateTo("/teachers");
-    }
-
-    private void Cancel()
-    {
-        NavigationManager.NavigateTo("/courses");
-    }
-}
 

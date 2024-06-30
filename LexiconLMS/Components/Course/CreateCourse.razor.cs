@@ -6,9 +6,12 @@ namespace LexiconLMS.Components.Course
         [SupplyParameterFromForm]
         public CourseCreateModel Course { get; set ; }
 
+       
         [Inject]
         public IHttpService? HttpService { get; set; }
-
+        protected string Message = string.Empty;
+        protected string ErrorMessage = string.Empty;
+        protected bool IsSaved = false;
         protected override void OnInitialized()
         {
             Course ??= new();
@@ -16,7 +19,19 @@ namespace LexiconLMS.Components.Course
         public async Task OnSumbit()
         {
             await HttpService.PostAsync(Endpoints.Courses, Course);
-            NavigationManager.NavigateTo("/teachers");
+            IsSaved = true;
+            if (IsSaved)
+            {
+                Message = "Course added successfully";
+                NavigationManager.NavigateTo("/teachers");
+            }
+            else
+            {
+                ErrorMessage = "There was an error";
+            }
+    
+           
+            
         }
       
     }
