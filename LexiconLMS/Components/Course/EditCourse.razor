@@ -1,24 +1,25 @@
 ﻿@page "/edit-course/{id:int}"
 @inject IHttpService HttpService
 @inject NavigationManager NavigationManager
+@rendermode InteractiveServer
 
 <h3>Edit Course</h3>
 
 <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" @bind="course.Name" class="form-control" id="name" />
+    <input type="text" @bind="@Course.Name" class="form-control" id="name" />
 </div>
 <div class="form-group">
     <label for="description">Description</label>
-    <textarea @bind="course.Description" class="form-control" id="description"></textarea>
+    <textarea @bind="@Course.Description" class="form-control" id="description"></textarea>
 </div>
 <div class="form-group">
     <label for="startDate">Start Date</label>
-    <input type="date" @bind="course.StartDate" class="form-control" id="startDate" />
+    <input type="date" @bind="@Course.StartDate" class="form-control" id="startDate" />
 </div>
 <div class="form-group">
     <label for="endDate">End Date</label>
-    <input type="date" @bind="course.EndDate" class="form-control" id="endDate" />
+    <input type="date" @bind="@Course.EndDate" class="form-control" id="endDate" />
 </div>
 <button class="btn btn-primary" @onclick="EditCourseAsync">Save</button>
 
@@ -26,16 +27,16 @@
     [Parameter]
     public int Id { get; set; }
 
-    private CourseUpdateModel course = new CourseUpdateModel();
+    private CourseUpdateModel Course = new CourseUpdateModel();
 
     protected override async Task OnInitializedAsync()
     {
-        course = await HttpService.GetAsync<CourseUpdateModel>($"{Endpoints.Courses}/{Id}");
+        Course = await HttpService.GetAsync<CourseUpdateModel>($"{Endpoints.Courses}/{Id}");
     }
 
     private async Task EditCourseAsync()
     {
-        await HttpService.PutAsync($"{Endpoints.Courses}/{Id}", course);
+        await HttpService.PutAsync($"{Endpoints.Courses}/{Id}", Course);
         NavigationManager.NavigateTo("/teachers");
     }
 }
