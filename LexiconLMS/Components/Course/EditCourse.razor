@@ -26,17 +26,17 @@
     [Parameter]
     public int Id { get; set; }
 
-    private CourseModel course = new CourseModel();
+    private CourseUpdateModel course = new CourseUpdateModel();
 
     protected override async Task OnInitializedAsync()
     {
-        course = await HttpService.GetAsync<CourseModel>($"{Endpoints.Courses}/{Id}");
+        course = await HttpService.GetAsync<CourseUpdateModel>($"{Endpoints.Courses}/{Id}");
     }
 
     private async Task EditCourseAsync()
     {
         await HttpService.PutAsync($"{Endpoints.Courses}/{Id}", course);
-        NavigationManager.NavigateTo("/courses");
+        NavigationManager.NavigateTo("/teachers");
     }
 }
 
