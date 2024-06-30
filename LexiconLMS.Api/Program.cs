@@ -1,4 +1,5 @@
 using LexiconLMS.Api;
+using LexiconLMS.Api.Authorization;
 using LexiconLMS.Core.Jwt;
 using System.Text.Json.Serialization;
 
@@ -17,6 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddTransient<IJwtProvider, JwtProvider>();
+builder.Services.AddAuthorization();
 
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddCoreServices();
@@ -29,8 +31,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    await app.SeedDatabaseAsync();
+    //await app.SeedDatabaseAsync();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseJwtMiddleware();
 
 app.UseHttpsRedirection();
 app.MapControllers();
