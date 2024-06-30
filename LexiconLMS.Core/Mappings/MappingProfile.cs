@@ -24,7 +24,9 @@ namespace LexiconLMS.Core.Mappings
 
             // Document
             CreateMap<Document, DocumentModel>().ForMember(dest => dest.UploadedAt, opt => opt.MapFrom(src => src.UploadTime));
-            CreateMap<Document, DocumentTrimModel>();
+            CreateMap<Document, DocumentTrimModel>()
+                .ForMember(dest => dest.UploadedAt, opt => opt.MapFrom(src => src.UploadTime))
+                .ForMember(dest => dest.UploadedBy, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"));
             CreateMap<DocumentCreateModel, Document>();
             CreateMap<DocumentUpdateModel, Document>();
 
@@ -36,6 +38,7 @@ namespace LexiconLMS.Core.Mappings
 
             // User
             CreateMap<User, UserModel>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+            CreateMap<User, UserTrimModel>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
             CreateMap<UserCreateModel, User>();
             CreateMap<UserUpdateModel, User>();
 

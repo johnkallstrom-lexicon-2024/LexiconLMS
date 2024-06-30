@@ -4,13 +4,18 @@
     [ApiController]
     public class ModulesController : ControllerBase
     {
+        private readonly ICourseService _courseService;
         private readonly IMapper _mapper;
         private readonly IModuleService _moduleService;
 
-        public ModulesController(IModuleService moduleService, IMapper mapper)
+        public ModulesController(
+            IModuleService moduleService, 
+            IMapper mapper, 
+            ICourseService courseService)
         {
             _moduleService = moduleService;
             _mapper = mapper;
+            _courseService = courseService;
         }
 
         [HttpGet]
@@ -35,6 +40,12 @@
         [HttpPost]
         public async Task<IActionResult> CreateModule([FromBody] ModuleCreateModel model)
         {
+            var course = await _courseService.GetCourseByIdAsync(model.CourseId);
+            if (course is null)
+            {
+                return BadRequest(new { Message = $"No course with id {model.CourseId} exists" });
+            }
+
             var module = _mapper.Map<Module>(model);
             var createdModule = await _moduleService.CreateModuleAsync(module);
 
@@ -44,6 +55,12 @@
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateModule(int id, [FromBody] ModuleUpdateModel model)
         {
+            var course = await _courseService.GetCourseByIdAsync(model.CourseId);
+            if (course is null)
+            {
+                return BadRequest(new { Message = $"No course with id {model.CourseId} exists" });
+            }
+
             var existingModule = await _moduleService.GetModuleByIdAsync(id);
             if (existingModule == null)
             {

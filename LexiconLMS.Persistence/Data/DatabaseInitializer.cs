@@ -6,14 +6,17 @@ namespace LexiconLMS.Persistence.Data
 {
     public class DatabaseInitializer
     {
-        private const int TOTAL_USERS = 50;
+        private const int TOTAL_TEACHERS = 5;
+        private const int TOTAL_STUDENTS_PER_COURSE = 5;
         private const int TOTAL_DOCUMENTS_PER_USER = 5;
-        private const int TOTAL_COURSES = 25;
-        private const int TOTAL_MODULES_PER_COURSE = 10;
-        private const int TOTAL_ACTIVITIES_PER_MODULE = 5;
+        private const int TOTAL_COURSES = 10;
+        private const int TOTAL_MODULES_PER_COURSE = 5;
+        private const int TOTAL_ACTIVITIES_PER_MODULE = 3;
 
-        private static readonly string[] _roles = ["Teacher", "Student"];
-        
+        private static readonly string[] ROLES = ["Teacher", "Student"];
+        private static readonly string TEACHER_ROLE = "Teacher";
+        private static readonly string STUDENT_ROLE = "Student";
+
         private static Faker _faker = new();
         private static CourseFaker _courseFaker = new();
         private static ModuleFaker _moduleFaker = new();
@@ -28,9 +31,10 @@ namespace LexiconLMS.Persistence.Data
         {
 
             await CreateRoles(roleManager);
-            await CreateUsers(userManager);
+            await CreateTeachers(userManager);
 
             await CreateCourses(context);
+            await CreateStudents(userManager, context);
             await CreateModules(context);
             await CreateActivities(context);
             await CreateDocuments(context, userManager);
@@ -121,7 +125,7 @@ namespace LexiconLMS.Persistence.Data
 
         public static async Task CreateRoles(RoleManager<Role> roleManager)
         {
-            foreach (var role in _roles)
+            foreach (var role in ROLES)
             {
                 if (!await roleManager.RoleExistsAsync(role))
                 {
@@ -134,21 +138,47 @@ namespace LexiconLMS.Persistence.Data
             }
         }
 
-        public static async Task CreateUsers(UserManager<User> userManager)
+        public static async Task CreateTeachers(UserManager<User> userManager)
         {
-            var users = _userFaker.Generate(TOTAL_USERS);
-
-            if (users != null && users.Count() > 0)
+            var teachers = _userFaker.Generate(TOTAL_TEACHERS);
+            if (teachers != null && teachers.Count() > 0)
             {
-                foreach (var user in users)
+                foreach (var teacher in teachers)
                 {
-                    user.PasswordHash = userManager.PasswordHasher.HashPassword(user, _faker.Internet.Password());
+                    teacher.PasswordHash = userManager.PasswordHasher.HashPassword(teacher, _faker.Internet.Password());
 
-                    var identityResult = await userManager.CreateAsync(user);
+                    var identityResult = await userManager.CreateAsync(teacher);
                     if (identityResult.Succeeded)
                     {
-                        string role = _roles[_faker.Random.Int(min: 0, max: (_roles.Count() - 1))];
-                        await userManager.AddToRoleAsync(user, role);
+                        await userManager.AddToRoleAsync(teacher, TEACHER_ROLE);
+                    }
+                }
+            }
+        }
+
+        public static async Task CreateStudents(UserManager<User> userManager, LexiconDbContext context)
+        {
+            var courses = await context.Courses.ToListAsync();
+            foreach (var course in courses)
+            {
+                await AddStudentsToCourse(course.Id, userManager);
+            }
+        }
+
+        private static async Task AddStudentsToCourse(int courseId, UserManager<User> userManager)
+        {
+            var students = _userFaker.Generate(TOTAL_STUDENTS_PER_COURSE);
+            if (students != null && students.Count() > 0)
+            {
+                foreach (var student in students)
+                {
+                    student.CourseId = courseId;
+                    student.PasswordHash = userManager.PasswordHasher.HashPassword(student, _faker.Internet.Password());
+
+                    var identityResult = await userManager.CreateAsync(student);
+                    if (identityResult.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(student, STUDENT_ROLE);
                     }
                 }
             }

@@ -21,6 +21,7 @@ namespace LexiconLMS.Persistence.Repositories
         {
             var activity = await _context.Activities
                 .Include(a => a.Module)
+                .Include(a => a.Documents)
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             return activity;
@@ -33,7 +34,6 @@ namespace LexiconLMS.Persistence.Repositories
         }
 
         public void Update(Activity entity) => _context.Activities.Update(entity);
-
         public void Delete(Activity entity) => _context.Activities.Remove(entity);
     }
 }

@@ -19,7 +19,12 @@ namespace LexiconLMS.Persistence.Repositories
 
         public async Task<Module?> GetByIdAsync(int id)
         {
-            var document = await _context.Modules.FirstOrDefaultAsync(d => d.Id == id);
+            var document = await _context.Modules
+                .Include(m => m.Course)
+                .Include(m => m.Activities)
+                .Include(m => m.Documents)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
             return document;
         }
 
@@ -30,7 +35,6 @@ namespace LexiconLMS.Persistence.Repositories
         }
 
         public void Update(Module entity) => _context.Modules.Update(entity);
-
         public void Delete(Module entity) => _context.Modules.Remove(entity);
     }
 }

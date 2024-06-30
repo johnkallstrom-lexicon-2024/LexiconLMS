@@ -35,8 +35,7 @@ namespace LexiconLMS.Persistence.Repositories
             return entry.Entity;
         }
 
-        public void Update(Document entity) => _context.Update(entity);
-
-        public void Delete(Document entity) => _context.Remove(entity);
+        public void Update(Document entity) => _context.Documents.Update(entity);
+        public void Delete(Document entity) => _context.Documents.Remove(entity);
     }
 }
