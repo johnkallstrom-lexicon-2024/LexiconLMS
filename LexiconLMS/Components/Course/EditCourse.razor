@@ -1,57 +1,41 @@
 ﻿@page "/courses/edit/{id:int}"
 @inject IHttpService HttpService
 @inject NavigationManager NavigationManager
+@rendermode InteractiveServer
 
 <h3>Edit Course</h3>
-<div class="row">
-    <div class="col-sm-8 col-xl-6">
-        <div class="card">
-            <div class="card-body">
-                <EditForm Model="Model" OnValidSubmit="Submit">
-                    <div class="mb-3">
-                        <label for="name">Name</label>
-                        <input type="text" @bind="Model.Name" class="form-control" id="name" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="description">Description</label>
-                        <textarea @bind="Model.Description" class="form-control" id="description"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="startDate">Start Date</label>
-                        <input type="date" @bind="Model.StartDate" class="form-control" id="startDate" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="endDate">End Date</label>
-                        <input type="date" @bind="Model.EndDate" class="form-control" id="endDate" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </EditForm>
-            </div>
-        </div>
-    </div>
+
+<div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" @bind="@Course.Name" class="form-control" id="name" />
+</div>
+<div class="form-group">
+    <label for="description">Description</label>
+    <textarea @bind="@Course.Description" class="form-control" id="description"></textarea>
+</div>
+<div class="form-group">
+    <label for="startDate">Start Date</label>
+    <input type="date" @bind="@Course.StartDate" class="form-control" id="startDate" />
+</div>
+<div class="form-group">
+    <label for="endDate">End Date</label>
+    <input type="date" @bind="@Course.EndDate" class="form-control" id="endDate" />
 </div>
 
 @code {
     [Parameter]
     public int Id { get; set; }
 
-    private CourseUpdateModel Model = new();
+    private CourseUpdateModel Course = new CourseUpdateModel();
 
     protected override async Task OnInitializedAsync()
     {
-        var course = await HttpService.GetAsync<CourseTrimModel>($"{Endpoints.Courses}/{Id}");
-        if (course != null)
-        {
-            Model.Name = course.Name;
-            Model.Description = course.Description;
-            Model.StartDate = course.StartDate;
-            Model.EndDate = course.EndDate;
-        }
+        Course = await HttpService.GetAsync<CourseUpdateModel>($"{Endpoints.Courses}/{Id}");
     }
 
     private async Task Submit()
     {
-        await HttpService.PutAsync($"{Endpoints.Courses}/{Id}", Model);
+        await HttpService.PutAsync($"{Endpoints.Courses}/{Id}", Course);
         NavigationManager.NavigateTo("/teachers");
     }
 }

@@ -1,43 +1,14 @@
-﻿@page "/courses/create"
-@inject IHttpService HttpService
+﻿@page "/create-course"
 @inject NavigationManager NavigationManager
 
-<h3>Create Course</h3>
-<div class="row">
-    <div class="col-sm-8 col-xl-6">
-        <div class="card">
-            <div class="card-body">
-                <EditForm Model="Model" OnValidSubmit="Submit">
-                    <div class="mb-3">
-                        <label for="name">Name</label>
-                        <input type="text" @bind="Model.Name" class="form-control" id="name" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="description">Description</label>
-                        <textarea @bind="Model.Description" class="form-control" id="description"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="startDate">Start Date</label>
-                        <input type="date" @bind="Model.StartDate" class="form-control" id="startDate" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="endDate">End Date</label>
-                        <input type="date" @bind="Model.EndDate" class="form-control" id="endDate" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </EditForm>
-            </div>
-        </div>
-    </div>
-</div>
+<h3>Add a new Course</h3>
 
-@code {
-    private CourseCreateModel Model = new();
-
-    private async Task Submit()
-    {
-        await HttpService.PostAsync(Endpoints.Courses, Model);
-        NavigationManager.NavigateTo("/courses");
-    }
-}
+<form method="post" @onsubmit="OnSumbit" @formname="add-course-form" data-enhance>
+    <InputText id="name" @bind-Value="@Course.Name" placeholder="Enter Course name"></InputText>
+    <InputTextArea id="description" @bind-Value="@Course.Description" placeholder="Add description of the Course"></InputTextArea>
+    <InputDate id="startDate" @bind-Value="@Course.StartDate"></InputDate>
+    <InputDate id="endDate" @bind-Value="@Course.EndDate"></InputDate>
+    <AntiforgeryToken/>
+    <button type="submit" class="btn btn-warning">Add Course</button>
+</form>
 
