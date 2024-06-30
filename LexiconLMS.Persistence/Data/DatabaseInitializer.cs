@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using LexiconLMS.Core.Identity;
 using LexiconLMS.Persistence.Fakers;
 using Microsoft.AspNetCore.Identity;
 
@@ -13,7 +14,8 @@ namespace LexiconLMS.Persistence.Data
         private const int TOTAL_MODULES_PER_COURSE = 5;
         private const int TOTAL_ACTIVITIES_PER_MODULE = 3;
 
-        private static readonly string[] ROLES = ["Teacher", "Student"];
+        private static readonly string[] ROLES = ["Administrator", "Teacher", "Student"];
+        private static readonly string ADMINISTRATOR_ROLE = "Administrator";
         private static readonly string TEACHER_ROLE = "Teacher";
         private static readonly string STUDENT_ROLE = "Student";
 
@@ -31,6 +33,7 @@ namespace LexiconLMS.Persistence.Data
         {
 
             await CreateRoles(roleManager);
+            await CreateAdministrator(userManager);
             await CreateTeachers(userManager);
 
             await CreateCourses(context);
@@ -135,6 +138,25 @@ namespace LexiconLMS.Persistence.Data
                         NormalizedName = role,
                     });
                 }
+            }
+        }
+
+        public static async Task CreateAdministrator(UserManager<User> userManager)
+        {
+            var user = new User
+            {
+                FirstName = "Darth",
+                LastName = "Vader",
+                Email = "administrator@lexicon.com",
+                UserName = "administrator"
+            };
+
+            user.PasswordHash = userManager.PasswordHasher.HashPassword(user, "password123");
+
+            var identityResult = await userManager.CreateAsync(user);
+            if (identityResult.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, ADMINISTRATOR_ROLE);
             }
         }
 
