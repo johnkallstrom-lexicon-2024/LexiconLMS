@@ -1,5 +1,6 @@
-﻿using LexiconLMS.Core.Models.User;
+﻿using LexiconLMS.Core.Models.Authenticate;
 using LexiconLMS.Core.Results;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LexiconLMS.Api.Controllers
 {
@@ -14,8 +15,9 @@ namespace LexiconLMS.Api.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> LoginUser(LoginModel model)
+        public async Task<IActionResult> LoginUser(AuthenticateRequest model)
         {
             var result = await _userService.LoginUserAsync(model.Email, model.Password);
             return Ok(result);
