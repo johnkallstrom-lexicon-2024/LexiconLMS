@@ -1,6 +1,6 @@
-﻿namespace LexiconLMS.Core.Models.User
+﻿namespace LexiconLMS.Core.Models.Authenticate
 {
-    public class LoginModel : BaseModel
+    public class AuthenticateRequest : BaseModel
     {
         [Required]
         public string Email { get; init; } = default!;
