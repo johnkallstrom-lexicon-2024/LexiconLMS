@@ -7,7 +7,7 @@ namespace LexiconLMS.Persistence.Data
     public class DatabaseInitializer
     {
         private const int TOTAL_TEACHERS = 5;
-        private const int TOTAL_STUDENTS_PER_COURSE = 10;
+        private const int TOTAL_STUDENTS_PER_COURSE = 5;
         private const int TOTAL_DOCUMENTS_PER_USER = 5;
         private const int TOTAL_COURSES = 10;
         private const int TOTAL_MODULES_PER_COURSE = 5;
