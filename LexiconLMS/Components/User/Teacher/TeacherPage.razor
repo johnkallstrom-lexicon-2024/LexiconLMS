@@ -2,22 +2,18 @@
 
 <PageTitle>LexiconLMS - Teachers</PageTitle>
 
-<h3>Teacher Overview</h3>
-
-<h3>Courses</h3>
-<div class="d-flex flex-row">
-    <TeacherCard />
-    <TeacherCard />
-    <TeacherCard />
-</div>
-
-<h3>Modules</h3>
-<div class="d-flex flex-row">
-<TeacherCard />
-<TeacherCard />
-<TeacherCard />
-</div>
-<a class="btn btn-secondary" href="/teachers/details/1">Details page</a>
-@code {
-
+@if (Loading)
+{
+    <Spinner />
+}
+else
+{
+    <h3>Teacher Overview</h3>
+    @if (Model != null && Model.Count() > 0)
+    {
+        @foreach (var teacher in Model)
+        {
+            <TeacherCard Teacher="teacher" />
+        }
+    }
 }
