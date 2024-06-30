@@ -1,4 +1,6 @@
-﻿namespace LexiconLMS.Api.Authorization
+﻿using LexiconLMS.Core.Models.User;
+
+namespace LexiconLMS.Api.Authorization
 {
     public class JwtMiddleware
     {
@@ -11,12 +13,26 @@
             _jwtProvider = jwtProvider;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IUserService userService)
         {
             string? token = context.Request.Headers.Authorization.ToString().Split(" ").Last();
             if (!string.IsNullOrWhiteSpace(token))
             {
-                // Validate token
+                var result = await _jwtProvider.ValidateTokenAsync(token);
+                if (result.Success)
+                {
+                    int userId = result.Value;
+                    var user = await userService.GetUserByIdAsync(userId);
+
+                    context.Items.Add("User", new UserTrimModel
+                    {
+                        Id = user.Id,
+                        Name = $"{user.FirstName} {user.LastName}",
+                        Email = user.Email,
+                        UserName = user.UserName,
+                        Roles = await userService.GetUserRolesAsync(user)
+                    });
+                }
             }
 
             await _next.Invoke(context);

@@ -39,5 +39,33 @@ namespace LexiconLMS.Core.Jwt
             var handler = new JwtSecurityTokenHandler();
             return handler.WriteToken(token);
         }
+
+        public async Task<Result<int>> ValidateTokenAsync(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+            var parameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = _jwtSettings.Issuer,
+                ValidAudience = _jwtSettings.Audience,
+                IssuerSigningKey = securityKey
+            };
+
+            TokenValidationResult? result = await handler.ValidateTokenAsync(token, parameters);
+            if (!result.IsValid)
+            {
+                return Result<int>.Fail(["Token validation failed"]);
+            }
+
+            var claim = result.Claims.FirstOrDefault(c => c.Key.Equals(ClaimTypes.NameIdentifier));
+            int userId = int.Parse(claim.Value.ToString());
+
+            return Result<int>.Ok(userId);
+        }
     }
 }
