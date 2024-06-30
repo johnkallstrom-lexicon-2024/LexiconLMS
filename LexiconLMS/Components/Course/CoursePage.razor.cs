@@ -2,7 +2,7 @@
 
 namespace LexiconLMS.Components.Course
 {
-    public partial class GetCourses
+    public partial class CoursePage
     {
         [Inject]
         public IHttpService HttpService { get; set; } = default!;

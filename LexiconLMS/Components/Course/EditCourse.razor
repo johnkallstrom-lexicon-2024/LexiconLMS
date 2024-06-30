@@ -1,4 +1,4 @@
-﻿@page "/edit-course/{id:int}"
+﻿@page "/courses/edit/{id:int}"
 @inject IHttpService HttpService
 @inject NavigationManager NavigationManager
 @rendermode InteractiveServer
@@ -21,7 +21,6 @@
     <label for="endDate">End Date</label>
     <input type="date" @bind="@Course.EndDate" class="form-control" id="endDate" />
 </div>
-<button class="btn btn-primary" @onclick="EditCourseAsync">Save</button>
 
 @code {
    

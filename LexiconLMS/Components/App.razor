@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="LexiconLMS.styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <HeadOutlet />
+    <HeadOutlet @rendermode=@(new InteractiveServerRenderMode(prerender: false)) />
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode=@(new InteractiveServerRenderMode(prerender: false)) />
     <script src="_framework/blazor.web.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
