@@ -22,7 +22,6 @@ namespace LexiconLMS.Core.Services
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
             var users = await _userManager.Users.ToListAsync();
-
             return users;
         }
 
