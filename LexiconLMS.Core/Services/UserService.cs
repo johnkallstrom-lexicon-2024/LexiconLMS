@@ -33,8 +33,10 @@ namespace LexiconLMS.Core.Services
             {
                 users = await _userManager.GetUsersInRoleAsync(parameters.Role);
             }
-
-            users = _userManager.Users.AsQueryable();
+            else
+            {
+                users = _userManager.Users;
+            }
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchTerm))
             {
