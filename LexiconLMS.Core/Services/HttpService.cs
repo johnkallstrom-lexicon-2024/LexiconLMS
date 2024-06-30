@@ -24,8 +24,8 @@ namespace LexiconLMS.Core.Services
             return data;
         }
 
-        public async Task PostAsync<TData>(string url, TData data) => await _httpClient.PostAsJsonAsync(url, data);
-        public async Task PutAsync<TData>(string url, TData data) => await _httpClient.PutAsJsonAsync(url, data);
+        public async Task PostAsync(string url, object data) => await _httpClient.PostAsJsonAsync(url, data);
+        public async Task PutAsync(string url, object data) => await _httpClient.PutAsJsonAsync(url, data);
         public async Task DeleteAsync(string url) => await _httpClient.DeleteAsync(url);
     }
 }
