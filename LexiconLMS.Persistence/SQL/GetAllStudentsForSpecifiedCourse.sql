@@ -1,4 +1,6 @@
-﻿SELECT 
+﻿USE LexiconDB
+
+SELECT 
 U.FirstName,
 U.LastName,
 U.Email,
