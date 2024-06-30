@@ -1,8 +1,10 @@
-﻿<div class="card border shadow-sm mb-3">
-  <div class="card-body">
-    <h5 class="card-title">@Teacher.Name</h5>
-    <p class="mb-0">@Teacher.Email</p>
-    <p class="mb-0">@Teacher.UserName</p>
-    <p class="mb-0">@Teacher.Roles.First()</p>
-  </div>
+﻿<div class="card mb-3">
+    <div class="card-body">
+        <a href="@($"/teachers/details/{Teacher.Id}")">
+            <h5 class="card-title">@Teacher.Name</h5>
+        </a>
+        <p class="mb-0">@Teacher.Email</p>
+        <p class="mb-0">@Teacher.UserName</p>
+        <p class="mb-0">@Teacher.Roles.First()</p>
+    </div>
 </div>
