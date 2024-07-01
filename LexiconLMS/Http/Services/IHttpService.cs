@@ -1,6 +1,6 @@
 ﻿using LexiconLMS.Core.Models.Authenticate;
 
-namespace LexiconLMS.Core.Interfaces
+namespace LexiconLMS.Http.Services
 {
     public interface IHttpService
     {
