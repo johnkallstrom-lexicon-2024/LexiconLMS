@@ -88,5 +88,16 @@ namespace LexiconLMS.Api.Controllers
             return NoContent();
         }
 
+        [HttpGet("module/{moduleId}")]
+        public async Task<IActionResult> GetActivitiesByModuleId(int moduleId)
+        {
+            var activities = await _activityService.GetActivitiesOfModuleIdAsync(moduleId);
+            if (activities == null)
+            {
+                return NotFound();
+            }
+            return Ok(activities);
+        }
+
     }
 }

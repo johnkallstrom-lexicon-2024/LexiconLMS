@@ -1,3 +1,35 @@
 ﻿@page "/modules"
 
 <PageTitle>LexiconLMS - Modules</PageTitle>
+
+@* 1. Show all modules here
+2. this should have a button to see all activies *@
+
+<table class="table table-bordered">
+    <thead class="table-warning">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Start</th>
+            <th scope="col">End</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var module in Modules)
+        {
+            <tr>
+                <td>@module.Id</td>
+                <td>@module.Name</td>
+                <td>@module.Description</td>
+                <td>@module.StartDate</td>
+                <td>@module.EndDate</td>
+                <td>@module.Activities.</td>
+@*                 <td>
+                    <button class="btn btn-primary" @onclick="() => ViewActivities(module.Id)">View Activities</button>
+                </td> *@
+            </tr>
+        }
+    </tbody>
+</table>

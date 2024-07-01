@@ -56,5 +56,12 @@ namespace LexiconLMS.Core.Services
             _unitOfWork.ActivityRepository.Delete(activity);
             await _unitOfWork.SaveAsync();
         }
+
+        public async Task<IEnumerable<Activity>> GetActivitiesOfModuleIdAsync(int id)
+        {
+            var activites = await _unitOfWork.ActivityRepository.GetActivitiesByModuleIdAsync(id);
+            return activites;
+        }
+
     }
 }
