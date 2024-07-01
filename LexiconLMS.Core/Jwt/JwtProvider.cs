@@ -16,8 +16,6 @@ namespace LexiconLMS.Core.Jwt
 
         public string GenerateToken(User user)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
-            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
             {
@@ -28,16 +26,27 @@ namespace LexiconLMS.Core.Jwt
                 new Claim(ClaimTypes.Surname, user.LastName),
             };
 
-            var token = new JwtSecurityToken(
-                issuer: _jwtSettings.Issuer,
-                audience: _jwtSettings.Audience,
-                claims: claims,
-                notBefore: null,
-                expires: DateTime.Now.AddMinutes(60),
-                signingCredentials: signingCredentials);
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
-            var handler = new JwtSecurityTokenHandler();
-            return handler.WriteToken(token);
+            var identity = new ClaimsIdentity(
+                claims: claims,
+                authenticationType: "jwt");
+
+            var securityTokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = identity,
+                Expires = DateTime.UtcNow.AddMinutes(60),
+                Issuer = _jwtSettings.Issuer,
+                Audience = _jwtSettings.Audience,
+                SigningCredentials = signingCredentials
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.CreateToken(securityTokenDescriptor);
+            var token = tokenHandler.WriteToken(securityToken);
+
+            return token;
         }
 
         public async Task<Result<int>> ValidateTokenAsync(string token)

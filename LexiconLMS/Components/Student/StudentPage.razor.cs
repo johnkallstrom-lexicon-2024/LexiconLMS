@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LexiconLMS.Components.User.Teacher
+namespace LexiconLMS.Components.Student
 {
-    public partial class TeacherPage
+    public partial class StudentPage
     {
         [Inject]
         public IHttpService HttpService { get; set; } = default!;
@@ -12,16 +12,16 @@ namespace LexiconLMS.Components.User.Teacher
 
         protected override async Task OnInitializedAsync()
         {
-            await GetTeachers();
+            await GetStudents();
         }
 
-        private async Task GetTeachers()
+        private async Task GetStudents()
         {
             Loading = true;
-            var teachers = await HttpService.GetAsync<IEnumerable<UserTrimModel>>($"{Endpoints.Users}?role=Teacher");
-            if (teachers != null)
+            var students = await HttpService.GetAsync<IEnumerable<UserTrimModel>>($"{Endpoints.Users}?role=Student");
+            if (students != null)
             {
-                Model = teachers;
+                Model = students;
             }
             Loading = false;
         }
