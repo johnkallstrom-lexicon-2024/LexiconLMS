@@ -1,0 +1,11 @@
+﻿@page "/delete-course/{id:int}"
+@inject IHttpService HttpService
+@inject NavigationManager NavigationManager
+
+<h3>Delete Course</h3>
+
+<p>Are you sure you want to delete this course?</p>
+<button class="btn btn-danger" @onclick="DeleteCourseAsync">Delete</button>
+<button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+
+

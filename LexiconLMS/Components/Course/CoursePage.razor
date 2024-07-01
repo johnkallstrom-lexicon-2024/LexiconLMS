@@ -1,27 +1,25 @@
-﻿@page "/courses"
+﻿@page "/courses";
 
-<PageTitle>LexiconLMS - Courses</PageTitle>
-
-<table class="table table-bordered">
-    <thead class="table-warning">
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Start</th>
-            <th scope="col">End</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <a href="/create-course" class="btn btn-success mb-3">Add Course</a>
+    <div class="row">
         @foreach (var course in Courses)
         {
-            <tr>
-                <td>@course.Id</td>
-                <td>@course.Name</td>
-                <td>@course.Description</td>
-                <td>@course.StartDate</td>
-                <td>@course.EndDate</td>
-            </tr>
+            <div class="col-md-4">
+                <div class="card mb-4" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Name</h5>
+                        <p class="card-text">@course.Description</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Id:</strong> @course.Id</li>
+                            <li class="list-group-item"><strong>Start:</strong> @course.StartDate.ToShortDateString()</li>
+                            <li class="list-group-item"><strong>End:</strong> @course.EndDate.ToShortDateString()</li>
+                        </ul>
+                        <a href="/courses/edit/@course.Id" class="btn btn-primary mt-2">Edit</a>
+                        <a href="/courses/edit/@course.Id" class="btn btn-danger mt-2">Delete</a>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
