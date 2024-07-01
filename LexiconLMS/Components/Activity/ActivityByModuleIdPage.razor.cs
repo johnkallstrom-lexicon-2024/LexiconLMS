@@ -15,7 +15,7 @@ namespace LexiconLMS.Components.Activity
         {
             try
             {
-                var activities = await HttpService.GetAsync<IEnumerable<ActivityModelForFiltering>>(Endpoints.Activities);
+                var activities = await HttpService.GetAsync<IEnumerable<ActivityModelForFiltering>>($"{Endpoints.Activities}/module/{ModuleId}");
                 if (activities != null)
                 {
                     // Filter activities by moduleId

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LexiconLMS.Components.Module
 {
@@ -6,6 +7,10 @@ namespace LexiconLMS.Components.Module
     {
         [Inject]
         public IHttpService HttpService { get; set; } = default!;
+
+        [Inject]
+
+        public NavigationManager NavigationManager { get; set; }
 
         public IEnumerable<ModuleTrimModel> Modules { get; set; } = [];
 
@@ -16,6 +21,11 @@ namespace LexiconLMS.Components.Module
             {
                 Modules = modules;
             }
+        }
+
+        private void ViewActivitiesByModuleId(int moduleId)
+        {
+            NavigationManager.NavigateTo($"/modules/{moduleId}/activities");
         }
     }
 }
