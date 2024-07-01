@@ -7,23 +7,15 @@ namespace LexiconLMS.Components.Module
         [Inject]
         public IHttpService HttpService { get; set; } = default!;
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; } = default!;
-
-        public IEnumerable<ModuleModel> Modules { get; set; } = [];
+        public IEnumerable<ModuleTrimModel> Modules { get; set; } = [];
 
         protected override async Task OnInitializedAsync()
         {
-            var modules = await HttpService.GetAsync<IEnumerable<ModuleModel>>(Endpoints.Modules);
+            var modules = await HttpService.GetAsync<IEnumerable<ModuleTrimModel>>(Endpoints.Modules);
             if (modules != null)
             {
                 Modules = modules;
             }
         }
-
-        //private void ViewActivities(int moduleId)
-        //{
-        //    NavigationManager.NavigateTo($"/modules/{moduleId}/activities");
-        //}
     }
 }

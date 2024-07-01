@@ -2,9 +2,37 @@
 
 <PageTitle>LexiconLMS - Modules</PageTitle>
 
+<div class="container">
+    @* <a href="/create-course" class="btn btn-success mb-3">Add Modules</a> *@
+    <div class="row">
+        @foreach (var module in Modules)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@module.Name</h5>
+                        <p class="card-text">@module.Description</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Id:</strong> @module.Id</li>
+                            <li class="list-group-item"><strong>Start:</strong> @module.StartDate.ToShortDateString()</li>
+                            <li class="list-group-item"><strong>End:</strong> @module.EndDate.ToShortDateString()</li>
+                        </ul>
+                        @* <button class="btn btn-primary mt-2" @onclick="() => ViewActivitiesByModuleId(module.Id)">View Activities</button> *@
+                        @* <a href="/courses/edit-course/@course.Id" class="btn btn-primary mt-2">Edit</a>
+                        <a href="/courses/delete-course/@course.Id" class="btn btn-danger mt-2">Delete</a> *@
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
 @* 1. Show all modules here
 2. this should have a button to see all activies *@
-
+@* 
 <table class="table table-bordered">
     <thead class="table-warning">
         <tr>
@@ -26,10 +54,10 @@
                 <td>@module.StartDate</td>
                 <td>@module.EndDate</td>
                 <td>@module.Activities.</td>
-@*                 <td>
+                <td>
                     <button class="btn btn-primary" @onclick="() => ViewActivities(module.Id)">View Activities</button>
-                </td> *@
+                </td>
             </tr>
         }
-    </tbody>
-</table>
+    </tbody> 
+</table>*@

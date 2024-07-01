@@ -2,15 +2,12 @@
 
 namespace LexiconLMS.Components.Activity
 {
-    public partial class ActivityPage
+    public partial class ActivityByModuleIdPage
     {
         [Parameter]
         public int ModuleId { get; set; }
         [Inject]
         public IHttpService HttpService { get; set; } = default!;
-
-        [Inject]
-        public NavigationManager NavigationManager { get; set; } = default!;
 
         public IEnumerable<ActivityModelForFiltering> Activity { get; set; } = [];
 
@@ -22,7 +19,7 @@ namespace LexiconLMS.Components.Activity
                 if (activities != null)
                 {
                     // Filter activities by moduleId
-                    Activity = activities.Where(a => a.Module.Id == ModuleId).ToList();
+                    Activity = activities;
                 }
             }
             catch (Exception ex)
