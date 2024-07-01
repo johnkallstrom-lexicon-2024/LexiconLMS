@@ -1,12 +1,35 @@
 ﻿@page "/students/details/{id:int}"
 
-<PageTitle>LexiconLMS - Teacher Details</PageTitle>
+<PageTitle>LexiconLMS - Student Details</PageTitle>
 
-<div class="bg-warning p-3">
-
-    <h3>Course: Introduction to computer science</h3>
-    <div class="bg-light m-1">Startdate section</div>
-    <div class="bg-light m-1">Description Section</div>
-    <a href="/students"> <i class="btn bi bi-arrow-left-circle-fill"></i></a>
-   
-</div>
+@if (Loading)
+{
+    <Spinner />
+}
+else
+{
+    @if (Model != null)
+    {
+        <div class="d-flex justify-content-center align-items-start min-vh-100 custom-mt">
+            <div class="card card-student p-3">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="card-body">
+                        <h3 class="pb-2">@Model.Name</h3>
+                            <h5 class="card-title">@Model.Roles.First()</h5>
+                            <ul>
+                                <li>Username: @Model.UserName</li>
+                                <li>Email: @Model.Email</li>
+                            </ul>
+                            @if (Model.Course != null)
+                            {
+                                <p>Course: @Model.Course.Name</p>
+                            }
+                            <button class="btn btn-primary text-center mt-2" @onclick="Return">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

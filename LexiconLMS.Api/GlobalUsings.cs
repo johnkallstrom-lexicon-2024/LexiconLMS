@@ -3,6 +3,7 @@ global using LexiconLMS.Api.Extensions;
 global using LexiconLMS.Core;
 global using LexiconLMS.Core.Entities;
 global using LexiconLMS.Core.Interfaces;
+global using LexiconLMS.Core.Parameters;
 global using LexiconLMS.Core.Models.Activity;
 global using LexiconLMS.Core.Models.Course;
 global using LexiconLMS.Core.Models.Document;

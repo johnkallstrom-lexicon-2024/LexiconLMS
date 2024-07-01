@@ -1,5 +1,9 @@
-﻿namespace LexiconLMS.Api.Controllers
+﻿using LexiconLMS.Api.Authorization;
+using Microsoft.AspNetCore.Authorization;
+
+namespace LexiconLMS.Api.Controllers
 {
+    //[IsAuthorized]
     [Route("api/[controller]")]
     [ApiController]
     public class CoursesController : ControllerBase

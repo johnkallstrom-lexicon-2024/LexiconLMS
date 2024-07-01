@@ -1,5 +1,6 @@
 ﻿namespace LexiconLMS.Api.Controllers
 {
+    //[IsAuthorized]
     [Route("api/[controller]")]
     [ApiController]
     public class ActivitiesController : ControllerBase
@@ -16,9 +17,13 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetActivities()
+        public async Task<IActionResult> GetActivities([FromQuery] ActivityQueryParams parameters)
         {
-            var activities = await _activityService.GetActivitiesAsync();
+            IEnumerable<Activity> activities = default!;
+
+            if (parameters is null) activities = await _activityService.GetActivitiesAsync();
+            else activities = await _activityService.GetActivitiesAsync(parameters);
+
             return Ok(_mapper.Map<IEnumerable<ActivityTrimModel>>(activities));
         }
 
