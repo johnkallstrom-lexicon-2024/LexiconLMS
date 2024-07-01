@@ -10,17 +10,26 @@ else
 {
     @if (Model != null)
     {
-        <h3>@Model.Name</h3>
-        <ul>
-            <li>Usernane: @Model.UserName</li>
-            <li>Email: @Model.Email</li>
-            <li>Role: @Model.Roles.First()</li>
-        </ul>
-        @if (Model.Course != null)
-        {
-            <p>Course: @Model.Course.Name</p>
-        }
-
-        <button class="btn btn-primary" @onclick="Return">Back</button>
+        <div class="d-flex justify-content-center align-items-start min-vh-100 custom-mt">
+            <div class="card card-student p-3">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="card-body">
+                        <h3 class="pb-2">@Model.Name</h3>
+                            <h5 class="card-title">@Model.Roles.First()</h5>
+                            <ul>
+                                <li>Username: @Model.UserName</li>
+                                <li>Email: @Model.Email</li>
+                            </ul>
+                            @if (Model.Course != null)
+                            {
+                                <p>Course: @Model.Course.Name</p>
+                            }
+                            <button class="btn btn-primary text-center mt-2" @onclick="Return">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 }
