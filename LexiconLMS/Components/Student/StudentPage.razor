@@ -1,10 +1,10 @@
-﻿@page "/teachers"
+﻿@page "/students"
 
-<PageTitle>LexiconLMS - Teachers</PageTitle>
+<PageTitle>LexiconLMS - Students</PageTitle>
 
 <div class="d-flex flex-column align-items-start min-vh-100">
     <div class ="flex-row">
-        <h3 class="mb-5 mt-5">Teacher Overview</h3>
+        <h3 class="mb-3">Student Overview</h3>
     </div>
     @if (Loading)
     {
@@ -16,13 +16,17 @@
         {
             <div class="flex-column">
                 <div class="row">
-                    @foreach (var teacher in Model)
+                    @foreach (var student in Model)
                     {
-                        <TeacherCard Teacher="teacher" />
+                        <StudentCard Student="student" />
                     }
                 </div>
             </div>
         }
-        <a href="/courses" class="btn btn-warning">Courses</a>
+
+        else
+        {
+        <p>No students found.</p>
+        }
     }
 </div>
