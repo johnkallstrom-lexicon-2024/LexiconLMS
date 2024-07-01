@@ -1,25 +1,30 @@
-﻿@page "/courses/edit/{id:int}"
+﻿@page "/courses/edit/{Id:int}"
 @inject IHttpService HttpService
-@inject NavigationManager NavigationManager
-@rendermode InteractiveServer
 
-<h3>Edit: @Course.Name</h3>
-    <section>
-        <EditForm Enhance Model="Course" FormName="EditCourseForm"
-            OnInvalidSubmit="@HandleInvalidSubmit"
-            OnValidSubmit="@HandleValidSubmit"
-            method="post" class="d-flex flex-column">
-            <lable for="name">Course name:</lable>
-            <InputText id="name" class="form-control" @bind-Value="@Course.Name" placeholder="Enter Course name"></InputText>
-            <lable for="name">Course description:</lable>
-            <InputTextArea id="description" class="form-control" @bind-Value="@Course.Description"></InputTextArea>
-            <lable for="name">Startdate:</lable>
-            <InputDate id="startDate" @bind-Value="@Course.StartDate" placeholder="Enter start of Course"></InputDate>
-            <lable for="name">EndDate:</lable>
-            <InputDate id="endDate" @bind-Value="@Course.EndDate" placeholder="Enter end of Course"></InputDate>
-            <button type="submit" class="btn btn-secondary">Add Changes</button>
-        </EditForm>
-    </section>
+<h3>Course Details</h3>
 
+@if (course == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div>
+        <h4>@course.Name</h4>
+        <p>@course.Description</p>
+        <p>Start Date: @course.StartDate.ToShortDateString()</p>
+        <p>End Date: @course.EndDate.ToShortDateString()</p>
+    </div>
+}
 
+@code {
+    [Parameter]
+    public int Id { get; set; }
 
+    public CourseTrimModel? course;
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = await HttpService.GetAsync<CourseTrimModel>($"{Endpoints.Courses}/{Id}");
+    }
+}
