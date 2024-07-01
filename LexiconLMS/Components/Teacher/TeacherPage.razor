@@ -5,6 +5,14 @@
 <div class="d-flex flex-column align-items-start min-vh-100">
     <div class ="flex-row">
         <h3 class="mb-5 mt-5">Teacher Overview</h3>
+        <div class="d-flex justify-content-evenly flex-row">
+            <a href="/courses" class="btn btn-warning">Courses</a>
+            <a href="/modules" class="btn btn-warning">Modules</a>
+            @*<a href="/activities" class="btn btn-warning">Activities</a>*@
+        </div>
+        <div>
+            @*<a href="/students" class="btn btn-warning">Students</a>*@
+        </div>
     </div>
     @if (Loading)
     {
@@ -23,6 +31,5 @@
                 </div>
             </div>
         }
-        <a href="/courses" class="btn btn-warning">Courses</a>
     }
 </div>
