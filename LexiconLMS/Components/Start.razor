@@ -28,6 +28,12 @@
     protected override void OnInitialized()
     {
         var user = AuthenticationState.Result.User;
-        Name = user.GetFullName();
+        if (user != null)
+        {
+            if (user.Identity != null && user.Identity.IsAuthenticated)
+            {
+                Name = user.GetFullName();
+            }
+        }
     }
 }
