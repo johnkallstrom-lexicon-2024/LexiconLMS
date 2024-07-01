@@ -12,7 +12,7 @@ namespace LexiconLMS.Core.Mappings
         {
             // Activity
             CreateMap<Activity, ActivityModel>();
-            CreateMap<Activity, ActivityTrimModel>();
+            CreateMap<Activity, ActivityTrimModel>().ForMember(dest => dest.Module, opt => opt.MapFrom(src => src.Module.Name));
             CreateMap<ActivityCreateModel, Activity>();
             CreateMap<ActivityUpdateModel, Activity>();
 
