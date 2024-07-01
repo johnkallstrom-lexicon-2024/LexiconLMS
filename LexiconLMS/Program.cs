@@ -1,5 +1,7 @@
 using Blazored.LocalStorage;
 using LexiconLMS;
+using LexiconLMS.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,10 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpServices();
 builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
+builder.Services.AddAuthorizationCore();
 
 var app = builder.Build();
 
