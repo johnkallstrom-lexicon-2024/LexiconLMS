@@ -20,7 +20,14 @@ namespace LexiconLMS.Api.Controllers
         public async Task<IActionResult> LoginUser(AuthenticateRequest model)
         {
             var result = await _userService.LoginUserAsync(model.Email, model.Password);
-            return Ok(result);
+            if (result.Success)
+            {
+                return Ok(result.Value);
+            }
+            else
+            {
+                return Ok(new { Success = false, Errors = result.Errors });
+            }
         }
     }
 }

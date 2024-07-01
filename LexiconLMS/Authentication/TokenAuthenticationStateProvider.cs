@@ -16,32 +16,32 @@ namespace LexiconLMS.Authentication
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            ClaimsPrincipal? user = default!;
-
             string? token = await _localStorage.GetItemAsStringAsync("token");
-            if (!string.IsNullOrWhiteSpace(token))
+            if (string.IsNullOrEmpty(token))
             {
-                user = ParseJwtTokenToClaimsPrincipal(token);
+                return new AuthenticationState(new ClaimsPrincipal());
             }
 
-            return new AuthenticationState(user);
+            var claims = ParseClaimsFromJwtToken(token);
+            var identity = claims.Count() > 0 ? new ClaimsIdentity(claims) : new ClaimsIdentity();
+
+            var state = new AuthenticationState(new ClaimsPrincipal(identity));
+            NotifyAuthenticationStateChanged(Task.FromResult(state));
+            return state;
         }
 
-        private ClaimsPrincipal ParseJwtTokenToClaimsPrincipal(string token)
+        private IEnumerable<Claim> ParseClaimsFromJwtToken(string token)
         {
-            JwtSecurityToken? securityToken = default!;
+            var claims = Enumerable.Empty<Claim>();
 
             var handler = new JwtSecurityTokenHandler();
             if (handler.CanReadToken(token))
             {
-                securityToken = handler.ReadJwtToken(token);
-                var identity = new ClaimsIdentity(securityToken.Claims, authenticationType: "jwt");
-                var principal = new ClaimsPrincipal(identity);
-
-                return principal;
+                var securityToken = handler.ReadJwtToken(token);
+                claims = securityToken.Claims;
             }
 
-            return new ClaimsPrincipal();
+            return claims;
         }
     }
 }

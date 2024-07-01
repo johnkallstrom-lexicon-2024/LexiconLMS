@@ -1,5 +1,4 @@
-﻿using LexiconLMS.Core.Models.Authenticate;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 
 namespace LexiconLMS.Core.Services
 {
@@ -26,22 +25,20 @@ namespace LexiconLMS.Core.Services
         }
 
         public async Task PostAsync(string url, object data) => await _httpClient.PostAsJsonAsync(url, data);
-        public async Task PutAsync(string url, object data) => await _httpClient.PutAsJsonAsync(url, data);
-        public async Task DeleteAsync(string url) => await _httpClient.DeleteAsync(url);
-
-        public async Task<AuthenticateResponse> LoginAsync(string url, AuthenticateRequest request)
+        public async Task<string> PostAndRetrieveString(string url, object data)
         {
-            var httpResponse = await _httpClient.PostAsJsonAsync(url, request);
+            string str = string.Empty;
+
+            var httpResponse = await _httpClient.PostAsJsonAsync(url, data);
             if (httpResponse.IsSuccessStatusCode)
             {
-                var result = await httpResponse.Content.ReadFromJsonAsync<AuthenticateResponse>();
-                if (result != null)
-                {
-                    return result;
-                }
+                str = await httpResponse.Content.ReadAsStringAsync();
             }
 
-            return default!;
+            return str;
         }
+
+        public async Task PutAsync(string url, object data) => await _httpClient.PutAsJsonAsync(url, data);
+        public async Task DeleteAsync(string url) => await _httpClient.DeleteAsync(url);
     }
 }

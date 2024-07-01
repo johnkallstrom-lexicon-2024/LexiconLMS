@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LexiconLMS.Api.Controllers
 {
-    //[IsAuthorized]
+    [IsAuthorized]
     [Route("api/[controller]")]
     [ApiController]
     public class ModulesController : ControllerBase

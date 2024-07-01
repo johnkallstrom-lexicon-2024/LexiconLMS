@@ -16,14 +16,19 @@ namespace LexiconLMS.Components.User
         [Inject]
         public IHttpService HttpService { get; set; } = default!;
 
-        public AuthenticateRequest Model { get; set; } = new();
+        public AuthenticateRequest? Model { get; set; }
+
+        protected override void OnInitialized()
+        {
+            Model = new();
+        }
 
         public async Task Submit()
         {
-            var response = await HttpService.LoginAsync(Endpoints.Authenticate, Model);
-            if (response != null && response.Success)
+            string? token = await HttpService.PostAndRetrieveString(Endpoints.Authenticate, Model);
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                await LocalStorage.SetItemAsync("token", response.Token);
+                await LocalStorage.SetItemAsStringAsync("token", token);
                 NavigationManager.NavigateTo("/", forceLoad: true);
             }
         }

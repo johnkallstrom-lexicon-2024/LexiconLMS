@@ -6,7 +6,7 @@ namespace LexiconLMS.Core.Interfaces
     {
         Task<TData?> GetAsync<TData>(string url);
         Task PostAsync(string url, object data);
-        Task<AuthenticateResponse> LoginAsync(string url, AuthenticateRequest request);
+        Task<string> PostAndRetrieveString(string url, object data);
         Task PutAsync(string url, object data);
         Task DeleteAsync(string url);
     }
