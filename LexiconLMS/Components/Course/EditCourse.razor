@@ -1,32 +1,60 @@
 ﻿@page "/courses/edit-course/{Id:int}"
 @inject IHttpService HttpService
-
-<h3>Edit Course</h3>
+@inject NavigationManager NavigationManager
 
 @if (course == null)
 {
+    <h3>Edit Course</h3>
     <p>Loading...</p>
 }
 else
 {
-    <div>
-        <h4>@course.Name</h4>
-        <p>@course.Description</p>
-        <p>Course Id: @course.Id</p>
-        <p>Start Date: @course.StartDate.ToShortDateString()</p>
-        <p>End Date: @course.EndDate.ToShortDateString()</p>
-    </div>
-    <NavLink href="/courses" class="btn-sm btn-warning">Back to Course overview</NavLink>
+    <EditForm Model="course" OnValidSubmit="OnSubmit" OnInvalidSubmit="InvalidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="name">Course Name</label>
+            <InputText id="name" @bind-Value="course.Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <InputTextArea id="description" @bind-Value="course.Description" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <InputDate id="startDate" @bind-Value="course.StartDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <InputDate id="endDate" @bind-Value="course.EndDate" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
 }
 
 @code {
     [Parameter]
     public int Id { get; set; }
 
-    public CourseTrimModel? course;
+    public CourseTrimModel? course { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         course = await HttpService.GetAsync<CourseTrimModel>($"{Endpoints.Courses}/{Id}");
+    }
+
+    private async Task OnSubmit()
+    {
+        if (course != null)
+        {
+            await HttpService.PutAsync($"{Endpoints.Courses}/{Id}", course);
+            NavigationManager.NavigateTo("/courses");
+        }
+    }
+
+    private void InvalidSubmit()
+    {
+        // Handle invalid submission
     }
 }
