@@ -1,8 +1,6 @@
 ﻿using LexiconLMS.Api.Authorization;
 using LexiconLMS.Core.Identity;
 using LexiconLMS.Core.Models.User;
-using LexiconLMS.Core.Parameters;
-using Microsoft.AspNetCore.Authorization;
 
 namespace LexiconLMS.Api.Controllers
 {

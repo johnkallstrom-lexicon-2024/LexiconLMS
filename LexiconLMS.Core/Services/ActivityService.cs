@@ -1,4 +1,5 @@
-﻿
+﻿using LexiconLMS.Core.Parameters;
+
 namespace LexiconLMS.Core.Services
 {
     public class ActivityService : IActivityService
@@ -14,6 +15,22 @@ namespace LexiconLMS.Core.Services
         {
             var activites = await _unitOfWork.ActivityRepository.GetListAsync();
             return activites;
+        }
+
+        public async Task<IEnumerable<Activity>> GetActivitiesAsync(ActivityQueryParams parameters)
+        {
+            var activities = Enumerable.Empty<Activity>();
+
+            if (parameters.ModuleId != default)
+            {
+                activities = await _unitOfWork.ActivityRepository.GetFilteredAsync(a => a.ModuleId == parameters.ModuleId);
+            }
+            else
+            {
+                activities = await _unitOfWork.ActivityRepository.GetListAsync();
+            }
+
+            return activities;
         }
 
         public async Task<Activity?> GetActivityByIdAsync(int id)
