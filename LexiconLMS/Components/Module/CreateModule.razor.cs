@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
-namespace LexiconLMS.Components.Course
+
+namespace LexiconLMS.Components.Module
 {
-    public partial class CreateCourse
+    public partial class CreateModule
     {
         [SupplyParameterFromForm]
-        public CourseCreateModel Course { get; set ; }
+        public ModuleTrimModel Module { get; set; }
 
-       
+
         [Inject]
         public IHttpService? HttpService { get; set; }
         protected string Message = string.Empty;
@@ -14,16 +15,16 @@ namespace LexiconLMS.Components.Course
         protected bool IsSaved = false;
         protected override void OnInitialized()
         {
-            Course ??= new();
+            Module ??= new();
         }
         public async Task OnSumbit()
         {
-            await HttpService.PostAsync(Endpoints.Courses, Course);
+            await HttpService.PostAsync(Endpoints.Modules, Module);
             IsSaved = true;
             if (IsSaved)
             {
-                Message = "Course added successfully";
-                NavigationManager.NavigateTo("/courses");
+                Message = "Module added successfully";
+                NavigationManager.NavigateTo("/modules");
             }
             else
             {
