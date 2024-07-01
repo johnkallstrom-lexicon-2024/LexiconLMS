@@ -8,7 +8,16 @@
 }
 else
 {
-    <h3 class="mb-3">Teacher Overview</h3>
+     <h3 class="mb-3">Teacher Overview</h3>
+    <div class="d-flex justify-content-evenly m-5">
+        <a href="/courses" class="btn btn-warning">Courses</a>
+        <a href="/modules" class="btn btn-warning">Modules</a>
+        @*<a href="/activities" class="btn btn-warning">Activities</a>*@
+    </div>
+    <div>
+        @*<a href="/students" class="btn btn-warning">Students</a>*@
+    </div>
+   
     @if (Model != null && Model.Count() > 0)
     {
         @foreach (var teacher in Model)
@@ -16,5 +25,6 @@ else
             <TeacherCard Teacher="teacher" />
         }
     }
-    <a href="/courses" class="btn btn-warning">Courses</a>
+   
+   
 }
