@@ -23,10 +23,19 @@
                         <NavLink class="nav-link" href="/documents" Match="NavLinkMatch.All">Documents</NavLink>
                     </li>
                     <li class="nav-item">
-                        <NavLink class="nav-link" href="/logout" Match="NavLinkMatch.All">Logout</NavLink>
+                        <button class="nav-link" @onclick="Logout">Logout</button>
                     </li>
                 </ul>
             </Authorized>
+            <NotAuthorized>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="/login" Match="NavLinkMatch.All">Login</NavLink>
+                    </li>
+                </ul>
+            </NotAuthorized>
         </AuthorizeView>
     </div>
 </nav>
+
+

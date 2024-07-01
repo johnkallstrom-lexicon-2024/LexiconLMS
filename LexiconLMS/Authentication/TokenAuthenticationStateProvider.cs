@@ -1,47 +1,51 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 
 namespace LexiconLMS.Authentication
 {
     public class TokenAuthenticationStateProvider : AuthenticationStateProvider
     {
+        private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;
 
-        public TokenAuthenticationStateProvider(ILocalStorageService localStorage)
+        public TokenAuthenticationStateProvider(ILocalStorageService localStorage, HttpClient httpClient)
         {
             _localStorage = localStorage;
+            _httpClient = httpClient;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
+            var identity = new ClaimsIdentity();
+
             string? token = await _localStorage.GetItemAsStringAsync("token");
-            if (string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(token))
             {
-                return new AuthenticationState(new ClaimsPrincipal());
+                identity = ParseTokenToClaimsIdentity(token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
 
-            var claims = ParseClaimsFromJwtToken(token);
-            var identity = claims.Count() > 0 ? new ClaimsIdentity(claims) : new ClaimsIdentity();
+            var user = new ClaimsPrincipal(identity);
+            var state = new AuthenticationState(user);
 
-            var state = new AuthenticationState(new ClaimsPrincipal(identity));
-            NotifyAuthenticationStateChanged(Task.FromResult(state));
             return state;
         }
 
-        private IEnumerable<Claim> ParseClaimsFromJwtToken(string token)
+        private ClaimsIdentity ParseTokenToClaimsIdentity(string token)
         {
-            var claims = Enumerable.Empty<Claim>();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
 
-            var handler = new JwtSecurityTokenHandler();
-            if (handler.CanReadToken(token))
-            {
-                var securityToken = handler.ReadJwtToken(token);
-                claims = securityToken.Claims;
-            }
+            var claims = jwtSecurityToken.Claims.ToList();
 
-            return claims;
+            var identity = new ClaimsIdentity(
+                claims: claims,
+                authenticationType: "jwt");
+
+            return identity;
         }
     }
 }

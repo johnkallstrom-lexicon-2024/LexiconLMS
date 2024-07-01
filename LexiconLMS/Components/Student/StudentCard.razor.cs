@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LexiconLMS.Components.User.Student
+namespace LexiconLMS.Components.Student
 {
     public partial class StudentCard
     {

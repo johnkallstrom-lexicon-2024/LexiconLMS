@@ -8,3 +8,7 @@ global using LexiconLMS.Core.Models.Activity;
 global using LexiconLMS.Core.Models.Course;
 global using LexiconLMS.Core.Models.Module;
 global using LexiconLMS.Core.Models.Document;
+global using Blazored.LocalStorage;
+global using LexiconLMS;
+global using LexiconLMS.Authentication;
+global using Microsoft.AspNetCore.Components.Authorization;

@@ -1,8 +1,3 @@
-using Blazored.LocalStorage;
-using LexiconLMS;
-using LexiconLMS.Authentication;
-using Microsoft.AspNetCore.Components.Authorization;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
