@@ -15,8 +15,8 @@ namespace LexiconLMS.Core.Models.Course
         public DateTime Created { get; set; }
         public DateTime? LastModified { get; set; }
 
-        public IEnumerable<UserTrimModel> Users { get; set; } = [];
         public IEnumerable<ModuleTrimModel> Modules { get; set; } = [];
+        public IEnumerable<UserTrimModel> Users { get; set; } = [];
         public IEnumerable<DocumentTrimModel> Documents { get; set; } = [];
     }
 }

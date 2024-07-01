@@ -4,13 +4,15 @@
     [ApiController]
     public class ActivitiesController : ControllerBase
     {
+        private IModuleService _moduleService;
         private readonly IMapper _mapper;
         private readonly IActivityService _activityService;
 
-        public ActivitiesController(IActivityService activityService, IMapper mapper)
+        public ActivitiesController(IActivityService activityService, IMapper mapper, IModuleService moduleService)
         {
             _activityService = activityService;
             _mapper = mapper;
+            _moduleService = moduleService;
         }
 
         [HttpGet]
@@ -35,6 +37,12 @@
         [HttpPost]
         public async Task<IActionResult> CreateActivity([FromBody] ActivityCreateModel model)
         {
+            var module = await _moduleService.GetModuleByIdAsync(model.ModuleId);
+            if (module is null)
+            {
+                return BadRequest(new { Message = $"No module with id {model.ModuleId} exists" });
+            }
+
             var activity = _mapper.Map<Activity>(model);
             var createdActivity = await _activityService.CreateActivityAsync(activity);
 
@@ -44,9 +52,10 @@
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateActivity(int id, [FromBody] ActivityUpdateModel model)
         {
-            if (!ModelState.IsValid)
+            var module = await _moduleService.GetModuleByIdAsync(model.ModuleId);
+            if (module is null)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new { Message = $"No module with id {model.ModuleId} exists" });
             }
 
             var existingActivity = await _activityService.GetActivityByIdAsync(id);
