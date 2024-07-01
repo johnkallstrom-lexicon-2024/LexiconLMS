@@ -26,7 +26,7 @@ namespace LexiconLMS.Components.Course
 
         protected async Task HandleValidSubmit()
         {
-            await 
+            await HttpService.PutAsync($"{Endpoints.Courses}/{Id}", Course);
             IsSaved = true;
         }
 
