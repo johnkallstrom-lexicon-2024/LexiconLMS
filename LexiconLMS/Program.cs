@@ -23,7 +23,6 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/error", createScopeForErrors: true);
     app.UseHsts();
 }
 
