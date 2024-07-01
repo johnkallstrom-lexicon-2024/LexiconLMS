@@ -1,18 +1,20 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace LexiconLMS.Components
 {
     public partial class Home
     {
-        [Inject]
-        public ILocalStorageService LocalStorage { get; set; } = default!;
+        //[CascadingParameter]
+        //public Task<AuthenticationState> AuthState { get; set; } = default!;
 
-        public string? Token { get; set; }
-
-        protected override async Task OnInitializedAsync()
-        {
-            Token = await LocalStorage.GetItemAsStringAsync("token");
-        }
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    if (AuthState != null)
+        //    {
+        //        var user = AuthState.Result.User;
+        //    }
+        //}
     }
 }
