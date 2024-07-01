@@ -1,0 +1,34 @@
+﻿@page "/modules/edit-module/{Id:int}"
+@inject IHttpService HttpService
+@inject NavigationManager NavigationManager
+
+@if (module == null)
+{
+    <h3>Edit Module</h3>
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="module" OnValidSubmit="OnSubmit" OnInvalidSubmit="InvalidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="name">Course Name</label>
+            <InputText id="name" @bind-Value="module.Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <InputTextArea id="description" @bind-Value="module.Description" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <InputDate id="startDate" @bind-Value="module.StartDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <InputDate id="endDate" @bind-Value="module.EndDate" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+}
