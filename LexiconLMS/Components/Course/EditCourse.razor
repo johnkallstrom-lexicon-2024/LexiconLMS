@@ -1,7 +1,7 @@
 ﻿@page "/courses/edit/{Id:int}"
 @inject IHttpService HttpService
 
-<h3>Course Details</h3>
+<h3>Edit Course</h3>
 
 @if (course == null)
 {
@@ -12,9 +12,11 @@ else
     <div>
         <h4>@course.Name</h4>
         <p>@course.Description</p>
+        <p>Course Id: @course.Id</p>
         <p>Start Date: @course.StartDate.ToShortDateString()</p>
         <p>End Date: @course.EndDate.ToShortDateString()</p>
     </div>
+    <NavLink href="/courses" class="btn-sm btn-warning">Back to Course overview</NavLink>
 }
 
 @code {
