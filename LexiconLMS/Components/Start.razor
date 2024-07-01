@@ -1,9 +1,33 @@
 ﻿@page "/"
+@using System.Security.Claims
+@using LexiconLMS.Extensions
 
 <PageTitle>LexiconLMS - Start</PageTitle>
 
 <AuthorizeView>
+    <Authorized>
+        <p class="mb-3">Welcome, @Name</p>
+        <ul>
+            @foreach (var claim in AuthenticationState.Result.User.Claims)
+            {
+                <li>@claim</li>
+            }
+        </ul>
+    </Authorized>
     <NotAuthorized>
         <p>Not authorized.</p>
     </NotAuthorized>
 </AuthorizeView>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; } = default!;
+
+    public string? Name { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var user = AuthenticationState.Result.User;
+        Name = user.GetFullName();
+    }
+}
