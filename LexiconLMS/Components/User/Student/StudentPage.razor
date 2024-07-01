@@ -2,5 +2,27 @@
 
 <PageTitle>LexiconLMS - Students</PageTitle>
 
-<h3>Student Overview</h3>
-<StudentList/>
+@if (Loading)
+{
+    <Spinner />
+}
+else
+{
+    <h3 class="mb-3">Student Overview</h3>
+    @if (Model != null && Model.Count() > 0)
+    {
+        @foreach (var student in Model)
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <a href="@($"/students/details/{student.Id}")">
+                        <h5 class="card-title">@student.Name</h5>
+                    </a>
+                    <p class="mb-0">@student.Email</p>
+                    <p class="mb-0">@student.UserName</p>
+                    <p class="mb-0">@student.Roles.First()</p>
+                </div>
+            </div>
+        }
+    }
+}

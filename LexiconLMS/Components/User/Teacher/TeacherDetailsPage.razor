@@ -2,9 +2,25 @@
 
 <PageTitle>LexiconLMS - Teacher Details</PageTitle>
 
-<div class="bg-warning p-3">
+@if (Loading)
+{
+    <Spinner />
+}
+else
+{
+    @if (Model != null)
+    {
+        <h3>@Model.Name</h3>
+        <ul>
+            <li>Usernane: @Model.UserName</li>
+            <li>Email: @Model.Email</li>
+            <li>Role: @Model.Roles.First()</li>
+        </ul>
+        @if (Model.Course != null)
+        {
+            <p>Course: @Model.Course.Name</p>
+        }
 
-    <h3>Course: Introduction to computer science</h3>
-    <div class="bg-light m-1">Startdate section</div>
-    <div class="bg-light m-1">Description Section</div>
-</div>
+        <button class="btn btn-primary" @onclick="Return">Back</button>
+    }
+}

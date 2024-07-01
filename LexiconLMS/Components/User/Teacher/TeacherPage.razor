@@ -2,6 +2,7 @@
 
 <PageTitle>LexiconLMS - Teachers</PageTitle>
 
+<<<<<<< HEAD
 <h3>Teacher Overview</h3>
 
 <h3>Courses</h3>
@@ -14,4 +15,20 @@
 
 @code {
 
+=======
+@if (Loading)
+{
+    <Spinner />
+>>>>>>> development
+}
+else
+{
+    <h3 class="mb-3">Teacher Overview</h3>
+    @if (Model != null && Model.Count() > 0)
+    {
+        @foreach (var teacher in Model)
+        {
+            <TeacherCard Teacher="teacher" />
+        }
+    }
 }
