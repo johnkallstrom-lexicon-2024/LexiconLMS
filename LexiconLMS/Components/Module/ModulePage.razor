@@ -4,25 +4,32 @@
 
 <div class="container">
     <h3 class="mb-3">Module Overview</h3>
-    <a href="modules/create-module" class="btn btn-success mb-3">New</a>
-    <div class="row">
-        @foreach (var modules in Modules)
-        {
-            <div class="col-md-4">
-                <div class="card mb-4" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@modules.Name</h5>
-                        <p class="card-text">@modules.Description</p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Id:</strong> @modules.Id</li>
-                            <li class="list-group-item"><strong>Start:</strong> @modules.StartDate.ToShortDateString()</li>
-                            <li class="list-group-item"><strong>End:</strong> @modules.EndDate.ToShortDateString()</li>
-                        </ul>
-                        <a href="/modules/edit-module/@modules.Id" class="btn btn-primary mt-2">Edit</a>
-                        @*<a href="/courses/delete-course/@modules.Id" class="btn btn-danger mt-2">Delete</a>*@
+    @if (Loading)
+    {
+        <Spinner />
+    }
+    else
+    {
+        <a href="modules/create-module" class="btn btn-success mb-3">New</a>
+        <div class="row">
+            @foreach (var modules in Modules)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@modules.Name</h5>
+                            <p class="card-text">@modules.Description</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Id:</strong> @modules.Id</li>
+                                <li class="list-group-item"><strong>Start:</strong> @modules.StartDate.ToShortDateString()</li>
+                                <li class="list-group-item"><strong>End:</strong> @modules.EndDate.ToShortDateString()</li>
+                            </ul>
+                            <a href="/modules/edit-module/@modules.Id" class="btn btn-primary mt-2">Edit</a>
+                            @*<a href="/courses/delete-course/@modules.Id" class="btn btn-danger mt-2">Delete</a>*@
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+    }
 </div>
