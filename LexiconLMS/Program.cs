@@ -1,12 +1,13 @@
+using Blazored.LocalStorage;
+using LexiconLMS;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddHttpClient<IHttpService, HttpService>(config =>
-{
-    config.BaseAddress = new Uri("https://localhost:7104");
-});
+builder.Services.AddHttpServices();
+builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();
 

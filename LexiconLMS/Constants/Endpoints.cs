@@ -7,5 +7,6 @@
         public const string Documents = "/api/documents";
         public const string Modules = "/api/modules";
         public const string Users = "/api/users";
+        public const string Authenticate = "/api/authenticate";
     }
 }

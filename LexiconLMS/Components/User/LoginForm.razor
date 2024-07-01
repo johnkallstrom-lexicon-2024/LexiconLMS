@@ -1,11 +1,14 @@
-﻿<EditForm Model="Model">
-    <div class="mb-4">
-        <input type="text" class="form-control" id="formLoginEmail" placeholder="Email/Username">
+﻿<EditForm Model="Model" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="@Model.Email" class="form-label">Email</label>
+        <InputText @bind-Value=Model.Email class="form-control" />
+        <ValidationMessage For="() => Model.Email" />
     </div>
-    <div class="mb-4">
-        <input type="password" class="form-control" id="formLoginPassword" placeholder="Password">
+    <div class="mb-3">
+        <label for="@Model.Email" class="form-label">Password</label>
+        <InputText type="password" @bind-Value=Model.Password class="form-control" />
+        <ValidationMessage For="() => Model.Password" />
     </div>
-    <div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
-    </div>
+    <button type="submit" class="btn btn-primary">Sign in</button>
 </EditForm>
