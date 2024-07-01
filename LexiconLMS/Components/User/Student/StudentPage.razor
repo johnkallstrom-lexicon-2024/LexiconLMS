@@ -2,7 +2,7 @@
 
 <PageTitle>LexiconLMS - Students</PageTitle>
 
-<div class="d-flex flex-column justify-content-center align-items-start min-vh-100">
+<div class="d-flex flex-column align-items-start min-vh-100">
     <div class ="flex-row">
         <h3 class="mb-5 mt-5">Student Overview</h3>
     </div>
@@ -18,18 +18,7 @@
                 <div class="row">
                     @foreach (var student in Model)
                     {
-                        <div class="col-md-4 mb-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <a href="@($"/students/details/{student.Id}")">
-                                        <h5 class="card-title">@student.Name</h5>
-                                    </a>
-                                    <p class="mb-0">@student.Email</p>
-                                    <p class="mb-0">@student.UserName</p>
-                                    <p class="mb-0">@student.Roles.FirstOrDefault()</p>
-                                </div>
-                            </div>
-                        </div>
+                        <StudentCard Student="student" />
                     }
                 </div>
             </div>
