@@ -4,11 +4,11 @@
 <h3>Add a new Course</h3>
 @if (!IsSaved)
 {
-    <form method="post" @onsubmit="OnSumbit" @formname="add-course-form" data-enhance>
-        <InputText id="name" @bind-Value="@Course.Name" placeholder="Enter Course name"></InputText>
-        <InputTextArea id="description" @bind-Value="@Course.Description" placeholder="Add description of the Course"></InputTextArea>
-        <InputDate id="startDate" @bind-Value="@Course.StartDate"></InputDate>
-        <InputDate id="endDate" @bind-Value="@Course.EndDate"></InputDate>
+    <form method="post" class="d-flex flex-column" @onsubmit="OnSumbit" @formname="add-course-form" data-enhance>
+        <InputText id="name" class="form-control" @bind-Value="@Course.Name" placeholder="Enter Course name"></InputText>
+        <InputTextArea id="description" class="form-control" @bind-Value="@Course.Description" placeholder="Add description of the Course"></InputTextArea>
+        <InputDate id="startDate" class="form-control" @bind-Value="@Course.StartDate"></InputDate>
+        <InputDate id="endDate" class="form-control" @bind-Value="@Course.EndDate"></InputDate>
         <AntiforgeryToken />
         <button type="submit" class="btn btn-warning">Add Course</button>
     </form>
