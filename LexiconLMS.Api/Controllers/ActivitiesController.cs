@@ -1,4 +1,6 @@
-﻿namespace LexiconLMS.Api.Controllers
+﻿using LexiconLMS.Api.Authorization;
+
+namespace LexiconLMS.Api.Controllers
 {
     [IsAuthorized]
     [Route("api/[controller]")]
