@@ -5,13 +5,13 @@ namespace LexiconLMS.Http.Services
 {
     public class HttpService : IHttpService
     {
-        private readonly ILocalStorageService _localStorage;
+        private readonly ISessionStorageService _sessionStorage;
         private readonly HttpClient _httpClient;
 
-        public HttpService(HttpClient httpClient, ILocalStorageService localStorage)
+        public HttpService(HttpClient httpClient, ISessionStorageService sessionStorage)
         {
             _httpClient = httpClient;
-            _localStorage = localStorage;
+            _sessionStorage = sessionStorage;
         }
 
         public async Task<TData?> GetAsync<TData>(string url)
@@ -61,7 +61,7 @@ namespace LexiconLMS.Http.Services
 
         private async Task SetAuthorizationHeader()
         {
-            string? token = await _localStorage.GetItemAsStringAsync("token");
+            string? token = await _sessionStorage.GetItemAsStringAsync("token");
             if (!string.IsNullOrEmpty(token))
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

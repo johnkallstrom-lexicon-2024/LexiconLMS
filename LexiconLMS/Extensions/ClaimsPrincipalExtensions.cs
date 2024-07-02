@@ -4,6 +4,12 @@ namespace LexiconLMS.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {
+        public static int GetUserId(this ClaimsPrincipal user)
+        {
+            var userId = user.Claims?.FirstOrDefault(claim => claim.Type.Equals("nameidentifier")).Value;
+            return int.Parse(userId);
+        }
+
         public static string GetFullName(this ClaimsPrincipal user)
         {
             if (user != null)

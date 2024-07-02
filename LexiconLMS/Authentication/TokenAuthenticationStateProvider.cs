@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 
@@ -9,29 +7,31 @@ namespace LexiconLMS.Authentication
     public class TokenAuthenticationStateProvider : AuthenticationStateProvider
     {
         private readonly HttpClient _httpClient;
-        private readonly ILocalStorageService _localStorage;
+        private readonly ISessionStorageService _sessionStorage;
 
-        public TokenAuthenticationStateProvider(ILocalStorageService localStorage, HttpClient httpClient)
+        public TokenAuthenticationStateProvider(HttpClient httpClient, ISessionStorageService sessionStorage)
         {
-            _localStorage = localStorage;
             _httpClient = httpClient;
+            _sessionStorage = sessionStorage;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var identity = new ClaimsIdentity();
-
-            string? token = await _localStorage.GetItemAsStringAsync("token");
-            if (!string.IsNullOrEmpty(token))
+            string? token = await _sessionStorage.GetItemAsStringAsync("token");
+            if (string.IsNullOrWhiteSpace(token))
             {
-                identity = ParseTokenToClaimsIdentity(token);
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var anonymous = new ClaimsPrincipal(new ClaimsIdentity());
+                return new AuthenticationState(anonymous);
             }
+            else
+            {
+                var identity = ParseTokenToClaimsIdentity(token);
+                var authenticated = new ClaimsPrincipal(identity);
 
-            var user = new ClaimsPrincipal(identity);
-            var state = new AuthenticationState(user);
+                var state = new AuthenticationState(authenticated);
 
-            return state;
+                return state;
+            }
         }
 
         private ClaimsIdentity ParseTokenToClaimsIdentity(string token)

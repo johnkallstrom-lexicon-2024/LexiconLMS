@@ -1,0 +1,9 @@
+﻿<button class="btn btn-primary" type="button" disabled>
+    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+    <span role="status">@Label</span>
+</button>
+
+@code {
+    [Parameter]
+    public string Label { get; set; } = "Submit";
+}
