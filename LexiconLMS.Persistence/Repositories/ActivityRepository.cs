@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 
 namespace LexiconLMS.Persistence.Repositories
 {
+
     public class ActivityRepository : IRepository<Activity>
     {
         private readonly LexiconDbContext _context;
@@ -49,5 +50,14 @@ namespace LexiconLMS.Persistence.Repositories
 
         public void Update(Activity entity) => _context.Activities.Update(entity);
         public void Delete(Activity entity) => _context.Activities.Remove(entity);
+
+        public async Task<IEnumerable<Activity>> GetActivitiesByModuleIdAsync(int moduleId)
+        {
+            var activities = await _context.Activities
+                .Where(a => a.ModuleId == moduleId)
+                .ToListAsync();
+
+            return activities;
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace LexiconLMS.Core.Interfaces
         Task<Activity> CreateActivityAsync(Activity activity);
         Task UpdateActivityAsync(Activity activity);
         Task DeleteActivityAsync(Activity activity);
+        Task<IEnumerable<Activity>> GetActivitiesOfModuleIdAsync(int id);
     }
 }

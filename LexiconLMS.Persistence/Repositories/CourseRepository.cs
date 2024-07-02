@@ -42,5 +42,10 @@ namespace LexiconLMS.Persistence.Repositories
 
         public void Update(Course entity) => _context.Courses.Update(entity);
         public void Delete(Course entity) => _context.Courses.Remove(entity);
+
+        public Task<IEnumerable<Activity>> GetActivitiesByModuleIdAsync(int moduleId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

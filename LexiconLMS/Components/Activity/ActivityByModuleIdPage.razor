@@ -1,0 +1,30 @@
+﻿@page "/modules/{moduleId:int}/activities"
+
+<PageTitle>LexiconLMS - Activity by Module</PageTitle>
+
+<div class="container">
+    <a href="/create-activity/@ModuleId" class="btn btn-success mb-3">New Activity</a>
+    <div class="row">
+        @foreach (var activity in Activity)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@activity.Name</h5>
+                        <p class="card-text">@activity.Description</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Id:</strong> @activity.Id</li>
+                            <li class="list-group-item"><strong>Start:</strong> @activity.StartDate.ToShortDateString()</li>
+                            <li class="list-group-item"><strong>End:</strong> @activity.EndDate.ToShortDateString()</li>
+                        </ul>
+                        <a href="/activities/edit-activity/@ModuleId" class="btn btn-primary mt-2">Edit</a>
+                        <a href="/activities/delete-activity/@activity.Id" class="btn btn-danger mt-2">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

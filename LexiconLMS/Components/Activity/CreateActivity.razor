@@ -1,0 +1,29 @@
+﻿@page "/create-activity/{moduleId:int}"
+
+@using LexiconLMS.Core.Entities
+@using LexiconLMS.Core.Models.Activity
+
+<h3>Add a new Activity</h3>
+@if (!IsSaved)
+{
+    <form method="post" class="d-flex flex-column" @onsubmit="OnSubmit">
+        <InputText id="name" class="form-control mb-3" @bind-Value="Activity.Name" placeholder="Enter activity name"></InputText>
+        <InputTextArea id="description" class="form-control mb-3" @bind-Value="Activity.Description" placeholder="Add description of the activity"></InputTextArea>
+        <InputSelect id="type" class="form-control mb-3" @bind-Value="Activity.Type">
+            @foreach (var type in Enum.GetValues(typeof(ActivityType)))
+            {
+                <option value="@type">@type</option>
+            }
+        </InputSelect>
+        <InputDate id="startDate" class="form-control mb-3" @bind-Value="Activity.StartDate"></InputDate>
+        <InputDate id="endDate" class="form-control mb-3" @bind-Value="Activity.EndDate"></InputDate>
+        <button type="submit" class="btn btn-warning">Add Activity</button>
+    </form>
+}
+else
+{
+    <h3 class="text-success">@Message</h3>
+    <button class="btn btn-primary" @onclick="NavigateBackToActivities">Back to Activities</button>
+
+}
+

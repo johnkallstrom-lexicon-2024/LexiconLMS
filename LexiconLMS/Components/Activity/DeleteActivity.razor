@@ -1,0 +1,33 @@
+﻿@page "/activities/delete-activity/{Id:int}"
+@inject IHttpService HttpService
+@inject NavigationManager NavigationManager
+
+<h3>Delete Activity</h3>
+
+<p>Are you sure you want to delete this activity?</p>
+<button class="btn btn-danger" @onclick="DeleteActivityAsync">Delete</button>
+<button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private async Task DeleteActivityAsync()
+    {
+        try
+        {
+            await HttpService.DeleteAsync($"api/activities/{Id}");
+            NavigationManager.NavigateTo("/modules"); // Navigate to appropriate page after deletion
+        }
+        catch (Exception ex)
+        {
+            // Handle exception or show error message
+            Console.WriteLine($"Error deleting activity: {ex.Message}");
+        }
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/modules"); // Navigate to appropriate page if cancel button is clicked
+    }
+}
