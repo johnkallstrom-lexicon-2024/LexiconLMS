@@ -1,9 +1,8 @@
 ﻿using LexiconLMS.Api.Authorization;
-using Microsoft.AspNetCore.Authorization;
 
 namespace LexiconLMS.Api.Controllers
 {
-    //[IsAuthorized]
+    [IsAuthorized]
     [Route("api/[controller]")]
     [ApiController]
     public class ActivitiesController : ControllerBase
@@ -20,9 +19,13 @@ namespace LexiconLMS.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetActivities()
+        public async Task<IActionResult> GetActivities([FromQuery] ActivityQueryParams parameters)
         {
-            var activities = await _activityService.GetActivitiesAsync();
+            IEnumerable<Activity> activities = default!;
+
+            if (parameters is null) activities = await _activityService.GetActivitiesAsync();
+            else activities = await _activityService.GetActivitiesAsync(parameters);
+
             return Ok(_mapper.Map<IEnumerable<ActivityTrimModel>>(activities));
         }
 

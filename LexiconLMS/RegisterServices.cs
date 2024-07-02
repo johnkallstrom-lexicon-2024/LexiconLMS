@@ -1,4 +1,6 @@
-﻿namespace LexiconLMS
+﻿using LexiconLMS.Http.Services;
+
+namespace LexiconLMS
 {
     public static class RegisterServices
     {

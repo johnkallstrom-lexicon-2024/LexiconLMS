@@ -1,0 +1,43 @@
+﻿@page "/login"
+
+<PageTitle>Lexicon LMS - Login</PageTitle>
+
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="card p-5 shadow-sm border">
+            <div class="card-body">
+                @if (Loading)
+                {
+                    <p>Processing...</p>
+                }
+                else
+                {
+                    <h1 class="mb-5">Welcome to Lexicon LMS</h1>
+                    <EditForm Model="Model" OnValidSubmit="Submit">
+                        <DataAnnotationsValidator />
+                        @if (Errors != null && Errors.Count() > 0)
+                        {
+                            <ul>
+                                @foreach (var error in Errors)
+                                {
+                                    <li>@error</li>
+                                }
+                            </ul>
+                        }
+                        <div class="mb-3">
+                            <label for="@Model.Email" class="form-label">Email</label>
+                            <InputText @bind-Value=Model.Email class="form-control" />
+                            <ValidationMessage For="() => Model.Email" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="@Model.Email" class="form-label">Password</label>
+                            <InputText type="password" @bind-Value=Model.Password class="form-control" />
+                            <ValidationMessage For="() => Model.Password" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sign in</button>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </div>
+</div>

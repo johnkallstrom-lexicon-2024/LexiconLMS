@@ -1,0 +1,19 @@
+﻿@page "/modules/create-module"
+@inject NavigationManager NavigationManager
+
+<h3>Add a new Module</h3>
+@if (!IsSaved)
+{
+    <form method="post" class="d-flex flex-column"  @onsubmit="OnSumbit" @formname="add-course-form" data-enhance>
+        <InputText id="name" class="form-control m-2" @bind-Value="@Module.Name" placeholder="Enter Module name"></InputText>
+        <InputTextArea id="description" class="form-control m-2" @bind-Value="@Module.Description" placeholder="Add description of the Module"></InputTextArea>
+        <InputDate id="startDate" class="form-control m-2" @bind-Value="@Module.StartDate"></InputDate>
+        <InputDate id="endDate" class="form-control m-2" @bind-Value="@Module.EndDate"></InputDate>
+        <AntiforgeryToken />
+        <button type="submit" class="btn btn-warning btn-lg">Add Module</button>
+    </form>
+}
+else
+{
+    <h3 class="text-success">@Message</h3>
+}

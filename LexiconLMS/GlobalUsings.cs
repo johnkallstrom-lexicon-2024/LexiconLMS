@@ -1,10 +1,10 @@
 ﻿global using LexiconLMS.Components;
 global using LexiconLMS.Constants;
-global using LexiconLMS.Core.Interfaces;
-global using LexiconLMS.Core.Services;
-global using LexiconLMS.Core.Models;
 global using LexiconLMS.Core.Models.User;
-global using LexiconLMS.Core.Models.Activity;
 global using LexiconLMS.Core.Models.Course;
 global using LexiconLMS.Core.Models.Module;
-global using LexiconLMS.Core.Models.Document;
+global using LexiconLMS.Http.Services;
+global using Blazored.LocalStorage;
+global using LexiconLMS;
+global using LexiconLMS.Authentication;
+global using Microsoft.AspNetCore.Components.Authorization;

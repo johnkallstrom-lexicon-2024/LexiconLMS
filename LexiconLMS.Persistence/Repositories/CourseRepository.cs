@@ -1,4 +1,5 @@
 ﻿using LexiconLMS.Persistence.Data;
+using System.Linq.Expressions;
 
 namespace LexiconLMS.Persistence.Repositories
 {
@@ -15,6 +16,11 @@ namespace LexiconLMS.Persistence.Repositories
         {
             var courses = await _context.Courses.ToListAsync();
             return courses;
+        }
+
+        public Task<IEnumerable<Course>> GetFilteredAsync(Expression<Func<Course, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Course?> GetByIdAsync(int id)

@@ -1,0 +1,29 @@
+﻿@page "/teachers"
+
+<PageTitle>LexiconLMS - Teachers</PageTitle>
+
+<div class="d-flex flex-column align-items-start min-vh-100">
+    <div class ="flex-row">
+        <h3 class="mb-3">Teacher Overview</h3>
+        <div class="d-flex justify-content-evenly flex-row">
+        </div>
+    </div>
+    @if (Loading)
+    {
+        <Spinner />
+    }
+    else
+    {
+        @if (Model != null && Model.Count() > 0)
+        {
+            <div class="flex-column">
+                <div class="row">
+                    @foreach (var teacher in Model)
+                    {
+                        <TeacherCard Teacher="teacher" />
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>

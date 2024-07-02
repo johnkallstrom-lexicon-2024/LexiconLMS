@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LexiconLMS.Components.Shared
+namespace LexiconLMS.Components
 {
-    public partial class Navbar
+    public partial class Logout
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; } = default!;
@@ -10,10 +10,10 @@ namespace LexiconLMS.Components.Shared
         [Inject]
         public ILocalStorageService LocalStorage { get; set; } = default!;
 
-        private async Task Logout()
+        protected override async Task OnInitializedAsync()
         {
             await LocalStorage.RemoveItemAsync("token");
-            NavigationManager.NavigateTo("/logout", forceLoad: true);
+            NavigationManager.NavigateTo("/logout");
         }
     }
 }

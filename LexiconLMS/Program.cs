@@ -1,6 +1,3 @@
-using Blazored.LocalStorage;
-using LexiconLMS;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
@@ -8,6 +5,10 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpServices();
 builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
+builder.Services.AddAuthorizationCore();
 
 var app = builder.Build();
 
@@ -17,7 +18,6 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/error", createScopeForErrors: true);
     app.UseHsts();
 }
 

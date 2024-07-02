@@ -1,7 +1,8 @@
 ﻿@page "/courses";
 
 <div class="container">
-    <a href="/create-course" class="btn btn-success mb-3">Add Course</a>
+    <h3 class="mb-3">Course Overview</h3>
+    <a href="/create-course" class="btn btn-success mb-3">New</a>
     <div class="row">
         @foreach (var course in Courses)
         {
@@ -16,7 +17,7 @@
                             <li class="list-group-item"><strong>End:</strong> @course.EndDate.ToShortDateString()</li>
                         </ul>
                         <a href="/courses/edit-course/@course.Id" class="btn btn-primary mt-2">Edit</a>
-                        <a href="/courses/delete-course/@course.Id" class="btn btn-danger mt-2">Delete</a>
+                        @*<a href="/courses/delete-course/@course.Id" class="btn btn-danger mt-2">Delete</a>*@
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 ﻿using LexiconLMS.Persistence.Data;
+using System.Linq.Expressions;
 
 namespace LexiconLMS.Persistence.Repositories
 {
@@ -14,7 +15,20 @@ namespace LexiconLMS.Persistence.Repositories
 
         public async Task<IEnumerable<Activity>> GetListAsync()
         {
-            var activities = await _context.Activities.ToListAsync();
+            var activities = await _context.Activities
+                .Include(a => a.Module)
+                .ToListAsync();
+
+            return activities;
+        }
+
+        public async Task<IEnumerable<Activity>> GetFilteredAsync(Expression<Func<Activity, bool>> predicate)
+        {
+            var activities = await _context.Activities
+                .Include(a => a.Module)
+                .Where(predicate)
+                .ToListAsync();
+
             return activities;
         }
 

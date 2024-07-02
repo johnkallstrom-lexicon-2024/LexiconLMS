@@ -44,10 +44,17 @@ h1:focus {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+@media (min-width: 650px) {
+    .card-student {
+        min-width: 400px !important;
+    }
+}
+
