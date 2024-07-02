@@ -1,0 +1,73 @@
+﻿@page "/activities/edit-activity/{ModuleId:int}"
+@inject IHttpService HttpService
+@inject NavigationManager NavigationManager
+
+@if (activity == null)
+{
+    <h3>Edit Activity</h3>
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="activity" OnValidSubmit="OnSubmit" OnInvalidSubmit="InvalidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="name">Activity Name</label>
+            <InputText id="name" @bind-Value="activity.Name" class="form-control" />
+        </div>
+        @* <div class="form-group">
+            <label for="moduleId">Module ID</label>
+            <InputNumber id="moduleId" @bind-Value="activity.ModuleId" class="form-control" />
+        </div> *@
+        <div class="form-group">
+            <label for="description">Description</label>
+            <InputTextArea id="description" @bind-Value="activity.Description" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <InputDate id="startDate" @bind-Value="activity.StartDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <InputDate id="endDate" @bind-Value="activity.EndDate" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int ModuleId { get; set; }
+
+    private ActivityUpdateModel activity;
+
+    protected override async Task OnInitializedAsync()
+    {
+        activity = await HttpService.GetAsync<ActivityUpdateModel>($"api/activities/{ModuleId}");
+    }
+
+    private async Task OnSubmit()
+    {
+        if (activity != null)
+        {
+            try
+            {
+                activity.ModuleId = ModuleId;
+                await HttpService.PutAsync($"api/activities/{ModuleId}", activity);
+                NavigationManager.NavigateTo($"/modules/{activity.ModuleId}/activities");
+            }
+            catch (Exception ex)
+            {
+                // Handle exception or show error message
+                Console.WriteLine($"Error updating activity: {ex.Message}");
+            }
+        }
+    }
+
+    private void InvalidSubmit()
+    {
+        // Handle invalid submission if needed
+    }
+}

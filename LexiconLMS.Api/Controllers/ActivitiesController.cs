@@ -2,7 +2,7 @@
 
 namespace LexiconLMS.Api.Controllers
 {
-    [IsAuthorized]
+    //[IsAuthorized]
     [Route("api/[controller]")]
     [ApiController]
     public class ActivitiesController : ControllerBase

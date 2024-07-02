@@ -3,7 +3,7 @@
 <PageTitle>LexiconLMS - Activity by Module</PageTitle>
 
 <div class="container">
-    @* <a href="/create-course" class="btn btn-success mb-3">Add Modules</a> *@
+    <a href="/create-activity/@ModuleId" class="btn btn-success mb-3">New Activity</a>
     <div class="row">
         @foreach (var activity in Activity)
         {
@@ -17,6 +17,7 @@
                             <li class="list-group-item"><strong>Start:</strong> @activity.StartDate.ToShortDateString()</li>
                             <li class="list-group-item"><strong>End:</strong> @activity.EndDate.ToShortDateString()</li>
                         </ul>
+                        <a href="/activities/edit-activity/@ModuleId" class="btn btn-primary mt-2">Edit</a>
                         @* <a href="/courses/edit-course/@course.Id" class="btn btn-primary mt-2">Edit</a>
                     <a href="/courses/delete-course/@course.Id" class="btn btn-danger mt-2">Delete</a> *@
                     </div>

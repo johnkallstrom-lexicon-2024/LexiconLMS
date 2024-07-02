@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using LexiconLMS.Core.Models.Activity;
+using Microsoft.AspNetCore.Components;
 
 namespace LexiconLMS.Components.Activity
 {
